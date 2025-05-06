@@ -1,19 +1,17 @@
 {
   "name": "carrent",
   "version": "1.0.0",
-  "description": "CarRent is a platform for renting premium cars online, offering easy booking for users and full management tools for admins.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/loryy9/CarRent.git"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "Lorenzo Bellotti",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/loryy9/CarRent/issues"
-  },
-  "homepage": "https://github.com/loryy9/CarRent#readme"
+  "dependencies": {
+    "express": "^5.1.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.10",
+    "sqlite3": "^5.1.7"
+  }
 }
