@@ -1,2 +1,4 @@
 node_modules/
+*.sqlite
 .vscode/
+/database/*.db
