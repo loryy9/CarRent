@@ -1,0 +1,128 @@
+:root {
+    --background-color-dark: #0b0b0b;
+    --text-color-dark: #fff;
+}
+
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+
+.navbar {
+    position: fixed;
+    max-width: 80%;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 15px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.custom-toggle-icon img {
+    height: 30px;
+    width: auto;
+    object-fit: cover;
+}
+
+.nav-link {
+    color: var(--text-color-dark);
+    font-size: 20px;
+}
+
+.btn a {
+    text-decoration: none;
+    color: var(--text-color-dark);
+}
+
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url("https://images.unsplash.com/photo-1519245659620-e859806a8d3b")
+            no-repeat center center/cover;
+    color: var(--white);
+}
+
+.hero-text {
+    color: var(--text-color-dark);
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.car-image{
+    height: 300px;
+    object-fit: cover;
+}
+
+.card img{
+    scale: 1;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover img{
+    transform: scale(1.05);
+}
+
+.recensioni {
+    width: 100%;
+    margin-top: 150px;
+}
+
+.contatti{
+    width: 100%;
+    margin-top: 150px;
+    padding-bottom: 50px;
+}
+
+/* pagina catalogo */
+
+.catalogo{
+    height: 60vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98') no-repeat center center/cover;
+}
+
+
+/* pagina prenota */
+.container-prenota{
+    padding-top: 150px;
+    padding-bottom: 50px;
+}
+
+/* dashboard */
+.header {
+    background-color: var(--background-color-dark);
+}
+
+
+
+@keyframes fadeIn {
+    0% {
+        transform: translate(-50%, -50px);
+        opacity: 0;
+    }
+    40% {
+        transform: translate(-50%, 10px);
+        opacity: 1;
+    }
+    60% {
+        transform: translate(-50%, -6px);
+    }
+    80% {
+        transform: translate(-50%, 3px);
+    }
+    100% {
+        transform: translate(-50%, 0);
+    }
+}
