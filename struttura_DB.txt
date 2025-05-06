@@ -1,0 +1,69 @@
+CREATE TABLE utente (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome TEXT NOT NULL,
+  cognome TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
+  data_nascita TEXT,
+  telefono TEXT,
+  patente_posseduta INTEGER DEFAULT 0,
+  numero_patente TEXT,
+  data_scadenza_patente TEXT,
+  ruolo TEXT DEFAULT 'utente', -- utente, admin
+  data_registrazione TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE auto (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  marca TEXT,
+  modello TEXT,
+  descrizione TEXT,
+  immagine TEXT, -- path o URL
+  disponibile INTEGER DEFAULT 1,
+  prezzo_giornaliero REAL,
+  FOREIGN KEY(id_host) REFERENCES utenti(id)
+);
+
+CREATE TABLE preferita (
+  id_utente INTEGER,
+  id_auto INTEGER,
+  PRIMARY KEY (id_utente, id_auto),
+  FOREIGN KEY(id_utente) REFERENCES utenti(id),
+  FOREIGN KEY(id_auto) REFERENCES auto(id)
+);
+
+CREATE TABLE prenotazione (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id_utente INTEGER,
+  id_auto INTEGER,
+  data_inizio TEXT,
+  data_fine TEXT,
+  stato TEXT DEFAULT 'prenotata', -- prenotata, in corso, completata, annullata
+  data_creazione TEXT DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(id_utente) REFERENCES utenti(id),
+  FOREIGN KEY(id_auto) REFERENCES auto(id)
+);
+
+CREATE TABLE pacchetto_aggiuntivo (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome TEXT,
+  descrizione TEXT,
+  prezzo REAL
+);
+
+CREATE TABLE prenotazione_pacchetto (
+  id_prenotazione INTEGER,
+  id_pacchetto INTEGER,
+  PRIMARY KEY (id_prenotazione, id_pacchetto),
+  FOREIGN KEY(id_prenotazione) REFERENCES prenotazioni(id),
+  FOREIGN KEY(id_pacchetto) REFERENCES pacchetti_aggiuntivi(id)
+);
+
+CREATE TABLE recensioni (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id_utente INTEGER,
+  voto INTEGER CHECK(voto BETWEEN 1 AND 5),
+  commento TEXT,
+  data TEXT DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(id_utente) REFERENCES utenti(id),
+);
