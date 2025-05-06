@@ -1,4 +1,4 @@
-CREATE TABLE utente (
+CREATE TABLE utenti (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   nome TEXT NOT NULL,
   cognome TEXT NOT NULL,
@@ -20,11 +20,10 @@ CREATE TABLE auto (
   descrizione TEXT,
   immagine TEXT, -- path o URL
   disponibile INTEGER DEFAULT 1,
-  prezzo_giornaliero REAL,
-  FOREIGN KEY(id_host) REFERENCES utenti(id)
+  prezzo_giornaliero REAL
 );
 
-CREATE TABLE preferita (
+CREATE TABLE preferite (
   id_utente INTEGER,
   id_auto INTEGER,
   PRIMARY KEY (id_utente, id_auto),
@@ -32,7 +31,7 @@ CREATE TABLE preferita (
   FOREIGN KEY(id_auto) REFERENCES auto(id)
 );
 
-CREATE TABLE prenotazione (
+CREATE TABLE prenotazioni (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   id_utente INTEGER,
   id_auto INTEGER,
@@ -44,14 +43,14 @@ CREATE TABLE prenotazione (
   FOREIGN KEY(id_auto) REFERENCES auto(id)
 );
 
-CREATE TABLE pacchetto_aggiuntivo (
+CREATE TABLE pacchetti_aggiuntivi (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   nome TEXT,
   descrizione TEXT,
   prezzo REAL
 );
 
-CREATE TABLE prenotazione_pacchetto (
+CREATE TABLE prenotazioni_pacchetti (
   id_prenotazione INTEGER,
   id_pacchetto INTEGER,
   PRIMARY KEY (id_prenotazione, id_pacchetto),
@@ -65,5 +64,5 @@ CREATE TABLE recensioni (
   voto INTEGER CHECK(voto BETWEEN 1 AND 5),
   commento TEXT,
   data TEXT DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY(id_utente) REFERENCES utenti(id),
+  FOREIGN KEY(id_utente) REFERENCES utenti(id)
 );
