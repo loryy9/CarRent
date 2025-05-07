@@ -1,0 +1,227 @@
+:root {
+    --primary-color: #e8a400; 
+    --secondary-color: #333;
+    --border-color: #333;
+    --error-color: #d9534f;
+    --success-color: #5cb85c;
+    --input-bg: #1a1a1a;
+    --card-bg: rgba(15, 15, 15, 0.8);
+}
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+
+.main-content {
+    padding: 60px 0;
+}
+
+.login{
+    padding-top: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.signup-container {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 60px;
+    padding: 30px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.signup-container h1 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.signup-container > p {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #aaa;
+}
+
+.form-group {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-group h2 {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.form-field {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-color-dark);
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="password"],
+.form-field input[type="date"],
+.form-field input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: var(--input-bg);
+    color: var(--text-color-dark);
+    transition: all 0.3s ease;
+}
+
+.form-field input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(232, 164, 0, 0.2);
+}
+
+.form-field input:invalid {
+    border-color: var(--error-color);
+}
+
+.checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.checkbox-field input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.checkbox-field label {
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.privacy-policy {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.privacy-policy a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.privacy-policy a:hover {
+    text-decoration: underline;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-color-dark);
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #d29400;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(232, 164, 0, 0.3);
+}
+
+.form-actions p {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.form-actions a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-actions a:hover {
+    text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+    .signup-container {
+        padding: 20px;
+        margin: 20px 10px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .form-field {
+        min-width: 100%;
+    }
+}
+
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+.form-field input:focus {
+    animation: borderPulse 1.5s infinite alternate;
+}
+
+@keyframes borderPulse {
+    0% {
+        border-color: var(--primary-color);
+    }
+    100% {
+        border-color: #d29400;
+    }
+}

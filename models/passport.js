@@ -1,47 +1,50 @@
 "use strict";
 
-import passport from 'passport';
-import { Strategy as LocalStrategy } from 'passport-local';
-import bcrypt from 'bcrypt';
-import db from './db.js'; 
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const db = require('./db');
 
-passport.use(new LocalStrategy(
-    { usernameField: 'email', passwordField: 'password' },
-    async (email, password, done) => {
-        try {
-            const user = await new Promise((resolve, reject) => {
-                db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
-                    if (err) reject(err);
-                    resolve(user);
-                });
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+}, async function (email, password, done) {
+    try {
+        const utente = await new Promise((resolve, reject) => {
+            db.get('SELECT * FROM utenti WHERE email = ?', [email], (err, row) => {
+                if (err) reject(err);
+                resolve(row);
             });
+        });
 
-            if (!user) {
-                return done(null, false, { message: 'Email non trovata.' });
-            }
-
-            const isMatch = await bcrypt.compare(password, user.password);
-            
-            if (isMatch) {
-                return done(null, user); 
-            } else {
-                return done(null, false, { message: 'Password errata.' }); 
-            }
-
-        } catch (err) {
-            return done(err); 
+        if (!utente) {
+            return done(null, false, { message: 'Utente non trovato.' });
         }
-    }
-));
 
-passport.serializeUser((user, done) => {
-    done(null, user.id); 
+        const isMatch = await bcrypt.compare(password, utente.password);
+
+        if (isMatch) {
+            return done(null, utente);
+        } else {
+            return done(null, false, { message: 'Password errata.' });
+        }
+
+    } catch (err) {
+        return done(err);
+    }
+}))
+
+
+passport.serializeUser((utente, done) => {
+    done(null, utente.id);
 });
 
 passport.deserializeUser((id, done) => {
-    db.get('SELECT * FROM users WHERE id = ?', [id], (err, user) => {
-        done(err, user);
+    db.get('SELECT * FROM utenti WHERE id = ?', [id], (err, row) => {
+        done(err, row);
     });
 });
 
-export default passport;
+console.log("Passport configurato con successo");
+
+module.exports = passport;

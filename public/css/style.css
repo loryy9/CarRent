@@ -15,6 +15,8 @@ body {
     color: var(--text-color-dark);
 }
 
+/* ----------- navbar ----------- */
+
 .navbar {
     position: fixed;
     max-width: 80%;
@@ -45,6 +47,7 @@ body {
     color: var(--text-color-dark);
 }
 
+/* ----------- pagina home ----------- */
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
         url("https://images.unsplash.com/photo-1519245659620-e859806a8d3b")
@@ -87,20 +90,19 @@ body {
 }
 
 /* pagina catalogo */
-
 .catalogo{
     height: 60vh;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98') no-repeat center center/cover;
 }
 
 
-/* pagina prenota */
+/* ----------- pagina prenota ----------- */
 .container-prenota{
     padding-top: 150px;
     padding-bottom: 50px;
 }
 
-/* dashboard */
+/* ----------- dashboard ----------- */
 .header {
     background-color: var(--background-color-dark);
 }
