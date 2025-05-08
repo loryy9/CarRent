@@ -5,13 +5,22 @@ const passport = require("../models/passport")
 
 
 router.get("/login", (req, res) => {
-    const { alert } = req.query;
+    const { alert, errorType } = req.query;
     let message = '';
     if (alert === 'errore') {
-        message = 'Email o password errati.';
+        if (errorType === 'non_trovato') {
+            message = 'Utente non trovato. Verifica l\'email inserita.';
+        } else if (errorType === 'password_errata') {
+            message = 'Password errata.';
+        } else if (errorType === 'non_autorizzato') {
+            message = 'Accesso non autorizzato. Effettua il login per accedere alla dashboard.';
+        } else {
+            message = 'Credenziali non valide. Riprova.';
+        }
     }
-    res.render("login", { message });
+    res.render("login", { message, isAuth: req.isAuthenticated() });
 });
+
 
 router.post('/login', (req, res, next) => {
     console.log("Body ricevuto:", req.body);
@@ -24,8 +33,16 @@ router.post('/login', (req, res, next) => {
             return next(err);
         }
         if (!utente) {
+            let errorType = '';
+            if (info && info.message) {
+                if (info.message == 'Utente non trovato.') {
+                    errorType = 'non_trovato';
+                } else if (info.message == 'Password errata.') {
+                    errorType = 'password_errata';
+                }
+            }
             console.log("Autenticazione fallita:", info?.message);
-            return res.redirect('/login?alert=errore');
+            return res.redirect(`/login?alert=errore&errorType=${errorType}`);
         }
         req.login(utente, (err) => {
             if (err) {

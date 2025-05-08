@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt")
 const dao = require("../models/dao")
 
 router.get("/registrazione", (req, res) => {
-    res.render("registrazione");
+    res.render("registrazione", { isAuth: req.isAuthenticated() });
 })
 
 router.post("/registrazione", async (req, res) => {

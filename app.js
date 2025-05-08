@@ -29,19 +29,17 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // Importazione router
+const indexRouter = require("./routes/index")
 const registrazioneRouter = require("./routes/registrazione")
 const loginRouter = require("./routes/login")
 const dashboardRouter = require("./routes/dashboard")
 
 
 console.log("Router importati con successo")
+app.use(indexRouter)
 app.use(registrazioneRouter)
 app.use(loginRouter)
 app.use(dashboardRouter)
-
-app.get('/', (req, res) => {
-    res.render('home');
-});
 
 
 app.listen(PORT, () => {

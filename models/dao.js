@@ -5,9 +5,9 @@ const sqlite = require("sqlite3")
 const db = require("./db")
 
 exports.newUser = async (user, cryptPwd) => {
-    sql = `INSERT INTO utenti (nome, cognome, email, password, data_nascita, telefono, patente_posseduta, numero_patente, data_scadenza_patente, ruolo) 
+    let sql = `INSERT INTO utenti (nome, cognome, email, password, data_nascita, telefono, patente_posseduta, numero_patente, data_scadenza_patente, ruolo) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    params = [
+    let params = [
         user.nome,
         user.cognome,
         user.email,
