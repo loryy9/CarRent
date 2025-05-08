@@ -38,8 +38,8 @@ const catalogoRouter = require("./routes/catalogo")
 
 console.log("Router importati con successo")
 app.use(indexRouter)
-app.use(registrazioneRouter)
 app.use(loginRouter)
+app.use(registrazioneRouter)
 app.use(dashboardRouter)
 app.use(catalogoRouter)
 

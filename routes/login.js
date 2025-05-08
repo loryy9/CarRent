@@ -5,6 +5,10 @@ const passport = require("../models/passport")
 
 
 router.get("/login", (req, res) => {
+    if(req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
     const { alert, errorType } = req.query;
     let message = '';
     if (alert === 'errore') {
