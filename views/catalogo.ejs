@@ -1,0 +1,165 @@
+<html>
+    <head>
+        <%- include('./components/header', {title: 'CarRent | Catalogo' }) %>
+    </head>
+    <body>
+        <%- include('./components/navbar', {active: 'catalogo', isAuth }) %>
+
+        <div class="catalogo d-flex flex-column align-items-center justify-content-center text-center py-5 px-5">
+            <h2>LA NOSTRA FLOTTA!</h2>
+            <p>Scopri la nostra offerta esclusiva di auto di lusso</p>
+        </div>
+    
+        <div class="container mt-3">
+            <div class="bg-dark p-4 rounded-3 shadow-sm mb-5 d-flex flex-column  justify-content-center ">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-white fw-medium mb-2">Ricerca...</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-warning text-dark">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Es. Huracan, 488 GTB...">
+                        </div>
+                    </div>
+    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label text-white fw-medium mb-2">Marca</label>
+                            <select class="form-select bg-light border-0 shadow-sm" id="brandSelect">
+                                <option value="" selected disabled>Seleziona una marca</option>
+                                <option value="lamborghini">Lamborghini</option>
+                                <option value="ferrari">Ferrari</option>
+                                <option value="porsche">Porsche</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="container py-5 mt-5">
+            <div class="row g-4 justify-content-center">
+                <div class="col-10 col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="overflow-hidden rounded-top-3">
+                            <img src="https://images.unsplash.com/photo-1580274455191-1c62238fa333"
+                                class="card-img-top car-image" alt="Porsche 911">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold mb-2">Porsche 911</h5>
+                            <span class="badge bg-warning text-dark mb-3">Supercar</span>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-tachometer-alt me-1 text-warning"></i> 325 km/h</span>
+                                <span><i class="fas fa-horse-head me-1 text-warning"></i> 640 CV</span>
+                                <span><i class="fas fa-stopwatch me-1 text-warning"></i> 3.2s 0-100</span>
+                            </div>
+                            <p class="fw-bold mb-3">Da €1.200 / giorno</p>
+                            <a href="prenota.html" class="btn btn-warning w-100">Prenota Ora</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="overflow-hidden rounded-top-3">
+                            <img src="https://images.unsplash.com/photo-1580274455191-1c62238fa333"
+                                class="card-img-top car-image" alt="Porsche 911">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold mb-2">Porsche 911</h5>
+                            <span class="badge bg-warning text-dark mb-3">Supercar</span>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-tachometer-alt me-1 text-warning"></i> 325 km/h</span>
+                                <span><i class="fas fa-horse-head me-1 text-warning"></i> 640 CV</span>
+                                <span><i class="fas fa-stopwatch me-1 text-warning"></i> 3.2s 0-100</span>
+                            </div>
+                            <p class="fw-bold mb-3">Da €1.200 / giorno</p>
+                            <a href="prenota.html" class="btn btn-warning w-100">Prenota Ora</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="overflow-hidden rounded-top-3">
+                            <img src="https://images.unsplash.com/photo-1580274455191-1c62238fa333"
+                                class="card-img-top car-image" alt="Porsche 911">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold mb-2">Porsche 911</h5>
+                            <span class="badge bg-warning text-dark mb-3">Supercar</span>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-tachometer-alt me-1 text-warning"></i> 325 km/h</span>
+                                <span><i class="fas fa-horse-head me-1 text-warning"></i> 640 CV</span>
+                                <span><i class="fas fa-stopwatch me-1 text-warning"></i> 3.2s 0-100</span>
+                            </div>
+                            <p class="fw-bold mb-3">Da €1.200 / giorno</p>
+                            <a href="prenota.html" class="btn btn-warning w-100">Prenota Ora</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="overflow-hidden rounded-top-3">
+                            <img src="https://images.unsplash.com/photo-1530906358829-e84b2769270f"
+                                class="card-img-top car-image" alt="Lamborghini Huracan">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold mb-2">Lamborghini Huracan</h5>
+                            <span class="badge bg-warning text-dark mb-3">Supercar</span>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-tachometer-alt me-1 text-warning"></i> 325 km/h</span>
+                                <span><i class="fas fa-horse-head me-1 text-warning"></i> 640 CV</span>
+                                <span><i class="fas fa-stopwatch me-1 text-warning"></i> 3.2s 0-100</span>
+                            </div>
+                            <p class="fw-bold mb-3">Da €1.200 / giorno</p>
+                            <a href="prenota.html" class="btn btn-warning w-100">Prenota Ora</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="overflow-hidden rounded-top-3">
+                            <img src="https://images.unsplash.com/photo-1530906358829-e84b2769270f"
+                                class="card-img-top car-image" alt="Lamborghini Huracan">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold mb-2">Lamborghini Huracan</h5>
+                            <span class="badge bg-warning text-dark mb-3">Supercar</span>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-tachometer-alt me-1 text-warning"></i> 325 km/h</span>
+                                <span><i class="fas fa-horse-head me-1 text-warning"></i> 640 CV</span>
+                                <span><i class="fas fa-stopwatch me-1 text-warning"></i> 3.2s 0-100</span>
+                            </div>
+                            <p class="fw-bold mb-3">Da €1.200 / giorno</p>
+                            <a href="prenota.html" class="btn btn-warning w-100">Prenota Ora</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="overflow-hidden rounded-top-3">
+                            <img src="https://images.unsplash.com/photo-1530906358829-e84b2769270f"
+                                class="card-img-top car-image" alt="Lamborghini Huracan">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold mb-2">Lamborghini Huracan</h5>
+                            <span class="badge bg-warning text-dark mb-3">Supercar</span>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-tachometer-alt me-1 text-warning"></i> 325 km/h</span>
+                                <span><i class="fas fa-horse-head me-1 text-warning"></i> 640 CV</span>
+                                <span><i class="fas fa-stopwatch me-1 text-warning"></i> 3.2s 0-100</span>
+                            </div>
+                            <p class="fw-bold mb-3">Da €1.200 / giorno</p>
+                            <a href="prenota.html" class="btn btn-warning w-100">Prenota Ora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('./components/footer') %>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+                crossorigin="anonymous"></script>
+    </body>
+</html>

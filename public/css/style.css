@@ -1,6 +1,7 @@
 :root {
     --background-color-dark: #0b0b0b;
     --text-color-dark: #fff;
+    --gold: #ffc107
 }
 
 * {
@@ -37,9 +38,18 @@ body {
     object-fit: cover;
 }
 
+
 .nav-link {
     color: var(--text-color-dark);
     font-size: 20px;
+    border-bottom: 1px solid transparent;
+}
+
+.nav-link:hover,
+.active .nav-link {
+    color: var(--text-color-dark);
+    transition: all 0.3s ease-in-out;
+    border-bottom: 1px solid var(--gold);
 }
 
 .btn a {
@@ -50,7 +60,7 @@ body {
 /* ----------- pagina home ----------- */
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-        url("https://images.unsplash.com/photo-1519245659620-e859806a8d3b")
+        url("../assets/home_image.jpg")
             no-repeat center center/cover;
     color: var(--white);
 }
@@ -92,7 +102,7 @@ body {
 /* pagina catalogo */
 .catalogo{
     height: 60vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/catalogo_imagejpg.jpg') no-repeat center center/cover;
 }
 
 

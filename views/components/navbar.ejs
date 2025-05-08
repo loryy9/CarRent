@@ -40,12 +40,21 @@
                     <a class="nav-link" href="/#contatti">Contatti</a>
                 </li>
             </ul>
-            <div class="btn d-flex align-items-center justify-content-center gap-2 btn-outline-warning ms-lg-3 mt-4 mt-lg-0">
-                <img src="/assets/login_white.png" alt="login-button" />
+            <div class="ms-lg-3 mt-4 mt-lg-0">
                 <% if (isAuth) { %>
-                    <a href="/dashboard">Dashboard</a>
+                    <a href="/dashboard" class="btn btn-outline-warning">
+                        <span class="d-flex align-items-center justify-content-center gap-2">
+                            Dashboard
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                    </a>
                 <% } else { %>
-                    <a href="/login">Accedi</a>
+                    <a href="/login" class="btn btn-outline-warning">
+                        <span class="d-flex align-items-center justify-content-center gap-2">
+                            Accedi
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                        </span>
+                    </a>
                 <% } %>
             </div>
         </div>
