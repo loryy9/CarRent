@@ -6,6 +6,9 @@ const bcrypt = require("bcrypt")
 const dao = require("../models/dao")
 
 router.get("/registrazione", (req, res) => {
+    if(req.isAuthenticated()) {
+        return res.redirect("/");
+    }
     res.render("registrazione", { isAuth: req.isAuthenticated() });
 })
 
