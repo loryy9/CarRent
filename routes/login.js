@@ -18,9 +18,13 @@ router.get("/login", (req, res) => {
             message = 'Password errata.';
         } else if (errorType === 'non_autorizzato') {
             message = 'Accesso non autorizzato. Effettua il login per accedere alla dashboard.';
-        } else {
+        } else if (errorType === 'logout') {
+            message = 'Logout non disponibile.';
+        } else{
             message = 'Credenziali non valide. Riprova.';
         }
+    } else if (alert === 'logout') {
+        message = 'Logout effettuato con successo.';
     }
     res.render("login", { message, isAuth: req.isAuthenticated() });
 });

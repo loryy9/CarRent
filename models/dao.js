@@ -17,7 +17,7 @@ exports.newUser = async (user, cryptPwd) => {
         user.patente_posseduta,
         user.numero_patente ? user.numero_patente : null,
         user.data_scadenza_patente ? user.data_scadenza_patente : null,
-        0 // 0 = cliente, 1 = admin
+        0
     ]
 
     return new Promise((resolve, reject) => {

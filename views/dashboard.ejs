@@ -2,13 +2,131 @@
 <html lang="it">
 
 <head>
-    <%- include('./components/header', {title: 'CarRent | Home' }) %>
+    <%- include('./components/header', {title: 'CarRent | Dashboard' }) %>
 </head>
 
 <body>
-    <%- include('./components/navbar', {active: '', isAuth }) %>
 
-        dashboard <%= utente.nome %> <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-xl-2 d-none d-lg-block bg-dark p-3 vh-100">
+                <a href="/" class="d-block mb-4 mt-4" >
+                    <img
+                        src="/assets/noBgColorGold.png"
+                        alt="Logo"
+                        height="30"
+                    />
+                </a>
+                <ul class="nav flex-column text-light">
+                    <li class="nav-item mb-2">
+                        <a href="/" class="nav-link ">
+                            <i class="fas fa-home me-2"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="#" class="nav-link ">
+                            <i class="fas fa-car me-2"></i> Prenota un'auto
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="#" class="nav-link ">
+                            <i class="fas fa-clipboard-list me-2"></i> Le tue prenotazioni
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="#" class="nav-link ">
+                            <i class="fas fa-heart me-2"></i> Le tue auto preferite
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <main class="col-12 col-lg-9 col-xl-10 px-3 py-4">
+                <div class="header sticky-top">
+                    <h5>Dashboard</h5>
+                    <div class="d-flex justify-content-between mb-4 pb-3 border-bottom">                    
+                        <h2>Eccoti <%= utente.nome %></h2>
+                        <div class="dropdown d-none d-lg-block">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                                <li><a class="dropdown-item" href="#">Profilo</a></li>
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuMobile">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="container p-0 d-flex flex-column gap-2">
+                    <div class="card border-0 bg-black">
+                        <div class="card-body p-4 bg-dark text-white rounded-3">
+                            <h5>Benvenuto nella tua dashboard</h5>
+                        </div>
+                    </div>
+                    <div class="card border-0 bg-black">
+                        <div class="card-body p-4 bg-dark text-white rounded-3">
+                            <h5>Prenotazioni attive: 0</h5>
+                        </div>
+                    </div>
+                    <div class="card border-0 bg-black">
+                        <div class="card-body p-4 bg-dark text-white rounded-3">
+                            <h5>Auto prefetite: 0</h5>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <div class="offcanvas offcanvas-start w-75 bg-black" tabindex="-1" id="menuMobile">
+        <div class="offcanvas-header">
+            <a href="index.html" class="d-block text-center mb-4 mt-4" >
+                <img
+                    src="/assets/noBgColorGold.png"
+                    alt="Logo"
+                    height="30"
+                />
+            </a>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a href="index.html" class="nav-link ">
+                        <i class="fas fa-home me-2"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-car me-2"></i> Prenota un'auto
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#" class="nav-link ">
+                        <i class="fas fa-clipboard-list me-2"></i> Le tue prenotazioni
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#" class="nav-link ">
+                        <i class="fas fa-heart me-2"></i> Le tue auto preferite
+                    </a>
+                </li>
+                <div class="dropdown w-100">
+                    <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                        <li><a class="dropdown-item" href="#">Profilo</a></li>
+                        <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                    </ul>
+                </div>
+            </ul>
+        </div>
+    </div>
 
         <%- include('./components/footer') %>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"

@@ -20,6 +20,10 @@ CREATE TABLE auto (
   descrizione TEXT,
   immagine TEXT, -- path o URL
   disponibile INTEGER DEFAULT 1,
+  velocita INTEGER NOT NULL, 
+  cavalli INTEGER NOT NULL,
+  tipologia TEXT NOT NULL, 
+  pref_contatore INTEGER DEFAULT 0,
   prezzo_giornaliero REAL
 );
 

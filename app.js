@@ -32,14 +32,16 @@ app.use(passport.session())
 const indexRouter = require("./routes/index")
 const registrazioneRouter = require("./routes/registrazione")
 const loginRouter = require("./routes/login")
+const logoutRouter = require("./routes/logout")
 const dashboardRouter = require("./routes/dashboard")
 const catalogoRouter = require("./routes/catalogo")
 
 
 console.log("Router importati con successo")
 app.use(indexRouter)
-app.use(loginRouter)
 app.use(registrazioneRouter)
+app.use(loginRouter)
+app.use(logoutRouter)
 app.use(dashboardRouter)
 app.use(catalogoRouter)
 
