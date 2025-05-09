@@ -31,13 +31,8 @@ router.get("/login", (req, res) => {
 
 
 router.post('/login', (req, res, next) => {
-    console.log("Body ricevuto:", req.body);
-    
-    passport.authenticate("local", (err, utente, info) => {
-        console.log("Auth result:", { err, utente, info }); 
-        
+    passport.authenticate("local", (err, utente, info) => {        
         if (err) {
-            console.error("Errore durante l'autenticazione:", err);
             return next(err);
         }
         if (!utente) {
@@ -49,15 +44,12 @@ router.post('/login', (req, res, next) => {
                     errorType = 'password_errata';
                 }
             }
-            console.log("Autenticazione fallita:", info?.message);
             return res.redirect(`/login?alert=errore&errorType=${errorType}`);
         }
         req.login(utente, (err) => {
             if (err) {
-                console.error("Errore durante il login:", err);
                 return next(err);
             }
-            console.log("Login avvenuto con successo:", utente.email);
             return res.redirect("/");
         });
     })(req, res, next);
