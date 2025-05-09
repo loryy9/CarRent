@@ -23,6 +23,10 @@ body {
     padding: 60px 0;
 }
 
+.text-small{
+    font-size: 12px;
+}
+
 .login{
     padding-top: 0px;
     display: flex;

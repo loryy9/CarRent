@@ -21,62 +21,41 @@
                     <div class="form-row">
                         <div class="form-field">
                             <label for="nome">Nome *</label>
-                            <input type="text" id="nome" name="nome" required>
+                            <input type="text" id="nome" name="nome" value="<%= locals.user && user.nome ? user.nome : '' %>" required>
                         </div>
                         
                         <div class="form-field">
                             <label for="cognome">Cognome *</label>
-                            <input type="text" id="cognome" name="cognome" required>
+                            <input type="text" id="cognome" name="cognome" value="<%= locals.user && user.cognome ? user.cognome : '' %> " required>
                         </div>
                     </div>
                     
                     <div class="form-field">
                         <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" value="<%= locals.user && user.email ? user.email : '' %>" required>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-field">
-                            <label for="password">Password *</label>
-                            <input type="password" id="password" name="password" required>
+                            <label for="password">Password * <span class="text-secondary text-small">(Min. 6 caratteri)</span></label>
+                            <input type="password" id="password" name="password" value="<%= locals.user && user.password ? user.password : '' %>" required>
                         </div>
                         
                         <div class="form-field">
-                            <label for="conferma_password">Conferma Password *</label>
-                            <input type="password" id="conferma_password" name="conferma_password" required>
+                            <label for="conferma_password">Conferma Password * <span class="text-secondary text-small">(Min. 6 caratteri)</span></label>
+                            <input type="password" id="conferma_password" name="conferma_password" value="<%= locals.user && user.conferma_password ? user.conferma_password : '' %>" required>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-field">
                             <label for="data_nascita">Data di nascita</label>
-                            <input type="date" id="data_nascita" name="data_nascita">
+                            <input type="date" id="data_nascita" name="data_nascita" value="<%= locals.user && user.data_nascita ? user.data_nascita : '' %>">
                         </div>
                         
                         <div class="form-field">
                             <label for="telefono">Telefono</label>
-                            <input type="tel" id="telefono" name="telefono">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <h2>Informazioni patente</h2>
-                    
-                    <div class="form-field checkbox-field">
-                        <input type="checkbox" id="patente_posseduta" name="patente_posseduta" value="1">
-                        <label for="patente_posseduta">Possiedo una patente</label>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-field">
-                            <label for="numero_patente">Numero patente</label>
-                            <input type="text" id="numero_patente" name="numero_patente">
-                        </div>
-                        
-                        <div class="form-field">
-                            <label for="data_scadenza_patente">Data scadenza patente</label>
-                            <input type="date" id="data_scadenza_patente" name="data_scadenza_patente">
+                            <input type="tel" id="telefono" name="telefono" value="<%= locals.user && user.telefono ? user.telefono : '' %>">
                         </div>
                     </div>
                 </div>

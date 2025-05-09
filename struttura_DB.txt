@@ -6,9 +6,6 @@ CREATE TABLE utenti (
   password TEXT NOT NULL,
   data_nascita TEXT,
   telefono TEXT,
-  patente_posseduta INTEGER DEFAULT 0,
-  numero_patente TEXT,
-  data_scadenza_patente TEXT,
   ruolo TEXT DEFAULT 'utente', -- utente, admin
   data_registrazione TEXT DEFAULT CURRENT_TIMESTAMP
 );
