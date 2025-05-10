@@ -26,7 +26,7 @@ router.get("/login", (req, res) => {
     } else if (alert === 'logout') {
         message = 'Logout effettuato con successo.';
     }
-    res.render("login", { message, isAuth: req.isAuthenticated() });
+    res.render("login", { alert, message, isAuth: req.isAuthenticated() });
 });
 
 
@@ -50,7 +50,7 @@ router.post('/login', (req, res, next) => {
             if (err) {
                 return next(err);
             }
-            return res.redirect("/");
+            return res.redirect("/?alert=login");
         });
     })(req, res, next);
 });

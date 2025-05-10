@@ -1,0 +1,8 @@
+<% if (locals.message && message) { %>
+    <div class="toast-notification <%= locals.alert && alert == 'errore' ? 'error' : 'success' %>">
+        <div class="toast-message">
+            <p><%=message%></p>
+        </div>
+        <div class="line"></div>
+    </div>
+<% } %>

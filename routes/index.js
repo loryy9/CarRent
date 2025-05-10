@@ -3,7 +3,12 @@ const express = require("express")
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.render('index', { isAuth: req.isAuthenticated() });
+    const { alert } = req.query;
+    let message = '';
+    if (alert === 'login'){
+        message = 'Login effettuato con successo.';
+    }
+    res.render('index', { alert, message, isAuth: req.isAuthenticated() });
 });
 
 module.exports = router
