@@ -10,7 +10,8 @@ router.get("/registrazione", (req, res) => {
     if(req.isAuthenticated()) {
         return res.redirect("/");
     }
-    res.render("registrazione", { isAuth: req.isAuthenticated() });
+    const { alert, message } = req.query;
+    res.render("registrazione", { alert, message, isAuth: req.isAuthenticated() });
 })
 
 router.post("/registrazione", [
@@ -25,7 +26,8 @@ router.post("/registrazione", [
         console.log("Errori di validazione:", errors.array());
         return res.render("registrazione", { 
             isAuth: req.isAuthenticated(),
-            errors: errors.array(),
+            alert : "errore",
+            message: "Campi non validi, riprovare.",
             user: req.body 
         });
     }
@@ -36,7 +38,7 @@ router.post("/registrazione", [
             req.body, 
             cryptoPwd
         );
-        return res.redirect("/");
+        return res.redirect("/?alert=registrazione");
     } catch (error) {
         console.log("Errore durante la registrazione: ", error);
         res.render("registrazione", { 
