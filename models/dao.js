@@ -27,3 +27,18 @@ exports.newUser = async (user, cryptPwd) => {
         })
     })    
 }
+
+exports.deleteUser = async (id) => {
+    let sql = `DELETE FROM utenti WHERE id = ?`
+    let params = [id]
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function (err){
+            if (err) {
+                reject(err)
+            } else {
+                resolve({id: this.lastID});
+            }
+        })
+    })    
+}

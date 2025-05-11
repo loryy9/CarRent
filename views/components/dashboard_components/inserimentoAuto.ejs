@@ -1,0 +1,50 @@
+<form action="/inserisci-auto" method="POST" enctype="multipart/form-data" class="bg-dark text-white p-4 rounded">
+    <h3 class="text-warning mb-4">Inserisci una nuova auto</h3>
+
+    <div class="mb-3">
+        <label for="marca" class="form-label">Marca</label>
+        <input type="text" class="form-control bg-black text-white border-secondary" id="marca" name="marca" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="modello" class="form-label">Modello</label>
+        <input type="text" class="form-control bg-black text-white border-secondary" id="modello" name="modello" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="descrizione" class="form-label">Descrizione</label>
+        <textarea class="form-control bg-black text-white border-secondary" id="descrizione" name="descrizione" rows="3" required></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="immagine" class="form-label">Immagine</label>
+        <input type="file" class="form-control bg-black text-white border-secondary" id="immagine" name="immagine" accept="image/*" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="velocita" class="form-label">Velocità (km/h)</label>
+        <input type="number" class="form-control bg-black text-white border-secondary" id="velocita" name="velocita" min="0" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="cavalli" class="form-label">Cavalli</label>
+        <input type="number" class="form-control bg-black text-white border-secondary" id="cavalli" name="cavalli" min="0" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="tipologia" class="form-label">Tipologia</label>
+        <select class="form-select bg-black text-white border-secondary" id="tipologia" name="tipologia" required>
+            <option value="SUV">SUV</option>
+            <option value="Berlina">Berlina</option>
+            <option value="Sportiva">Sportiva</option>
+            <option value="Utilitaria">Utilitaria</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="prezzo_giornaliero" class="form-label">Prezzo Giornaliero (€)</label>
+        <input type="number" class="form-control bg-black text-white border-secondary" id="prezzo_giornaliero" name="prezzo_giornaliero" step="0.01" min="0" required>
+    </div>
+
+    <button type="submit" class="btn btn-warning w-100">Inserisci Auto</button>
+</form>

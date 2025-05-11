@@ -12,8 +12,10 @@ const indexRouter = require("./routes/index")
 const registrazioneRouter = require("./routes/registrazione")
 const loginRouter = require("./routes/login")
 const logoutRouter = require("./routes/logout")
+const cancellaUtenteRouter = require("./routes/cancellaUtente")
 const dashboardRouter = require("./routes/dashboard")
 const catalogoRouter = require("./routes/catalogo")
+
 
 app.set("view engine", "ejs")
 
@@ -34,6 +36,7 @@ app.use(indexRouter)
 app.use(registrazioneRouter)
 app.use(loginRouter)
 app.use(logoutRouter)
+app.use(cancellaUtenteRouter)
 app.use(dashboardRouter)
 app.use(catalogoRouter)
 

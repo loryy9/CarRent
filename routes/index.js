@@ -9,6 +9,8 @@ router.get('/', (req, res) => {
         message = 'Login effettuato con successo.';
     } else if (alert === 'registrazione'){
         message = 'Registrazione effettuata con successo.';
+    } else if (alert === 'cancellazione'){
+        message = 'Utente cancellato con successo.';
     }
     res.render('index', { alert, message, isAuth: req.isAuthenticated() });
 });
