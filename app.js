@@ -15,6 +15,7 @@ const logoutRouter = require("./routes/logout")
 const cancellaUtenteRouter = require("./routes/cancellaUtente")
 const dashboardRouter = require("./routes/dashboard")
 const catalogoRouter = require("./routes/catalogo")
+const autoRouter = require("./routes/auto")
 
 
 app.set("view engine", "ejs")
@@ -39,6 +40,7 @@ app.use(logoutRouter)
 app.use(cancellaUtenteRouter)
 app.use(dashboardRouter)
 app.use(catalogoRouter)
+app.use("/dashboard", autoRouter)
 
 app.listen(PORT, () => {
     console.log(`Server avviato su http://localhost:${PORT}`);

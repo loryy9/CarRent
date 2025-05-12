@@ -1,50 +1,50 @@
-<form action="/inserisci-auto" method="POST" enctype="multipart/form-data" class="bg-dark text-white p-4 rounded">
-    <h3 class="text-warning mb-4">Inserisci una nuova auto</h3>
+<form action="/dashboard/addAuto" method="POST" class="bg-dark text-white p-5 rounded shadow-lg col-lg-6 mx-auto mt-5">
+    <h3 class="text-warning mb-4 text-center">Inserisci una nuova auto</h3>
 
-    <div class="mb-3">
-        <label for="marca" class="form-label">Marca</label>
-        <input type="text" class="form-control bg-black text-white border-secondary" id="marca" name="marca" required>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="marca" class="form-label">Marca</label>
+            <input type="text" class="form-control bg-black text-white border-secondary" id="marca" name="marca" placeholder="Es. BMW" required>
+        </div>
+        <div class="col-md-6">
+            <label for="modello" class="form-label">Modello</label>
+            <input type="text" class="form-control bg-black text-white border-secondary" id="modello" name="modello" placeholder="Es. Serie 3" required>
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label for="modello" class="form-label">Modello</label>
-        <input type="text" class="form-control bg-black text-white border-secondary" id="modello" name="modello" required>
+    <div class="row g-3 mt-3">
+        <div class="col-md-6">
+            <label for="immagine" class="form-label">Immagine</label>
+            <input type="file" class="form-control bg-black text-white border-secondary" id="immagine" name="immagine" accept="image/*" required>
+        </div>
+        <div class="col-md-6">
+            <label for="tipologia" class="form-label">Tipologia</label>
+            <select class="form-select bg-black text-white border-secondary" id="tipologia" name="tipologia" required>
+                <option value="" disabled selected>Seleziona una tipologia</option>
+                <option value="SUV">SUV</option>
+                <option value="Berlina">Berlina</option>
+                <option value="Sportiva">Sportiva</option>
+                <option value="Utilitaria">Utilitaria</option>
+            </select>
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label for="descrizione" class="form-label">Descrizione</label>
-        <textarea class="form-control bg-black text-white border-secondary" id="descrizione" name="descrizione" rows="3" required></textarea>
+    <div class="row g-3 mt-3">
+        <div class="col-md-4">
+            <label for="velocita" class="form-label">Velocità (km/h)</label>
+            <input type="number" class="form-control bg-black text-white border-secondary" id="velocita" name="velocita" min="0" placeholder="Es. 220" required>
+        </div>
+        <div class="col-md-4">
+            <label for="cavalli" class="form-label">Cavalli</label>
+            <input type="number" class="form-control bg-black text-white border-secondary" id="cavalli" name="cavalli" min="0" placeholder="Es. 150" required>
+        </div>
+        <div class="col-md-4">
+            <label for="prezzo_giornaliero" class="form-label">Prezzo Giornaliero (€)</label>
+            <input type="number" class="form-control bg-black text-white border-secondary" id="prezzo_giornaliero" name="prezzo_giornaliero" step="0.01" min="0" placeholder="Es. 50.00" required>
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label for="immagine" class="form-label">Immagine</label>
-        <input type="file" class="form-control bg-black text-white border-secondary" id="immagine" name="immagine" accept="image/*" required>
+    <div class="d-flex justify-content-center mt-4">
+        <button type="submit" class="btn btn-warning px-5 py-2">Inserisci Auto</button>
     </div>
-
-    <div class="mb-3">
-        <label for="velocita" class="form-label">Velocità (km/h)</label>
-        <input type="number" class="form-control bg-black text-white border-secondary" id="velocita" name="velocita" min="0" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="cavalli" class="form-label">Cavalli</label>
-        <input type="number" class="form-control bg-black text-white border-secondary" id="cavalli" name="cavalli" min="0" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="tipologia" class="form-label">Tipologia</label>
-        <select class="form-select bg-black text-white border-secondary" id="tipologia" name="tipologia" required>
-            <option value="SUV">SUV</option>
-            <option value="Berlina">Berlina</option>
-            <option value="Sportiva">Sportiva</option>
-            <option value="Utilitaria">Utilitaria</option>
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label for="prezzo_giornaliero" class="form-label">Prezzo Giornaliero (€)</label>
-        <input type="number" class="form-control bg-black text-white border-secondary" id="prezzo_giornaliero" name="prezzo_giornaliero" step="0.01" min="0" required>
-    </div>
-
-    <button type="submit" class="btn btn-warning w-100">Inserisci Auto</button>
 </form>

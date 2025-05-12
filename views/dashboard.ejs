@@ -9,7 +9,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-xl-2 d-none d-lg-block bg-dark p-3 vh-100">
+            <div class="col-lg-3 col-xl-2 d-none d-lg-block bg-dark p-3 vh-100 sticky-top">
                 <a href="/" class="d-block mb-4 mt-4">
                     <img src="/assets/noBgColorGold.png" alt="Logo" height="30" />
                 </a>
@@ -46,7 +46,7 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="/dashboard?alert=inserimentoAuto" class="nav-link ">
+                        <a href="/dashboard?alert=elencoAuto" class="nav-link ">
                             <i class="fas fa-car-side me-2"></i> Gestisci auto
                         </a>
                     </li>
@@ -82,7 +82,6 @@
                         </button>
                     </div>
                 </div>  
-                <%- view %>
 
                 <% if (view === '') { %>
                     <div class="container p-0 d-flex flex-column gap-2">
@@ -91,19 +90,11 @@
                                 <h5>Benvenuto nella tua dashboard</h5>
                             </div>
                         </div>
-                        <div class="card border-0 bg-black">
-                            <div class="card-body p-4 bg-dark text-white rounded-3">
-                                <h5>Prenotazioni attive: 0</h5>
-                            </div>
-                        </div>
-                        <div class="card border-0 bg-black">
-                            <div class="card-body p-4 bg-dark text-white rounded-3">
-                                <h5>Auto prefetite: 0</h5>
-                            </div>
-                        </div>
                     </div>
                 <% } else if (view === 'inserimentoAuto') { %>
                     <%- include('./components/dashboard_components/inserimentoAuto') %>
+                <% } else if (view === 'elencoAuto') { %>
+                    <%- include('./components/dashboard_components/elencoAuto', { auto }) %>
                 <% } %>
             </main>
         </div>

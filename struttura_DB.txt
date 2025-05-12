@@ -14,7 +14,6 @@ CREATE TABLE auto (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   marca TEXT,
   modello TEXT,
-  descrizione TEXT,
   immagine TEXT, -- path o URL
   disponibile INTEGER DEFAULT 1,
   velocita INTEGER NOT NULL, 
