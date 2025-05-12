@@ -33,7 +33,11 @@
                     <a href="#" class="btn btn-outline-warning w-100">
                         <i class="fa-solid fa-heart"></i>
                     </a>
-                <% }  %>
+                <% } else if (user.ruolo == 1) { %>
+                    <a href="dashboard/deleteAuto/<%= auto.id %>" class="btn btn-outline-warning w-100">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                <% } %>
             </div>
         </div>
     </div>

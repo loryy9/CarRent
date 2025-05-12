@@ -121,3 +121,18 @@ exports.updateAuto = async (id, auto) => {
         });
     });
 };
+
+exports.deleteAuto = async (id) => {
+    let sql = `DELETE FROM auto WHERE id = ?`
+    let params = [id]
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function (err){
+            if (err) {
+                reject(err)
+            } else {
+                resolve({id: this.lastID});
+            }
+        })
+    })    
+}

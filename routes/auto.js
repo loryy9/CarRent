@@ -42,6 +42,27 @@ router.get("/dashboard/getAuto/:id", async (req, res) => {
     }
 });
 
+router.get("/dashboard/deleteAuto/:id", async (req, res) => {
+    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
+
+    const id = req.params.id;
+    try {
+        await dao.deleteAuto(id);
+        return res.redirect("/dashboard?alert=elencoAuto&message=Auto eliminata con successo");
+    } catch (error) {
+        console.log("Errore durante l'eliminazione dell'auto:", error);
+        return res.render("dashboard", {
+            isAuth: req.isAuthenticated(),
+            alert: "errore",
+            message: "Errore durante l'eliminazione dell'auto.",
+            user: req.user,
+            view: ""
+        });
+    }
+});
+
 router.post("/dashboard/addAuto", [
     check('marca').notEmpty(),
     check('modello').notEmpty(),
