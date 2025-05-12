@@ -25,7 +25,7 @@
                 <% if (user.ruolo == 0) { %>
                     <a href="/prenota" class="btn btn-warning w-100">Prenota Ora</a>
                 <% } else if (user.ruolo == 1) { %>
-                    <a href="/dashboard?alert=modificaAuto" class="btn btn-warning w-100">Modifica</a>
+                    <a href="/dashboard/getAuto/<%= auto.id %>" class="btn btn-warning w-100">Modifica</a>
                 <% } %>
             </div>
             <div class="col-2">

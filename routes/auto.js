@@ -1,10 +1,48 @@
 'use strict'
 const express = require("express")
 const router = express.Router()
-const { check, validationResult} = require("express-validator")
 const dao = require("../models/dao")
+const { check, validationResult} = require("express-validator")
 
-router.post("/addAuto", [
+router.get("/dashboard/getAuto/:id", async (req, res) => {
+    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
+
+    const id = req.params.id;
+    try {
+        const auto = await dao.getAutoById(id);
+        if (auto) {
+            return res.render("dashboard", {
+                isAuth: req.isAuthenticated(),
+                user: req.user,
+                view: "modificaAuto",
+                auto: auto,
+                alert: "",
+                message: ""
+            });
+        } else {
+            return res.render("dashboard", {
+                isAuth: req.isAuthenticated(),
+                alert: "errore",
+                message: "Auto non trovata.",
+                user: req.user,
+                view: ""
+            });
+        }
+    } catch (error) {
+        console.log("Errore durante il recupero dell'auto:", error);
+        return res.render("dashboard", {
+            isAuth: req.isAuthenticated(),
+            alert: "errore",
+            message: "Errore durante il recupero dell'auto.",
+            user: req.user,
+            view: ""
+        });
+    }
+});
+
+router.post("/dashboard/addAuto", [
     check('marca').notEmpty(),
     check('modello').notEmpty(),
     // check('immagine').isEmail(),
@@ -48,5 +86,48 @@ router.post("/addAuto", [
         })
     }
 })
+
+router.post("/dashboard/updateAuto/:id", [
+    check('marca').notEmpty(),
+    check('modello').notEmpty(),
+    // check('immagine').isEmail(),
+    check('tipologia').notEmpty(),
+    check('velocita').notEmpty(),
+    check('cavalli').notEmpty(),
+    check('prezzo_giornaliero').notEmpty()
+], async (req, res) => {
+    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log("Errori di validazione:", errors.array());
+        const auto = await dao.getAutoById(req.params.id);
+        return res.render("dashboard", {
+            isAuth: req.isAuthenticated(),
+            alert: "errore",
+            message: "Campi non validi, riprovare.",
+            user: req.user,
+            view: "modificaAuto",
+            auto: auto
+        });
+    }
+
+    try {
+        await dao.updateAuto(req.params.id, req.body);
+        return res.redirect("/dashboard?alert=elencoAuto&message=Auto modificata con successo");
+    } catch (error) {
+        console.log("Errore durante l'aggiornamento dell'auto:", error);
+        return res.render("dashboard", {
+            isAuth: req.isAuthenticated(),
+            alert: "errore",
+            message: "Errore durante l'aggiornamento dell'auto.",
+            user: req.user,
+            view: "modificaAuto",
+            auto: req.body
+        });
+    }
+});
 
 module.exports = router

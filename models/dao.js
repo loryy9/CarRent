@@ -80,3 +80,44 @@ exports.getAllAuto = async () => {
         });
     });
 };
+
+exports.getAutoById = async (id) => {
+    let sql = `SELECT * FROM auto WHERE id = ?`
+    let params = [id]
+    return new Promise((resolve, reject) => {
+        db.get(sql, params, (err, row) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(row)
+            }
+        })
+    })
+}
+
+exports.updateAuto = async (id, auto) => {
+    const sql = `
+        UPDATE auto
+        SET marca = ?, modello = ?, tipologia = ?, velocita = ?, cavalli = ?, prezzo_giornaliero = ?
+        WHERE id = ?
+    `;
+    const params = [
+        auto.marca, 
+        auto.modello, 
+        auto.tipologia, 
+        auto.velocita, 
+        auto.cavalli, 
+        auto.prezzo_giornaliero, 
+        id
+    ];
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function(err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(this.changes);
+            }
+        });
+    });
+};
