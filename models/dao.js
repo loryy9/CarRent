@@ -149,3 +149,103 @@ exports.deleteAuto = async (id) => {
         })
     })    
 }
+
+exports.isAutoPreferita = async (id_auto, id_utente) => {
+    let sql = 'SELECT * FROM preferite WHERE id_auto = ? AND id_utente = ?';
+    let params = [id_auto, id_utente];
+
+    return new Promise((resolve, reject) => {
+        db.get(sql, params, (err, row) => {
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(row);
+            }
+        })
+    })
+}
+
+exports.addAutoPreferita = async (id_auto, id_utente) => {
+    let sql = 'INSERT INTO preferite (id_auto, id_utente) VALUES (?, ?)';
+    let params = [id_auto, id_utente];
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function(err){
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(this.lastID);
+            }
+        })
+    })
+}
+
+exports.incrementaContatorePreferite = async (id_auto) => {
+    let sql = 'UPDATE auto SET pref_contatore = pref_contatore + 1 WHERE id = ?';
+    let params = [id_auto];
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function(err){
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(this.changes);
+            }
+        })
+    })
+}
+
+exports.removePreferita = async (id_auto, id_utente) => {
+    let sql = 'DELETE FROM preferite WHERE id_auto = ? AND id_utente = ?';
+    let params = [id_auto, id_utente];
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function(err){
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(this.changes);
+            }
+        })
+    })
+}
+
+exports.decrementaContatorePreferite = async (id_auto) => {
+    let sql = 'UPDATE auto SET pref_contatore = pref_contatore - 1 WHERE id = ?';
+    let params = [id_auto];
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function(err){
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(this.changes);
+            }
+        })
+    })
+}
+
+exports.getPreferiteByUserId = async (id_utente) => {
+    let sql = `
+        select id_auto
+        from preferite
+        where id_utente = ?
+    `;
+    let params = [id_utente];
+
+    return new Promise((resolve, reject) => {
+        db.all(sql, params, (err, rows) => {
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(rows);
+            }
+        })
+    })
+}

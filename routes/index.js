@@ -13,9 +13,12 @@ router.get('/', async (req, res) => {
     } else if (alert === 'cancellazione'){
         message = 'Utente cancellato con successo.';
     }
+    let preferite_user = []
+    if (req.user) {
+        preferite_user = await dao.getPreferiteByUserId(req.user.id);
+    }
     let top_auto = await dao.getAutoPreferite();
-    console.log(top_auto);
-    res.render('index', { alert, message, top_auto, isAuth: req.isAuthenticated(), user: req.user || {ruolo: 0} });
+    res.render('index', { alert, message, top_auto, preferite_user, isAuth: req.isAuthenticated(), user: req.user || {ruolo: 0} });
 });
 
 module.exports = router

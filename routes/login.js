@@ -17,7 +17,7 @@ router.get("/login", (req, res) => {
         } else if (errorType === 'password_errata') {
             message = 'Password errata.';
         } else if (errorType === 'non_autorizzato') {
-            message = 'Accesso non autorizzato. Effettua il login per accedere alla dashboard.';
+            message = 'Accesso non autorizzato. Effettua il login.';
         } else if (errorType === 'logout') {
             message = 'Logout non disponibile.';
         } else{

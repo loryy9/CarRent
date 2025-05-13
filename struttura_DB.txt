@@ -24,9 +24,9 @@ CREATE TABLE auto (
 );
 
 CREATE TABLE preferite (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   id_utente INTEGER,
   id_auto INTEGER,
-  PRIMARY KEY (id_utente, id_auto),
   FOREIGN KEY(id_utente) REFERENCES utenti(id),
   FOREIGN KEY(id_auto) REFERENCES auto(id)
 );
@@ -51,9 +51,9 @@ CREATE TABLE pacchetti_aggiuntivi (
 );
 
 CREATE TABLE prenotazioni_pacchetti (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   id_prenotazione INTEGER,
   id_pacchetto INTEGER,
-  PRIMARY KEY (id_prenotazione, id_pacchetto),
   FOREIGN KEY(id_prenotazione) REFERENCES prenotazioni(id),
   FOREIGN KEY(id_pacchetto) REFERENCES pacchetti_aggiuntivi(id)
 );

@@ -28,7 +28,7 @@
                 <% if (top_auto.length > 0) { %>
                     <% top_auto.forEach((auto) => { %>
                         <div class="col-md-4 mb-3">
-                            <%- include('./components/card', { auto }) %>
+                            <%- include('./components/card', { auto, preferite_user }) %>
                         </div>
                 <% }) %>
                 <% } else { %>

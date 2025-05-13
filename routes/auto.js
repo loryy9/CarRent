@@ -3,6 +3,7 @@ const express = require("express")
 const router = express.Router()
 const dao = require("../models/dao")
 const { check, validationResult} = require("express-validator")
+const react = require("react")
 
 router.get("/dashboard/getAuto/:id", async (req, res) => {
     if (!req.isAuthenticated() || req.user.ruolo != 1) {
@@ -150,5 +151,55 @@ router.post("/dashboard/updateAuto/:id", [
         });
     }
 });
+
+router.post("/addAutoPreferita/:id", async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
+
+    const id_auto = req.params.id;
+    const id_utente = req.user.id;
+
+    try {
+        const isPreferita = await dao.isAutoPreferita(id_auto, id_utente);
+        console.log(isPreferita)
+        if (isPreferita) {
+            return res.redirect(req.headers.referer || '/catalogo')
+        }
+        await dao.addAutoPreferita(id_auto, id_utente);
+        await dao.incrementaContatorePreferite(id_auto);
+        return res.redirect(req.headers.referer || '/catalogo')
+    } catch (error) {
+        return res.render("index", {
+            isAuth: req.isAuthenticated(),
+            alert: "errore",
+            message: "Errore durante l'aggiunta dell'auto preferita.",
+            user: req.user,
+            view: ""
+        })
+    }   
+})
+
+router.post("/removeAutoPreferita/:id", async (req, res) => {
+    if (!req.isAuthenticated){
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
+
+    const id_auto = req.params.id;
+    const id_utente = req.user.id;  
+    try {
+        await dao.removePreferita(id_auto, id_utente);
+        await dao.decrementaContatorePreferite(id_auto);
+        return res.redirect(req.headers.referer || '/catalogo')
+    } catch (error) {
+        return res.render("index", {
+            isAuth: req.isAuthenticated(),
+            alert: "errore",
+            message: "Errore durante la rimozione dell'auto preferita.",
+            user: req.user,
+            view: ""
+        })
+    }
+})
 
 module.exports = router
