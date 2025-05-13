@@ -3,7 +3,6 @@ const express = require("express")
 const router = express.Router()
 const dao = require("../models/dao")
 const { check, validationResult} = require("express-validator")
-const react = require("react")
 
 router.get("/dashboard/getAuto/:id", async (req, res) => {
     if (!req.isAuthenticated() || req.user.ruolo != 1) {
