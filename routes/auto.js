@@ -42,7 +42,7 @@ router.get("/dashboard/getAuto/:id", async (req, res) => {
     }
 });
 
-router.get("/dashboard/deleteAuto/:id", async (req, res) => {
+router.post("/dashboard/deleteAuto/:id", async (req, res) => {
     if (!req.isAuthenticated() || req.user.ruolo != 1) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
