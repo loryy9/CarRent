@@ -25,72 +25,15 @@
             </div>
 
             <div class="row g-4 justify-content-center">
-                <div class="col-10 col-lg-4 mb-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="overflow-hidden rounded-top-3">
-                            <img src="https://images.unsplash.com/photo-1580274455191-1c62238fa333"
-                                class="card-img-top car-image" alt="Porsche 911">
+                <% if (top_auto.length > 0) { %>
+                    <% top_auto.forEach((auto) => { %>
+                        <div class="col-md-4 mb-3">
+                            <%- include('./components/card', { auto }) %>
                         </div>
-                        <div class="card-body p-4">
-                            <h5 class="card-title fw-bold mb-2">Porsche 911</h5>
-                            <span class="badge bg-warning text-dark mb-3">Supercar</span>
-                            <div class="d-flex justify-content-between mb-3">
-                                <span><i class="fas fa-tachometer-alt me-1 text-warning"></i> 325 km/h</span>
-                                <span><i class="fas fa-horse-head me-1 text-warning"></i> 640 CV</span>
-                                <span><i class="fas fa-stopwatch me-1 text-warning"></i> 3.2s 0-100</span>
-                            </div>
-                            <p class="fw-bold mb-3">Da €1.200 / giorno</p>
-                            <div class="row g-2">
-                                <div class="col-10">
-                                    <a href="/prenota" class="btn btn-warning w-100">Prenota Ora</a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="#" class="btn btn-outline-warning w-100">
-                                        <i class="fa-solid fa-heart"></i>
-                                    </a>
-                                </div>
-                            </div>                   
-                        </div>
-                    </div>
-                </div>
-                <div class="col-10 col-lg-4 mb-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="overflow-hidden rounded-top-3">
-                            <img src="https://images.unsplash.com/photo-1580274455191-1c62238fa333"
-                                class="card-img-top car-image" alt="Porsche 911">
-                        </div>
-                        <div class="card-body p-4">
-                            <h5 class="card-title fw-bold mb-2">Porsche 911</h5>
-                            <span class="badge bg-warning text-dark mb-3">Supercar</span>
-                            <div class="d-flex justify-content-between mb-3">
-                                <span><i class="fas fa-tachometer-alt me-1 text-warning"></i> 325 km/h</span>
-                                <span><i class="fas fa-horse-head me-1 text-warning"></i> 640 CV</span>
-                                <span><i class="fas fa-stopwatch me-1 text-warning"></i> 3.2s 0-100</span>
-                            </div>
-                            <p class="fw-bold mb-3">Da €1.200 / giorno</p>
-                            <a href="/prenota" class="btn btn-warning w-100">Prenota Ora</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-10 col-lg-4 mb-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="overflow-hidden rounded-top-3">
-                            <img src="https://images.unsplash.com/photo-1580274455191-1c62238fa333"
-                                class="card-img-top car-image" alt="Porsche 911">
-                        </div>
-                        <div class="card-body p-4">
-                            <h5 class="card-title fw-bold mb-2">Porsche 911</h5>
-                            <span class="badge bg-warning text-dark mb-3">Supercar</span>
-                            <div class="d-flex justify-content-between mb-3">
-                                <span><i class="fas fa-tachometer-alt me-1 text-warning"></i> 325 km/h</span>
-                                <span><i class="fas fa-horse-head me-1 text-warning"></i> 640 CV</span>
-                                <span><i class="fas fa-stopwatch me-1 text-warning"></i> 3.2s 0-100</span>
-                            </div>
-                            <p class="fw-bold mb-3">Da €1.200 / giorno</p>
-                            <a href="/prenota" class="btn btn-warning w-100">Prenota Ora</a>
-                        </div>
-                    </div>
-                </div>
+                <% }) %>
+                <% } else { %>
+                    <p class="text-white">Nessuna auto disponibile.</p>
+                <% } %>
 
             </div>
             <div class="text-center mt-5">

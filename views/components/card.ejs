@@ -20,6 +20,9 @@
             </span>
         </div>
         <p class="fw-bold mb-3"> Da <%= auto.prezzo_giornaliero %> / giorno </p>
+        <% if (user.ruolo == 1) { %>
+            <p>Totale like: <%- auto.pref_contatore %> </p>
+        <% } %>
         <div class="row g-2">
             <div class="col-10">
                 <% if (user.ruolo == 0) { %>

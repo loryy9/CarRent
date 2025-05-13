@@ -95,6 +95,19 @@ exports.getAutoById = async (id) => {
     })
 }
 
+exports.getAutoPreferite = async () => {
+    let sql = `SELECT * FROM auto ORDER BY pref_contatore DESC LIMIT 3`
+    return new Promise((resolve, reject) => {
+        db.all(sql, [], (err, rows) => {
+            if(err) {
+                reject(err)
+            } else {
+                resolve(rows)
+            }
+        })
+    })
+}
+
 exports.updateAuto = async (id, auto) => {
     const sql = `
         UPDATE auto
