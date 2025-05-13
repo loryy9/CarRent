@@ -1,0 +1,18 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-white">Elenco delle Automobili preferite</h3>
+    </div>
+    <div class="row">
+        <% if (auto.length > 0) { %>
+            <% auto.forEach((auto) => { %>
+                <% if (preferite_user.find(p => p.id_auto === auto.id)) { %>
+                    <div class="col-md-4 mb-3">
+                        <%- include('../card', { auto }) %>
+                    </div>
+                <% } %>
+            <% }) %>
+        <% } else { %>
+            <p class="text-white">Nessuna auto preferita.</p>
+        <% } %>
+    </div>
+</div>

@@ -34,7 +34,7 @@
                     </li>
 
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link ">
+                        <a href="/dashboard?alert=autoPreferite" class="nav-link ">
                             <i class="fas fa-heart me-2"></i> Le tue auto preferite
                         </a>
                     </li>
@@ -93,6 +93,8 @@
                     <%- include('./components/dashboard_components/elencoAuto', { auto }) %>
                 <% } else if (view === 'modificaAuto') { %>
                     <%- include('./components/dashboard_components/modificaAuto', { auto }) %>
+                <% } else if (view === 'autoPreferite') { %>
+                    <%- include('./components/dashboard_components/elencoAutoPreferite', {auto, preferite_user }) %>
                 <% } %>
             </main>
         </div>
@@ -123,7 +125,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="#" class="nav-link ">
+                    <a href="/dashboard?alert=autoPreferite" class="nav-link ">
                         <i class="fas fa-heart me-2"></i> Le tue auto preferite
                     </a>
                 </li>
@@ -135,7 +137,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="/dashboard?alert=inserimentoAuto" class="nav-link ">
+                    <a href="/dashboard?alert=elencoAuto" class="nav-link ">
                         <i class="fas fa-car-side me-2"></i> Gestisci auto
                     </a>
                 </li>

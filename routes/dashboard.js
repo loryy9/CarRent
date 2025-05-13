@@ -14,6 +14,7 @@ router.get('/dashboard', async (req, res) => {
     let message = req.query.message || '';
     let view = '';
     let auto = []; 
+    let preferite_user = [];
 
     if (alert === 'cancellazione') {
         message = 'Utente cancellato con successo.';
@@ -26,9 +27,17 @@ router.get('/dashboard', async (req, res) => {
         } catch (error) {
             console.error("Errore durante il recupero delle auto:", error);
         }
+    } else if (alert === 'autoPreferite'){
+        view = 'autoPreferite';
+        try {
+            auto = await dao.getAutoPreferite();
+            preferite_user = await dao.getPreferiteByUserId(req.user.id);
+        } catch (error) {
+            console.error("Errore durante il recupero delle auto preferite:", error);
+        }
     }
 
-    res.render('dashboard', { user, alert, message, view, isAuth: req.isAuthenticated(), auto });
+    res.render('dashboard', { user, alert, message, view, isAuth: req.isAuthenticated(), auto, preferite_user });
 });
 
 module.exports = router
