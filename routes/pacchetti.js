@@ -26,12 +26,19 @@ router.post("/dashboard/addPacchetto", [
         await dao.newPacchetto(
             req.body
         );
+        let categorie = [];
+        try {
+            categorie = await dao.getCategoriaPacchetti();
+        } catch (error) {
+            console.error("Errore nel recupero categorie:", error);
+        }
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             alert: "success",
             message: "Pacchetto inserito con successo.",
             user: req.user,
             view: "inserimentoPacchetto",
+            categorie: categorie
         })
     } catch (error) {
         console.log("Errore durante l'inserimento del pacchetto: ", error);
@@ -40,9 +47,31 @@ router.post("/dashboard/addPacchetto", [
             alert: "errore",
             message: "Errore durante l'inserimento del pacchetto.",
             user: req.user,
-            view: "inserimentoPacchetto"
+            view: "inserimentoPacchetto",
+            categorie: []
         })
     }
+})
+
+router.post("/dashboard/deletePacchetto/:id", async (req, res) => {
+    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
+
+    const id = req.params.id;
+        try {
+            await dao.deletePacchetto(id);
+            return res.redirect("/dashboard?alert=elencoPacchetti&message=Pacchetto eliminato con successo");
+        } catch (error) {
+            console.log("Errore durante l'eliminazione del pacchetto:", error);
+            return res.render("dashboard", {
+                isAuth: req.isAuthenticated(),
+                alert: "errore",
+                message: "Errore durante l'eliminazione del pacchetto.",
+                user: req.user,
+                view: ""
+            });
+        }
 })
 
 module.exports = router

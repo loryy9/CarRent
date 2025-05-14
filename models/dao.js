@@ -251,7 +251,21 @@ exports.getPreferiteByUserId = async (id_utente) => {
 }
 
 exports.getAllPacchetti = async () => {
-    let sql = 'SELECT * FROM pacchetti_aggiuntivi';
+    let sql = 'SELECT * FROM pacchetti_aggiuntivi ORDER BY categoria ASC, prezzo ASC';
+    
+    return new Promise((resolve, reject) => {
+        db.all(sql, [], (err, rows) => {
+            if(err){
+                reject(err);
+            } else {
+                resolve(rows)
+            }            
+        })
+    })
+}
+
+exports.getCategoriaPacchetti = async () => {
+    let sql = 'SELECT DISTINCT categoria FROM pacchetti_aggiuntivi ORDER BY categoria ASC';
     
     return new Promise((resolve, reject) => {
         db.all(sql, [], (err, rows) => {
@@ -277,4 +291,19 @@ exports.newPacchetto = async (pacchetto) => {
             }
         })
     })
+}
+
+exports.deletePacchetto = async (id) => {
+    let sql = `DELETE FROM pacchetti_aggiuntivi WHERE id = ?`
+    let params = [id]
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function (err){
+            if (err) {
+                reject(err)
+            } else {
+                resolve({id: this.lastID});
+            }
+        })
+    })    
 }

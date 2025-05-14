@@ -16,6 +16,7 @@ router.get('/dashboard', async (req, res) => {
     let auto = []; 
     let preferite_user = [];
     let pacchetti = [];
+    let categorie = [];
 
     if (alert === 'cancellazione') {
         message = 'Utente cancellato con successo.';
@@ -44,10 +45,12 @@ router.get('/dashboard', async (req, res) => {
             console.error("Errore durante il recupero dei pacchetti: ", error)
         }
     } else if ( alert === 'inserimentoPacchetto' ) {
+        categorie = await dao.getCategoriaPacchetti();
+        console.log(categorie);
         view = 'inserimentoPacchetto'
     }
 
-    res.render('dashboard', { user, alert, message, view, isAuth: req.isAuthenticated(), auto, preferite_user, pacchetti });
+    res.render('dashboard', { user, alert, message, view, isAuth: req.isAuthenticated(), auto, preferite_user, pacchetti, categorie });
 });
 
 module.exports = router

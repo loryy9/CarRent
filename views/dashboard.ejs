@@ -103,7 +103,7 @@
                 <% } else if (view === 'elencoPacchetti') { %>
                     <%- include('./components/dashboard_components/elencoPacchetti', {pacchetti}) %>
                 <% } else if (view === 'inserimentoPacchetto') { %>
-                    <%- include('./components/dashboard_components/inserimentoPacchetto') %>
+                    <%- include('./components/dashboard_components/inserimentoPacchetto', {categorie}) %>
                 <% } %>
             </main>
         </div>
