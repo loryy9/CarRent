@@ -249,3 +249,32 @@ exports.getPreferiteByUserId = async (id_utente) => {
         })
     })
 }
+
+exports.getAllPacchetti = async () => {
+    let sql = 'SELECT * FROM pacchetti_aggiuntivi';
+    
+    return new Promise((resolve, reject) => {
+        db.all(sql, [], (err, rows) => {
+            if(err){
+                reject(err);
+            } else {
+                resolve(rows)
+            }            
+        })
+    })
+}
+
+exports.newPacchetto = async (pacchetto) => {
+    let sql = `INSERT INTO pacchetti_aggiuntivi (categoria, nome, descrizione, prezzo)
+               VALUES (?, ?, ?, ?)`;
+    let params = [pacchetto.categoria, pacchetto.nome, pacchetto.descrizione, pacchetto.prezzo] 
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function (err){
+            if (err) {
+                reject(err)
+            } else {
+                resolve({id: this.lastID});
+            }
+        })
+    })
+}

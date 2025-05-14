@@ -45,6 +45,7 @@ CREATE TABLE prenotazioni (
 
 CREATE TABLE pacchetti_aggiuntivi (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
+  categoria TEXT,
   nome TEXT,
   descrizione TEXT,
   prezzo REAL

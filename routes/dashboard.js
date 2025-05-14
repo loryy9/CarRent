@@ -15,6 +15,7 @@ router.get('/dashboard', async (req, res) => {
     let view = '';
     let auto = []; 
     let preferite_user = [];
+    let pacchetti = [];
 
     if (alert === 'cancellazione') {
         message = 'Utente cancellato con successo.';
@@ -35,9 +36,18 @@ router.get('/dashboard', async (req, res) => {
         } catch (error) {
             console.error("Errore durante il recupero delle auto preferite:", error);
         }
+    } else if( alert === 'elencoPacchetti') {
+        view = 'elencoPacchetti'
+        try {
+            pacchetti = await dao.getAllPacchetti();     
+        } catch (error) {
+            console.error("Errore durante il recupero dei pacchetti: ", error)
+        }
+    } else if ( alert === 'inserimentoPacchetto' ) {
+        view = 'inserimentoPacchetto'
     }
 
-    res.render('dashboard', { user, alert, message, view, isAuth: req.isAuthenticated(), auto, preferite_user });
+    res.render('dashboard', { user, alert, message, view, isAuth: req.isAuthenticated(), auto, preferite_user, pacchetti });
 });
 
 module.exports = router

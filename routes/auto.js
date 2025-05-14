@@ -2,7 +2,7 @@
 const express = require("express")
 const router = express.Router()
 const dao = require("../models/dao")
-const { check, validationResult} = require("express-validator")
+const { check, validationResult } = require("express-validator")
 
 router.get("/dashboard/getAuto/:id", async (req, res) => {
     if (!req.isAuthenticated() || req.user.ruolo != 1) {
@@ -72,13 +72,12 @@ router.post("/dashboard/addAuto", [
     check('cavalli').notEmpty(),
     check('prezzo_giornaliero').notEmpty()
 ], async (req, res) => {
-    console.log(req.body)
     const errors = validationResult(req);
-    if (!errors.isEmpty()){
+    if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array())
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert : "errore",
+            alert: "errore",
             message: "Campi non validi, riprovare.",
             user: req.user,
             view: "inserimentoAuto"
@@ -91,16 +90,16 @@ router.post("/dashboard/addAuto", [
         );
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert : "success",
+            alert: "success",
             message: "Auto inserita con successo.",
             user: req.user,
-            view: "inserimentoAuto"
+            view: "inserimentoAuto",
         })
     } catch (error) {
         console.log("Errore durante l'inserimento dell'auto: ", error);
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert : "errore",
+            alert: "errore",
             message: "Errore durante l'inserimento dell'auto.",
             user: req.user,
             view: "inserimentoAuto"
@@ -176,16 +175,16 @@ router.post("/addAutoPreferita/:id", async (req, res) => {
             user: req.user,
             view: ""
         })
-    }   
+    }
 })
 
 router.post("/removeAutoPreferita/:id", async (req, res) => {
-    if (!req.isAuthenticated){
+    if (!req.isAuthenticated) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
     const id_auto = req.params.id;
-    const id_utente = req.user.id;  
+    const id_utente = req.user.id;
     try {
         await dao.removePreferita(id_auto, id_utente);
         await dao.decrementaContatorePreferite(id_auto);

@@ -55,6 +55,11 @@
                             <i class="fas fa-tasks me-2"></i> Gestisci prenotazioni
                         </a>
                     </li>
+                    <li class="nav-item mb-2">
+                        <a href="/dashboard?alert=elencoPacchetti" class="nav-link ">
+                            <i class="fas fa-tasks me-2"></i> Gestisci pacchetti
+                        </a>
+                    </li>
                     <% } %>
                 </ul>
             </div>
@@ -95,6 +100,10 @@
                     <%- include('./components/dashboard_components/modificaAuto', { auto }) %>
                 <% } else if (view === 'autoPreferite') { %>
                     <%- include('./components/dashboard_components/elencoAutoPreferite', {auto, preferite_user }) %>
+                <% } else if (view === 'elencoPacchetti') { %>
+                    <%- include('./components/dashboard_components/elencoPacchetti', {pacchetti}) %>
+                <% } else if (view === 'inserimentoPacchetto') { %>
+                    <%- include('./components/dashboard_components/inserimentoPacchetto') %>
                 <% } %>
             </main>
         </div>
@@ -144,6 +153,11 @@
                 <li class="nav-item mb-2">
                     <a href="#" class="nav-link ">
                         <i class="fas fa-tasks me-2"></i> Gestisci prenotazioni
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="/dashboard?alert=elencoPacchetti" class="nav-link ">
+                        <i class="fas fa-tasks me-2"></i> Gestisci pacchetti
                     </a>
                 </li>
                 <% } %>
