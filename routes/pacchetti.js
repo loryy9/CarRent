@@ -4,6 +4,46 @@ const router = express.Router()
 const dao = require("../models/dao")
 const { check, validationResult } = require("express-validator")
 
+router.get("/dashboard/getPacchetto/:id", async (req, res) => {
+    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
+
+    const id = req.params.id;
+        try {
+            const pacchetto = await dao.getPacchettoById(id);
+            const categorie = await dao.getCategoriaPacchetti();
+            if (pacchetto) {
+                return res.render("dashboard", {
+                    isAuth: req.isAuthenticated(),
+                    user: req.user,
+                    view: "modificaPacchetto",
+                    pacchetto,
+                    categorie,
+                    alert: "",
+                    message: ""
+                });
+            } else {
+                return res.render("dashboard", {
+                    isAuth: req.isAuthenticated(),
+                    alert: "errore",
+                    message: "Pacchetto non trovato.",
+                    user: req.user,
+                    view: ""
+                });
+            }
+        } catch (error) {
+            console.log("Errore durante il recupero del pacchetto:", error);
+            return res.render("dashboard", {
+                isAuth: req.isAuthenticated(),
+                alert: "errore",
+                message: "Errore durante il recupero del pacchetto.",
+                user: req.user,
+                view: ""
+            });
+        }
+})
+
 router.post("/dashboard/addPacchetto", [
     check('categoria').notEmpty(),
     check('nome').notEmpty(),
@@ -73,5 +113,59 @@ router.post("/dashboard/deletePacchetto/:id", async (req, res) => {
             });
         }
 })
+
+router.post("/dashboard/updatePacchetto/:id", [
+    check('categoria').notEmpty(),
+    check('nome').notEmpty(),
+    check('descrizione').notEmpty(),
+    check('prezzo').notEmpty(),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log("Errori di validazione:", errors.array());
+        
+        let categorie = [];
+        try {
+            categorie = await dao.getCategoriaPacchetti();
+        } catch (error) {
+            console.error("Errore nel recupero categorie:", error);
+        }
+        
+        return res.render("dashboard", {
+            isAuth: req.isAuthenticated(),
+            alert: "errore",
+            message: "Campi non validi, riprovare.",
+            user: req.user,
+            view: "inserimentoPacchetto",
+            categorie: categorie 
+        });
+    }
+
+    try {
+        await dao.updatePacchetto(
+            req.params.id,
+            req.body
+        );
+        return res.redirect("/dashboard?alert=elencoPacchetti&message=Pacchetto aggiornato con successo");
+    } catch (error) {
+        console.log("Errore durante l'aggiornamento del pacchetto: ", error);
+        
+        let categorie = [];
+        try {
+            categorie = await dao.getCategoriaPacchetti();
+        } catch (error) {
+            console.error("Errore nel recupero categorie:", error);
+        }
+        
+        return res.render("dashboard", {
+            isAuth: req.isAuthenticated(),
+            alert: "errore",
+            message: "Errore durante l'aggiornamento del pacchetto.",
+            user: req.user,
+            view: "inserimentoPacchetto",
+            categorie: categorie  
+        });
+    }
+});
 
 module.exports = router

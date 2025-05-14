@@ -104,7 +104,9 @@
                     <%- include('./components/dashboard_components/elencoPacchetti', {pacchetti}) %>
                 <% } else if (view === 'inserimentoPacchetto') { %>
                     <%- include('./components/dashboard_components/inserimentoPacchetto', {categorie}) %>
-                <% } %>
+                <% } else if (view === 'modificaPacchetto') { %>
+                    <%- include('./components/dashboard_components/modificaPacchetto', {pacchetto, categorie}) %>
+                <% }  %>
             </main>
         </div>
     </div>

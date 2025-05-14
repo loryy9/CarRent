@@ -250,6 +250,20 @@ exports.getPreferiteByUserId = async (id_utente) => {
     })
 }
 
+exports.getPacchettoById = async (id) => {
+    let sql = `SELECT * FROM pacchetti_aggiuntivi WHERE id = ?`
+    let params = [id]
+    return new Promise((resolve, reject) => {
+        db.get(sql, params, (err, row) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(row)
+            }
+        })
+    })
+}
+
 exports.getAllPacchetti = async () => {
     let sql = 'SELECT * FROM pacchetti_aggiuntivi ORDER BY categoria ASC, prezzo ASC';
     
@@ -306,4 +320,29 @@ exports.deletePacchetto = async (id) => {
             }
         })
     })    
+}
+
+exports.updatePacchetto = async (id, pacchetto) => {
+    const sql = `
+        UPDATE pacchetti_aggiuntivi
+        SET categoria = ?, nome = ?, descrizione = ?, prezzo = ?
+        WHERE id = ?
+    `;
+    const params = [
+        pacchetto.categoria, 
+        pacchetto.nome, 
+        pacchetto.descrizione, 
+        pacchetto.prezzo, 
+        id
+    ];
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function(err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(this.changes);
+            }
+        });
+    });
 }

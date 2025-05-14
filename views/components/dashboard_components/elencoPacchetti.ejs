@@ -35,10 +35,12 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <a href="/dashboard/modificaPacchetto/<%= pacchetto.id %>"
-                                            class="btn btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                        <form action="/dashboard/getPacchetto/<%= pacchetto.id %>" method="GET"
+                                            class="d-inline">
+                                            <button type="submit" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </form>
                                         <form action="/dashboard/deletePacchetto/<%= pacchetto.id %>" method="POST"
                                             class="d-inline">
                                             <button type="submit" class="btn btn-danger">
