@@ -213,11 +213,13 @@ router.get("/prenotazione/getAuto/:id", async (req, res) => {
     const id = req.params.id;
     try {
         const auto = await dao.getAutoById(id);
+        const pacchetti = await dao.getAllPacchetti();
         if (auto) {
             return res.render("prenotazione", {
                 isAuth: req.isAuthenticated(),
                 user: req.user,                
                 auto: auto,
+                pacchetti: pacchetti,
                 alert: "",
                 message: ""
             });

@@ -18,13 +18,13 @@
                              class="img-fluid h-100 w-100 object-fit-cover" 
                              alt="Porsche 911">
                         <div class="position-absolute bottom-0 start-0 bg-warning text-dark py-2 px-3 rounded-end">
-                            <span class="fw-bold">Supercar</span>
+                            <span class="fw-bold"><%= auto.tipologia %></span>
                         </div>
                     </div>
                     
                     <div class="col-md-7">
                         <div class="card-body p-4 p-md-5">
-                                <h3 class="card-title fw-bold mb-3">Porsche 911 Carrera</h3>
+                                <h3 class="card-title fw-bold mb-3"><%= auto.marca %> <%= auto.modello %></h3>
                             
                             <div class="row mb-4">
                                 <div class="col-6 col-md-3 mb-3">
@@ -32,7 +32,7 @@
                                         <i class="fas fa-tachometer-alt text-warning me-2"></i>
                                         <div>
                                             <small class="text-muted d-block">Velocità</small>
-                                            <span class="fw-medium">325 km/h</span>
+                                            <span class="fw-medium"><%= auto.velocita %> km/h</span>
                                         </div>
                                     </div>
                                 </div>
@@ -41,25 +41,16 @@
                                         <i class="fas fa-horse-head text-warning me-2"></i>
                                         <div>
                                             <small class="text-muted d-block">Potenza</small>
-                                            <span class="fw-medium">450 CV</span>
+                                            <span class="fw-medium"><%= auto.cavalli %> CV</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-6 col-md-3 mb-3">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-stopwatch text-warning me-2"></i>
-                                        <div>
-                                            <small class="text-muted d-block">0-100</small>
-                                            <span class="fw-medium">3.6 sec</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>                                
                                 <div class="col-6 col-md-3 mb-3">
                                     <div class="d-flex align-items-center">
                                         <i class="fas fa-gas-pump text-warning me-2"></i>
                                         <div>
                                             <small class="text-muted d-block">Carburante</small>
-                                            <span class="fw-medium">Benzina</span>
+                                            <span class="fw-medium"><%= auto.carburante %></span>
                                         </div>
                                     </div>
                                 </div>
@@ -68,65 +59,60 @@
                             <hr class="my-4">
                             
                             <h5 class="fw-bold mb-3">Seleziona pacchetto</h5>
-                            
-                            <div class="form-check mb-3 package-option">
-                                <input class="form-check-input" type="radio" name="package" id="basicPackage" value="base" checked>
-                                <label class="form-check-label d-flex justify-content-between w-100" for="basicPackage">
-                                    <span>
-                                        <strong>Pacchetto Base</strong>
-                                        <small class="d-block text-muted">Assicurazione base, km limitati (150/giorno)</small>
-                                    </span>
-                                    <span class="fw-bold">€900/giorno</span>
-                                </label>
-                            </div>
-                            
-                            <div class="form-check mb-3 package-option">
-                                <input class="form-check-input" type="radio" name="package" id="premiumPackage" value="premium">
-                                <label class="form-check-label d-flex justify-content-between w-100" for="premiumPackage">
-                                    <span>
-                                        <strong>Pacchetto Premium</strong>
-                                        <small class="d-block text-muted">Assicurazione completa, km illimitati</small>
-                                    </span>
-                                    <span class="fw-bold">€1200/giorno</span>
-                                </label>
-                            </div>
-                            
-                            <div class="form-check mb-4 package-option">
-                                <input class="form-check-input" type="radio" name="package" id="luxuryPackage" value="luxury">
-                                <label class="form-check-label d-flex justify-content-between w-100" for="luxuryPackage">
-                                    <span>
-                                        <strong>Pacchetto Luxury</strong>
-                                        <small class="d-block text-muted">Tutto incluso, assistenza personale 24/7</small>
-                                    </span>
-                                    <span class="fw-bold">€1500/giorno</span>
-                                </label>
-                            </div>
+                            <% if(pacchetti.length > 0) { %>
+                                <% pacchetti.forEach(pacchetto => { %>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="pacchetto" id="pacchetto_<%= pacchetto.id %>" value="<%= pacchetto.id %>" data-prezzo="<%= pacchetto.prezzo %>">
+                                        <label class="form-check-label d-flex justify-content-between w-100" for="pacchetto_<%= pacchetto.id %>">
+                                            <span>
+                                                <strong>Pacchetto <%= pacchetto.nome %></strong>
+                                                <small class="d-block text-muted"><%= pacchetto.descrizione %></small>
+                                            </span>
+                                            <span class="fw-bold">€<%= pacchetto.prezzo %>/giorno</span>
+                                        </label>
+                                    </div>
+                                <% }) %>
+                            <% } else { %>
+                                <div class="alert alert-warning" role="alert">
+                                    Non sono disponibili pacchetti aggiuntivi.
+                                </div>
+                            <% } %>                   
                             
                             <hr class="my-4">
                             
                             <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <label for="startDate" class="form-label fw-medium">Data di ritiro</label>
-                                    <input type="date" class="form-control" id="startDate">
+                                <div class="col-md-6 mb-3">
+                                    <label for="data_inizio" class="form-label fw-medium">Data di ritiro</label>
+                                    <input type="date" class="form-control" id="data_inizio">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="endDate" class="form-label fw-medium">Data di consegna</label>
-                                    <input type="date" class="form-control" id="endDate">
+                                <div class="col-md-6 mb-3">
+                                    <label for="data_fine" class="form-label fw-medium">Data di consegna</label>
+                                    <input type="date" class="form-control" id="data_fine">
+                                </div>
+                                <div class="col-12 d-flex justify-content-center mt-2">
+                                    <button type="button" class="btn btn-warning btn-lg px-4 py-2 shadow-sm rounded-3 d-flex align-items-center">
+                                        <i class="fas fa-calendar-check me-2"></i>
+                                        <span class="fw-medium">Verifica disponibilità</span>
+                                    </button>
                                 </div>
                             </div>
                             
                             <div class="bg-light p-3 rounded-3 mb-4">
                                 <div class="d-flex justify-content-between mb-2">
-                                    <span>Tariffa giornaliera:</span>
-                                    <span class="fw-bold" id="dailyRate">€900</span>
+                                    <span>Tariffa giornaliera auto:</span>
+                                    <span class="fw-bold" id="prezzo_auto">€<%= auto.prezzo_giornaliero %></span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Tariffa giornaliera pacchetto:</span>
+                                    <span class="fw-bold" id="prezzo_pacchetto">€0.00</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Giorni:</span>
-                                    <span class="fw-bold" id="daysCount">1</span>
+                                    <span class="fw-bold" id="contatore_giorni">0</span>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span class="fw-bold">Totale:</span>
-                                    <span class="fw-bold fs-5 text-warning" id="totalPrice">€900</span>
+                                    <span class="fw-bold fs-5 text-warning" id="prezzo_totale">€0.00</span>
                                 </div>
                             </div>
                             
@@ -143,6 +129,7 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
                 crossorigin="anonymous"></script>
+        <script src="/js/funzioni_prenotazione.js"></script>
 </body>
 
 </html>
