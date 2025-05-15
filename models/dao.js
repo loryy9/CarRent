@@ -44,8 +44,8 @@ exports.deleteUser = async (id) => {
 }
 
 exports.newAuto = async (auto) => {
-    let sql = `INSERT INTO auto (marca, modello, immagine, disponibile, velocita, cavalli, tipologia, pref_contatore, prezzo_giornaliero)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    let sql = `INSERT INTO auto (marca, modello, immagine, disponibile, velocita, cavalli, tipologia, pref_contatore, prezzo_giornaliero, carburante)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     let params = [
         auto.marca,
         auto.modello,
@@ -55,7 +55,8 @@ exports.newAuto = async (auto) => {
         auto.cavalli,
         auto.tipologia,
         0,
-        auto.prezzo_giornaliero
+        auto.prezzo_giornaliero,
+        auto.carburante
     ]
     return new Promise((resolve, reject) => {
         db.run(sql, params, function (err){
@@ -111,7 +112,7 @@ exports.getAutoPreferite = async () => {
 exports.updateAuto = async (id, auto) => {
     const sql = `
         UPDATE auto
-        SET marca = ?, modello = ?, tipologia = ?, velocita = ?, cavalli = ?, prezzo_giornaliero = ?
+        SET marca = ?, modello = ?, tipologia = ?, velocita = ?, cavalli = ?, prezzo_giornaliero = ?, carburante = ?
         WHERE id = ?
     `;
     const params = [
@@ -121,6 +122,7 @@ exports.updateAuto = async (id, auto) => {
         auto.velocita, 
         auto.cavalli, 
         auto.prezzo_giornaliero, 
+        auto.carburante,
         id
     ];
 
@@ -265,21 +267,7 @@ exports.getPacchettoById = async (id) => {
 }
 
 exports.getAllPacchetti = async () => {
-    let sql = 'SELECT * FROM pacchetti_aggiuntivi ORDER BY categoria ASC, prezzo ASC';
-    
-    return new Promise((resolve, reject) => {
-        db.all(sql, [], (err, rows) => {
-            if(err){
-                reject(err);
-            } else {
-                resolve(rows)
-            }            
-        })
-    })
-}
-
-exports.getCategoriaPacchetti = async () => {
-    let sql = 'SELECT DISTINCT categoria FROM pacchetti_aggiuntivi ORDER BY categoria ASC';
+    let sql = 'SELECT * FROM pacchetti_aggiuntivi ORDER BY prezzo ASC';
     
     return new Promise((resolve, reject) => {
         db.all(sql, [], (err, rows) => {
@@ -293,9 +281,9 @@ exports.getCategoriaPacchetti = async () => {
 }
 
 exports.newPacchetto = async (pacchetto) => {
-    let sql = `INSERT INTO pacchetti_aggiuntivi (categoria, nome, descrizione, prezzo)
-               VALUES (?, ?, ?, ?)`;
-    let params = [pacchetto.categoria, pacchetto.nome, pacchetto.descrizione, pacchetto.prezzo] 
+    let sql = `INSERT INTO pacchetti_aggiuntivi (nome, descrizione, prezzo)
+               VALUES (?, ?, ?)`;
+    let params = [pacchetto.nome, pacchetto.descrizione, pacchetto.prezzo] 
     return new Promise((resolve, reject) => {
         db.run(sql, params, function (err){
             if (err) {
@@ -325,11 +313,10 @@ exports.deletePacchetto = async (id) => {
 exports.updatePacchetto = async (id, pacchetto) => {
     const sql = `
         UPDATE pacchetti_aggiuntivi
-        SET categoria = ?, nome = ?, descrizione = ?, prezzo = ?
+        SET nome = ?, descrizione = ?, prezzo = ?
         WHERE id = ?
     `;
-    const params = [
-        pacchetto.categoria, 
+    const params = [ 
         pacchetto.nome, 
         pacchetto.descrizione, 
         pacchetto.prezzo, 

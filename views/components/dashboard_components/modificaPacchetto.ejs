@@ -3,23 +3,14 @@
 
     <div class="row g-3">
         <div class="col-md-6">
-            <label for="categoria" class="form-label">Categoria</label>
-            <select class="form-select bg-black text-white border-secondary" id="categoria" name="categoria" required>
-                <option value="" disabled selected>Seleziona una categoria</option>
-                <% categorie.forEach((categoria) => { %>
-                    <option value="<%= categoria.categoria %>" <%= pacchetto.categoria === categoria.categoria ? 'selected' : '' %>><%= categoria.categoria%></option>
-                <% }) %>
-            </select>
-        </div>
-        <div class="col-md-6">
             <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control bg-black text-white border-secondary" id="nome" name="nome" value="<%= pacchetto.nome %>" placeholder="Es. Pieno" required>
+            <input type="text" class="form-control bg-black text-white border-secondary" id="nome" name="nome" value="<%= pacchetto.nome %>" placeholder="Es. Base" required>
         </div>
     </div>
 
     <div class="row g-3 mt-3">
             <label for="descrizione" class="form-label">Descrizione</label>
-            <textarea class="form-control bg-black text-white border-secondary" id="descrizione" name="descrizione" value="<%= pacchetto.descrizione %>" placeholder="" required  rows="5"></textarea>
+            <textarea class="form-control bg-black text-white border-secondary" id="descrizione" name="descrizione" placeholder="" required  rows="5"><%= pacchetto.descrizione %></textarea>
     </div>
 
     <div class="row g-3 mt-3">

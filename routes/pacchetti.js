@@ -12,14 +12,12 @@ router.get("/dashboard/getPacchetto/:id", async (req, res) => {
     const id = req.params.id;
         try {
             const pacchetto = await dao.getPacchettoById(id);
-            const categorie = await dao.getCategoriaPacchetti();
             if (pacchetto) {
                 return res.render("dashboard", {
                     isAuth: req.isAuthenticated(),
                     user: req.user,
                     view: "modificaPacchetto",
                     pacchetto,
-                    categorie,
                     alert: "",
                     message: ""
                 });
@@ -45,7 +43,6 @@ router.get("/dashboard/getPacchetto/:id", async (req, res) => {
 })
 
 router.post("/dashboard/addPacchetto", [
-    check('categoria').notEmpty(),
     check('nome').notEmpty(),
     check('descrizione').notEmpty(),
     check('prezzo').notEmpty(),
@@ -66,19 +63,12 @@ router.post("/dashboard/addPacchetto", [
         await dao.newPacchetto(
             req.body
         );
-        let categorie = [];
-        try {
-            categorie = await dao.getCategoriaPacchetti();
-        } catch (error) {
-            console.error("Errore nel recupero categorie:", error);
-        }
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             alert: "success",
             message: "Pacchetto inserito con successo.",
             user: req.user,
             view: "inserimentoPacchetto",
-            categorie: categorie
         })
     } catch (error) {
         console.log("Errore durante l'inserimento del pacchetto: ", error);
@@ -88,7 +78,6 @@ router.post("/dashboard/addPacchetto", [
             message: "Errore durante l'inserimento del pacchetto.",
             user: req.user,
             view: "inserimentoPacchetto",
-            categorie: []
         })
     }
 })
@@ -115,7 +104,6 @@ router.post("/dashboard/deletePacchetto/:id", async (req, res) => {
 })
 
 router.post("/dashboard/updatePacchetto/:id", [
-    check('categoria').notEmpty(),
     check('nome').notEmpty(),
     check('descrizione').notEmpty(),
     check('prezzo').notEmpty(),
@@ -124,20 +112,12 @@ router.post("/dashboard/updatePacchetto/:id", [
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array());
         
-        let categorie = [];
-        try {
-            categorie = await dao.getCategoriaPacchetti();
-        } catch (error) {
-            console.error("Errore nel recupero categorie:", error);
-        }
-        
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             alert: "errore",
             message: "Campi non validi, riprovare.",
             user: req.user,
             view: "inserimentoPacchetto",
-            categorie: categorie 
         });
     }
 
@@ -150,20 +130,12 @@ router.post("/dashboard/updatePacchetto/:id", [
     } catch (error) {
         console.log("Errore durante l'aggiornamento del pacchetto: ", error);
         
-        let categorie = [];
-        try {
-            categorie = await dao.getCategoriaPacchetti();
-        } catch (error) {
-            console.error("Errore nel recupero categorie:", error);
-        }
-        
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             alert: "errore",
             message: "Errore durante l'aggiornamento del pacchetto.",
             user: req.user,
             view: "inserimentoPacchetto",
-            categorie: categorie  
         });
     }
 });

@@ -11,6 +11,9 @@
         <span class="badge bg-warning text-dark mb-3">
             <%= auto.tipologia %>
         </span>
+        <span class="badge bg-dark text-light mb-3">
+            <%= auto.carburante %>
+        </span>
         <div class="d-flex gap-3 mb-3">
             <span><i class="fas fa-tachometer-alt me-1 text-warning"></i>
                 <%= auto.velocita %>
@@ -26,7 +29,7 @@
         <div class="row g-2">
             <div class="col-10">
                 <% if (user.ruolo == 0) { %>
-                    <a href="/prenota" class="btn btn-warning w-100">Prenota Ora</a>
+                    <a href="/prenotazione/getAuto/<%= auto.id %>" class="btn btn-warning w-100">Prenota Ora</a>
                 <% } else if (user.ruolo == 1) { %>
                     <a href="/dashboard/getAuto/<%= auto.id %>" class="btn btn-warning w-100">Modifica</a>
                 <% } %>

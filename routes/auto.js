@@ -70,8 +70,12 @@ router.post("/dashboard/addAuto", [
     check('tipologia').notEmpty(),
     check('velocita').notEmpty(),
     check('cavalli').notEmpty(),
-    check('prezzo_giornaliero').notEmpty()
+    check('prezzo_giornaliero').notEmpty(),
+    check('carburante').notEmpty()
 ], async (req, res) => {
+    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array())
@@ -114,7 +118,8 @@ router.post("/dashboard/updateAuto/:id", [
     check('tipologia').notEmpty(),
     check('velocita').notEmpty(),
     check('cavalli').notEmpty(),
-    check('prezzo_giornaliero').notEmpty()
+    check('prezzo_giornaliero').notEmpty(),
+    check('carburante').notEmpty()  
 ], async (req, res) => {
     if (!req.isAuthenticated() || req.user.ruolo != 1) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
@@ -199,5 +204,40 @@ router.post("/removeAutoPreferita/:id", async (req, res) => {
         })
     }
 })
+
+router.get("/prenotazione/getAuto/:id", async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
+
+    const id = req.params.id;
+    try {
+        const auto = await dao.getAutoById(id);
+        if (auto) {
+            return res.render("prenotazione", {
+                isAuth: req.isAuthenticated(),
+                user: req.user,                
+                auto: auto,
+                alert: "",
+                message: ""
+            });
+        } else {
+            res.redirect(req.headers.referer || '/catalogo');
+        }
+    } catch (error) {
+        console.log("Errore durante il recupero dell'auto:", error);
+        let preferite_user = []
+        if (req.user) {
+            preferite_user = await dao.getPreferiteByUserId(req.user.id);
+        }
+        return res.render("catalogo", {
+            isAuth: req.isAuthenticated(),
+            alert: "errore",
+            message: "Errore durante il recupero dell'auto.",
+            user: req.user || {ruolo: 0},
+            preferite_user: preferite_user,
+        });
+    }
+});
 
 module.exports = router

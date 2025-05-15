@@ -98,9 +98,9 @@
                 <% } else if (view === 'elencoPacchetti') { %>
                     <%- include('./components/dashboard_components/elencoPacchetti', {pacchetti}) %>
                 <% } else if (view === 'inserimentoPacchetto') { %>
-                    <%- include('./components/dashboard_components/inserimentoPacchetto', {categorie}) %>
+                    <%- include('./components/dashboard_components/inserimentoPacchetto') %>
                 <% } else if (view === 'modificaPacchetto') { %>
-                    <%- include('./components/dashboard_components/modificaPacchetto', {pacchetto, categorie}) %>
+                    <%- include('./components/dashboard_components/modificaPacchetto', {pacchetto}) %>
                 <% }  %>
             </main>
         </div>
