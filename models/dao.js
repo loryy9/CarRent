@@ -335,7 +335,7 @@ exports.updatePacchetto = async (id, pacchetto) => {
 }
 
 exports.verificaDisponibilita = async (data_inizio_check, data_fine_check, id_auto) => {
-    let sql = 'SELECT * FROM prenotazioni WHERE id_auto = ? AND (data_inizio <= ? OR data_fine >= ?)';
+    let sql = 'SELECT * FROM prenotazioni WHERE id_auto = ? AND (data_inizio <= ? AND data_fine >= ?)';
     let params = [id_auto, data_fine_check, data_inizio_check];
 
     return new Promise((resolve, reject) => {
