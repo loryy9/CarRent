@@ -10,6 +10,8 @@
 
         <div class="container-prenota container">
             <h2 class="text-center fw-bold mb-5">Prenota la tua auto</h2>
+            <input type="hidden" id="id_auto" value="<%= auto.id %>">
+            <input type="hidden" id="id_utente" value="<%= user.id %>">
             
             <div class="card border-0 shadow-lg overflow-hidden">
                 <div class="row g-0">
@@ -90,10 +92,13 @@
                                     <input type="date" class="form-control" id="data_fine">
                                 </div>
                                 <div class="col-12 d-flex justify-content-center mt-2">
-                                    <button type="button" class="btn btn-warning btn-lg px-4 py-2 shadow-sm rounded-3 d-flex align-items-center">
+                                    <button type="button" id="verifica_disponibilita" class="btn btn-warning btn-lg px-4 py-2 shadow-sm rounded-3 d-flex align-items-center">
                                         <i class="fas fa-calendar-check me-2"></i>
                                         <span class="fw-medium">Verifica disponibilità</span>
                                     </button>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <div id="disponibilita_alert" class="alert" style="display: none;" role="alert"></div>
                                 </div>
                             </div>
                             
@@ -116,7 +121,7 @@
                                 </div>
                             </div>
                             
-                            <button type="button" class="btn btn-warning w-100 py-3 fw-bold">
+                            <button type="button" id="prenota_button" class="btn btn-warning w-100 py-3 fw-bold">
                                 <i class="fas fa-car me-2"></i>Completa Prenotazione
                             </button>
                         </div>
@@ -130,6 +135,7 @@
                 integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
                 crossorigin="anonymous"></script>
         <script src="/js/funzioni_prenotazione.js"></script>
+        <script src="/js/controllo_disponibilita.js"></script>
 </body>
 
 </html>
