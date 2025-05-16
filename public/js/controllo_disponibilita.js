@@ -3,6 +3,7 @@ document.getElementById('verifica_disponibilita').addEventListener('click', asyn
     const data_fine = document.getElementById('data_fine').value;
     const id_auto = document.getElementById('id_auto').value;
     const alertDiv = document.getElementById('disponibilita_alert');
+    const prenotaButton = document.getElementById('prenota_button');
 
     alertDiv.style.display = 'none';
 
@@ -25,13 +26,16 @@ document.getElementById('verifica_disponibilita').addEventListener('click', asyn
             if (data.disponibile) {
                 alertDiv.className = 'alert alert-success';
                 alertDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i> Auto disponibile per il periodo selezionato!';
+                prenotaButton.disabled = false;
             } else {
                 alertDiv.className = 'alert alert-danger';
                 alertDiv.innerHTML = '<i class="fas fa-times-circle me-2"></i> Auto non disponibile per il periodo selezionato. Prova altre date.';
+                prenotaButton.disabled = true;
             }
         } else {
             alertDiv.className = 'alert alert-danger';
             alertDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i> ' + (data.errors || 'Errore durante la verifica');
+            prenotaButton.disabled = true;
         }
         
         alertDiv.style.display = 'block';
@@ -40,5 +44,6 @@ document.getElementById('verifica_disponibilita').addEventListener('click', asyn
         alertDiv.className = 'alert alert-danger';
         alertDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i> Errore di connessione';
         alertDiv.style.display = 'block';
+        prenotaButton.disabled = true;
     }
 });

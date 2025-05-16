@@ -347,5 +347,28 @@ exports.verificaDisponibilita = async (data_inizio_check, data_fine_check, id_au
             }
         });
     });
-    
+}
+
+exports.creaPrenotazione = async (id_auto, id_utente, data_inizio, data_fine, pacchetto, totale_giorni, prezzo_totale) => {
+    let sql = `INSERT INTO prenotazioni (id_utente, id_auto, data_inizio, data_fine, totale_giorni, prezzo_totale, id_pacchetto) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)`
+    let params = [
+        id_utente,
+        id_auto,
+        data_inizio,
+        data_fine,
+        totale_giorni,
+        prezzo_totale,
+        pacchetto
+    ]
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function (err){
+            if (err) {
+                reject(err)
+            } else {
+                resolve({id: this.lastID});
+            }
+        })
+    })    
 }

@@ -37,10 +37,14 @@ CREATE TABLE prenotazioni (
   id_auto INTEGER,
   data_inizio TEXT,
   data_fine TEXT,
-  stato TEXT DEFAULT 'prenotata', -- prenotata, in corso, completata, annullata
+  totale_giorni INTEGER, 
+  prezzo_totale REAL,
+  id_pacchetto INTEGER,
+  stato TEXT DEFAULT 'prenotata',
   data_creazione TEXT DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY(id_utente) REFERENCES utenti(id),
-  FOREIGN KEY(id_auto) REFERENCES auto(id)
+  FOREIGN KEY(id_auto) REFERENCES auto(id),
+  FOREIGN KEY(id_pacchetto) REFERENCES pacchetti_aggiuntivi(id)
 );
 
 CREATE TABLE pacchetti_aggiuntivi (
