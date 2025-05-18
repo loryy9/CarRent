@@ -1,0 +1,34 @@
+<div class="modal fade" id="addRecensioneModal" tabindex="-1" aria-labelledby="addRecensioneModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/recensioni/add" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addRecensioneModalLabel">Aggiungi una Recensione</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="commento" class="form-label">Commento</label>
+                        <textarea class="form-control" id="commento" name="commento" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="voto" class="form-label">Voto</label>
+                        <select class="form-select" id="voto" name="voto" required>
+                            <option value="" disabled selected>Seleziona un voto</option>
+                            <option value="1">1 - Pessimo</option>
+                            <option value="2">2 - Scarso</option>
+                            <option value="3">3 - Discreto</option>
+                            <option value="4">4 - Buono</option>
+                            <option value="5">5 - Eccellente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                    <button type="submit" class="btn btn-primary">Salva Recensione</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

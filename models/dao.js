@@ -479,3 +479,19 @@ exports.getAllRecensioni = async () => {
         })
     })            
 }
+
+exports.addRecensione = async (id_utente, commento, voto) => {
+    let sql = `INSERT INTO recensioni (id_utente, commento, voto) 
+                VALUES (?, ?, ?)`
+    let params = [id_utente, commento, voto]
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function (err){
+            if (err) {
+                reject(err)
+            } else {
+                resolve({id: this.lastID});
+            }
+        })
+    })    
+}

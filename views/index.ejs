@@ -115,7 +115,7 @@
                 <div class="row justify-content-center g-4">
                     <% if (recensioni.length > 0) { %>
                         <% recensioni.forEach((recensione) => { %>
-                            <% include('./components/card_recensioni', { recensione }) %>
+                            <%- include('./components/card_recensioni', { recensione }) %>
                         <% }) %>
                     <% } else { %>
                         <p class="text-white">Nessuna recensione disponibile.</p>
