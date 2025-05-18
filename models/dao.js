@@ -152,6 +152,19 @@ exports.deleteAuto = async (id) => {
     })    
 }
 
+exports.getMarchi = async () => {
+    let sql = `SELECT DISTINCT marca FROM auto ORDER BY marca ASC`;
+    return new Promise((resolve, reject) => {
+        db.all(sql, [], (err, rows) => {
+            if(err){
+                reject(err);
+            } else{
+                resolve(rows);
+            }
+        })
+    })
+}
+
 exports.isAutoPreferita = async (id_auto, id_utente) => {
     let sql = 'SELECT * FROM preferite WHERE id_auto = ? AND id_utente = ?';
     let params = [id_auto, id_utente];

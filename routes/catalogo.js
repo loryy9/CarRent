@@ -4,12 +4,50 @@ const router = express.Router()
 const dao = require("../models/dao")
 
 router.get('/catalogo', async (req, res) => {
-    let preferite_user = []
-    if (req.user) {
-        preferite_user = await dao.getPreferiteByUserId(req.user.id);
-    }
-    let auto = await dao.getAllAuto();
-    res.render('catalogo', {auto, preferite_user, isAuth: req.isAuthenticated(), user: req.user || {ruolo: 0}});
-})
+    try {
+        let preferite_user = [];
+        if (req.user) {
+            preferite_user = await dao.getPreferiteByUserId(req.user.id);
+        }
 
-module.exports = router
+        let auto = await dao.getAllAuto();
+        let marchi = await dao.getMarchi();
+
+        const { testo, marchio, prezzoMin, prezzoMax } = req.query;
+
+        if (testo) {
+            auto = auto.filter(a =>
+                a.modello.toLowerCase().includes(testo.toLowerCase()) ||
+                a.marca.toLowerCase().includes(testo.toLowerCase())
+            );
+        }
+
+        if (marchio) {
+            auto = auto.filter(a => a.marca.toLowerCase() == marchio.toLowerCase());
+        }
+
+        if (prezzoMin) {
+            auto = auto.filter(a => a.prezzo_giornaliero >= parseFloat(prezzoMin));
+        }
+        if (prezzoMax) {
+            auto = auto.filter(a => a.prezzo_giornaliero <= parseFloat(prezzoMax));
+        }
+
+        res.render('catalogo', {
+            auto,
+            preferite_user,
+            marchi,
+            isAuth: req.isAuthenticated(),
+            user: req.user || { ruolo: 0 },
+            testo,
+            marchio,
+            prezzoMin,
+            prezzoMax
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Errore del server');
+    }
+});
+
+module.exports = router;

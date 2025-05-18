@@ -11,54 +11,56 @@
         </div>
     
         <div class="container mt-3">
-            <div class="bg-dark p-4 rounded-3 shadow-sm mb-5 d-flex flex-column  justify-content-center ">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label text-white fw-medium mb-2">Ricerca...</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-warning text-dark">
-                                <i class="fas fa-search"></i>
-                            </span>
-                            <input type="text" class="form-control" id="searchInput" placeholder="Es. Huracan, 488 GTB...">
+            <div class="bg-dark p-4 rounded-3 shadow-sm mb-5">
+                <h3 class="text-center text-warning fw-bold mb-4">Filtra la tua ricerca</h3>
+                <form method="GET" action="/catalogo">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label text-white fw-medium">Cerca un modello</label>
+                            <input type="text" class="form-control" name="testo" placeholder="Es. Huracan, 488 GTB..." value="<%= testo || '' %>">
                         </div>
-                    </div>
-    
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label text-white fw-medium mb-2">Marca</label>
-                            <select class="form-select bg-light border-0 shadow-sm" id="brandSelect">
-                                <option value="" selected disabled>Seleziona una marca</option>
-                                <option value="lamborghini">Lamborghini</option>
-                                <option value="ferrari">Ferrari</option>
-                                <option value="porsche">Porsche</option>
+
+                        <div class="col-md-4">
+                            <label class="form-label text-white fw-medium">Seleziona una marca</label>
+                            <select class="form-select bg-light border-0 shadow-sm" name="marchio">
+                                <option value="" <%= !marchio ? 'selected' : '' %>>Tutti i marchi</option>
+                                <% marchi.forEach((marca) => { %>
+                                    <option value="<%= marca.marca %>" <%= marchio === marca.marca ? 'selected' : '' %>><%= marca.marca %></option>
+                                <% }) %>
                             </select>
                         </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label text-white fw-medium">Fascia di prezzo (€)</label>
+                            <div class="d-flex flex-column align-items-center">
+                                <input type="range" class="form-range" id="priceMin" name="prezzoMin" min="0" max="10000" step="500" value="<%= prezzoMin || 0 %>" oninput="updatePriceLabels()">
+                                <input type="range" class="form-range mt-2" id="priceMax" name="prezzoMax" min="0" max="10000" step="500" value="<%= prezzoMax || 10000 %>" oninput="updatePriceLabels()">
+                                <div class="d-flex justify-content-between w-100 mt-2">
+                                    <span class="text-white">Min: €<span id="priceMinLabel"><%= prezzoMin || 0 %></span></span>
+                                    <span class="text-white">Max: €<span id="priceMaxLabel"><%= prezzoMax || 10000 %></span></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                <div class="col-md-6">
-                    <label for="customRange1" class="form-label">Prezzo da</label>
-                    <input type="range" class="form-range" id="customRange1">
-                </div>
-                <div class="col-md-6">
-                    <label for="customRange1" class="form-label">a</label>
-                    <input type="range" class="form-range" id="customRange1">
-                </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-warning px-4">
+                            <i class="fas fa-filter me-2"></i>Applica Filtri
+                        </button>
+                    </div>
+                </form>
             </div>
-            </div>
-        </div>
-    
-        <div class="container py-5 mt-5">
+
             <div class="row g-4">
-            <% if (auto.length > 0) { %>
-                <% auto.forEach((auto) => { %>
-                    <div class="col-md-4 mb-3">
-                        <%- include('./components/card', { auto }) %>
-                    </div>
-                <% }) %>
-            <% } else { %>
-                <p class="text-white">Nessuna auto disponibile.</p>
-            <% } %>
+                <% if (auto.length > 0) { %>
+                    <% auto.forEach((auto) => { %>
+                        <div class="col-md-4 mb-3">
+                            <%- include('./components/card', { auto, user, preferite_user }) %>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p class="text-white">Nessuna auto disponibile.</p>
+                <% } %>
             </div>
         </div>
 
@@ -66,5 +68,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
                 crossorigin="anonymous"></script>
+        <script src="/js/slider_prezzi.js"></script>
     </body>
 </html>
