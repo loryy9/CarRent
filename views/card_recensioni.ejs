@@ -1,0 +1,19 @@
+<div class="col-md-6 col-lg-4">
+    <div class="card bg-black h-100 border-0 shadow-lg">
+        <div class="card-body p-4 text-white">
+            <div class="d-flex mb-3">
+                <i class="fas fa-quote-left fa-2x text-warning me-2"></i>
+            </div>
+            <p class="card-text mb-4"><%= recensione.commento</p>
+            <div class="d-flex align-items-center mt-auto">
+                <div class="avatar rounded-circle overflow-hidden bg-warning me-3" style="width: 50px; height: 50px;">
+                    <i class="fas fa-user fa-lg d-flex justify-content-center align-items-center h-100 text-dark"></i>
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold"><%= recensione.nome %> <%= recensione.cognome %></h6>
+                    <small><%= recensione.voto %>/5</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

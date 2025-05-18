@@ -377,8 +377,8 @@ exports.getAllPrenotazioni = async () => {
     let sql = `SELECT p.*, a.marca, a.modello, pa.nome AS nome_pacchetto, u.email AS email_utente
                FROM prenotazioni p
                JOIN auto a ON p.id_auto = a.id
-               LEFT JOIN pacchetti_aggiuntivi pa ON p.id_pacchetto = pa.id
                JOIN utenti u ON p.id_utente = u.id
+               LEFT JOIN pacchetti_aggiuntivi pa ON p.id_pacchetto = pa.id
                ORDER BY p.id DESC`;
     
     return new Promise((resolve, reject) => {
@@ -410,7 +410,6 @@ exports.getPrenotazioniByUserId = async (id_utente) => {
             }
         })
     })
-
 }
 
 exports.getStatoPrenotazione = (prenotazione) => {
@@ -445,6 +444,38 @@ exports.deletePrenotazione = async (id) => {
                 resolve({id: this.lastID});
             }
         })
-    }
-    )
+    })
+}
+
+exports.getRecensioniHome = async () => {
+    let sql = `SELECT r.*, u.nome, u.cognome
+               FROM recensioni r
+               JOIN utenti u ON r.id_utente = u.id
+               LIMIT 3`
+    
+    return new Promise((resolve, reject) => {
+        db.all(sql, [], (err, rows) => {
+            if(err){
+                reject(err);
+            } else{
+                resolve(rows);
+            }
+        })
+    })            
+}
+
+exports.getAllRecensioni = async () => {
+    let sql = `SELECT r.*, u.nome, u.cognome
+               FROM recensioni r
+               JOIN utenti u ON r.id_utente = u.id`
+    
+    return new Promise((resolve, reject) => {
+        db.all(sql, [], (err, rows) => {
+            if(err){
+                reject(err);
+            } else{
+                resolve(rows);
+            }
+        })
+    })            
 }

@@ -18,7 +18,8 @@ router.get('/', async (req, res) => {
         preferite_user = await dao.getPreferiteByUserId(req.user.id);
     }
     let top_auto = await dao.getAutoPreferite();
-    res.render('index', { alert, message, top_auto, preferite_user, isAuth: req.isAuthenticated(), user: req.user || {ruolo: 0} });
+    let recensioni = await dao.getRecensioniHome();
+    res.render('index', { alert, message, top_auto, preferite_user, recensioni, isAuth: req.isAuthenticated(), user: req.user || {ruolo: 0} });
 });
 
 module.exports = router

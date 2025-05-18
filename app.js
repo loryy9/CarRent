@@ -18,6 +18,7 @@ const catalogoRouter = require("./routes/catalogo")
 const autoRouter = require("./routes/auto") 
 const pacchettiRouter = require("./routes/pacchetti")
 const prenotazioneRouter = require("./routes/prenotazione")
+const recensioniRouter = require("./routes/recensione")
 
 app.set("view engine", "ejs")
 
@@ -44,6 +45,7 @@ app.use(catalogoRouter)
 app.use(autoRouter)
 app.use(pacchettiRouter)
 app.use(prenotazioneRouter)
+app.use(recensioniRouter)
 
 app.listen(PORT, () => {
     console.log(`Server avviato su http://localhost:${PORT}`);

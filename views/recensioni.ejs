@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <%- include('./components/header', {title: 'CarRent | Recensioni' }) %>
+</head>
+
+<body>
+    <%- include('./components/navbar', {active: '', isAuth}) %>
+
+    <div class="container py-5">
+        <h1 class="text-center py-5 mb-4">Recensioni</h1>
+        <% if (recensioni.length > 0) { %>
+            <div class="row">
+                <% recensioni.forEach((recensione) => { %>
+                    <div class="col-md-4 mb-4">
+                        <%- include('./components/card_recensioni', {recensione}) %>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="alert alert-warning text-center" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i> Nessuna recensione disponibile.
+            </div>
+        <% } %>
+    </div>
+
+    <%- include('./components/footer') %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
