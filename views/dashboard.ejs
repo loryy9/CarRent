@@ -22,7 +22,7 @@
                     <!-- UTENTI STANDARD -->
                     <% if (user.ruolo==0) { %>
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link ">
+                        <a href="/catalogo" class="nav-link ">
                             <i class="fas fa-car me-2"></i> Prenota un'auto
                         </a>
                     </li>
@@ -46,8 +46,8 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link ">
-                            <i class="fas fa-tasks me-2"></i> Gestisci prenotazioni
+                        <a href="/dashboard?alert=allPrenotazioni" class="nav-link ">
+                            <i class="fas fa-tasks me-2"></i> Visualizza prenotazioni
                         </a>
                     </li>
                     <li class="nav-item mb-2">
@@ -101,7 +101,7 @@
                     <%- include('./components/dashboard_components/inserimentoPacchetto') %>
                 <% } else if (view === 'modificaPacchetto') { %>
                     <%- include('./components/dashboard_components/modificaPacchetto', {pacchetto}) %>
-                <% } else if (view === 'prenotazioniUtente') { %>
+                <% } else if (view === 'prenotazioniUtente' || view === 'allPrenotazioni') { %>
                     <%- include('./components/dashboard_components/elencoPrenotazioni', {prenotazioni}) %>
                 <% } %>
             </main>
@@ -124,12 +124,12 @@
                 </li>
                 <% if (user.ruolo == 0) { %>
                 <li class="nav-item mb-2">
-                    <a href="#" class="nav-link">
+                    <a href="/catalogo" class="nav-link">
                         <i class="fas fa-car me-2"></i> Prenota un'auto
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="#" class="nav-link ">
+                    <a href="/dashboard?alert=prenotazioniUtente" class="nav-link ">
                         <i class="fas fa-clipboard-list me-2"></i> Le tue prenotazioni
                     </a>
                 </li>
@@ -146,8 +146,8 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="#" class="nav-link ">
-                        <i class="fas fa-tasks me-2"></i> Gestisci prenotazioni
+                    <a href="/dashboard?alert=allPrenotazioni" class="nav-link ">
+                        <i class="fas fa-tasks me-2"></i> Visualizza prenotazioni
                     </a>
                 </li>
                 <li class="nav-item mb-2">

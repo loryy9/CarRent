@@ -373,8 +373,27 @@ exports.creaPrenotazione = async (id_auto, id_utente, data_inizio, data_fine, pa
     })    
 }
 
+exports.getAllPrenotazioni = async () => {
+    let sql = `SELECT p.*, a.marca, a.modello, pa.nome AS nome_pacchetto, u.email AS email_utente
+               FROM prenotazioni p
+               JOIN auto a ON p.id_auto = a.id
+               LEFT JOIN pacchetti_aggiuntivi pa ON p.id_pacchetto = pa.id
+               JOIN utenti u ON p.id_utente = u.id
+               ORDER BY p.id DESC`;
+    
+    return new Promise((resolve, reject) => {
+        db.all(sql, [], (err, rows) => {
+            if(err){
+                reject(err);
+            } else{
+                resolve(rows);
+            }
+        })
+    })
+}
+
 exports.getPrenotazioniByUserId = async (id_utente) => {
-    let sql = `SELECT p.*, a.marca, a.modello, a.cavalli, a.velocita, pa.nome AS nome_pacchetto
+    let sql = `SELECT p.*, a.marca, a.modello, pa.nome AS nome_pacchetto
                FROM prenotazioni p
                JOIN auto a ON p.id_auto = a.id
                LEFT JOIN pacchetti_aggiuntivi pa ON p.id_pacchetto = pa.id

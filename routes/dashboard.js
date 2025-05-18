@@ -56,6 +56,19 @@ router.get('/dashboard', async (req, res) => {
         } catch (error) {
             console.error("Errore durante il recupero delle prenotazioni:", error);
         }
+    } else if (alert === 'allPrenotazioni') {
+        view = 'allPrenotazioni'
+        if(user.ruolo != 1){
+            return res.redirect('/dashboard?alert=errore&errorType=non_autorizzato');
+        }
+        try {
+            prenotazioni = await dao.getAllPrenotazioni();
+            prenotazioni.forEach((prenotazione) => {
+                prenotazione.stato = dao.getStatoPrenotazione(prenotazione);
+            });
+        } catch (error) {
+            console.error("Errore durante il recupero delle prenotazioni:", error);
+        }
     }
 
     res.render('dashboard', { user, alert, message, view, isAuth: req.isAuthenticated(), auto, preferite_user, pacchetti, prenotazioni });
