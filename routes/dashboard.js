@@ -16,6 +16,7 @@ router.get('/dashboard', async (req, res) => {
     let auto = []; 
     let preferite_user = [];
     let pacchetti = [];
+    let prenotazioni = [];
 
     if (alert === 'cancellazione') {
         message = 'Utente cancellato con successo.';
@@ -45,9 +46,19 @@ router.get('/dashboard', async (req, res) => {
         }
     } else if ( alert === 'inserimentoPacchetto' ) {
         view = 'inserimentoPacchetto'
+    } else if (alert === 'prenotazioniUtente') {
+        view = 'prenotazioniUtente'
+        try {
+            prenotazioni = await dao.getPrenotazioniByUserId(user.id);
+            prenotazioni.forEach((prenotazione) => {
+                prenotazione.stato = dao.getStatoPrenotazione(prenotazione);
+            });
+        } catch (error) {
+            console.error("Errore durante il recupero delle prenotazioni:", error);
+        }
     }
 
-    res.render('dashboard', { user, alert, message, view, isAuth: req.isAuthenticated(), auto, preferite_user, pacchetti });
+    res.render('dashboard', { user, alert, message, view, isAuth: req.isAuthenticated(), auto, preferite_user, pacchetti, prenotazioni });
 });
 
 module.exports = router

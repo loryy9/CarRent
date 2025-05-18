@@ -1,0 +1,69 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-white">Elenco Prenotazioni</h3>
+    </div>
+    <div class="row">
+        <% if (prenotazioni.length > 0) { %>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Auto</th>
+                            <th>Data Inizio</th>
+                            <th>Data Fine</th>
+                            <th>Giorni</th>
+                            <th>Prezzo Totale</th>
+                            <th>Pacchetto</th>
+                            <th>Stato</th>
+                            <th class="text-center">Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% prenotazioni.forEach((prenotazione) => { %>
+                            <tr>
+                                <td>
+                                    <%= prenotazione.marca %> <%= prenotazione.modello %>
+                                </td>
+                                <td>
+                                    <%= prenotazione.data_inizio %>
+                                </td>
+                                <td>
+                                    <%= prenotazione.data_fine %>
+                                </td>
+                                <td>
+                                    <%= prenotazione.totale_giorni %>
+                                </td>
+                                <td>
+                                    <%= prenotazione.prezzo_totale %> €
+                                </td>
+                                <td>
+                                    <% if (prenotazione.nome_pacchetto) { %>
+                                        <strong><%= prenotazione.nome_pacchetto %></strong>
+                                        <br>
+                                        <small><%= prenotazione.descrizione_pacchetto %></small>
+                                    <% } else { %>
+                                        Nessun pacchetto
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <%= prenotazione.stato %>
+                                </td>
+                                <td class="text-center">
+                                    <form action="/dashboard/deletePrenotazione/<%= prenotazione.id %>" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Cancella
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <div class="alert alert-warning" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i> Nessuna prenotazione disponibile.
+            </div>
+        <% } %>
+    </div>
+</div>

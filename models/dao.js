@@ -372,3 +372,60 @@ exports.creaPrenotazione = async (id_auto, id_utente, data_inizio, data_fine, pa
         })
     })    
 }
+
+exports.getPrenotazioniByUserId = async (id_utente) => {
+    let sql = `SELECT p.*, a.marca, a.modello, a.cavalli, a.velocita, pa.nome AS nome_pacchetto
+               FROM prenotazioni p
+               JOIN auto a ON p.id_auto = a.id
+               LEFT JOIN pacchetti_aggiuntivi pa ON p.id_pacchetto = pa.id
+               WHERE p.id_utente = ?
+               ORDER BY p.id DESC`;
+
+    let params = [id_utente];
+    return new Promise((resolve, reject) => {
+        db.all(sql, params, (err, rows) => {
+            if(err){
+                reject(err);
+            } else{
+                resolve(rows);
+            }
+        })
+    })
+
+}
+
+exports.getStatoPrenotazione = (prenotazione) => {
+    const oggi = new Date();
+    const data_inizio = new Date(prenotazione.data_inizio);
+    const data_fine = new Date(prenotazione.data_fine);
+
+    const oggiSoloData = new Date(oggi.getFullYear(), oggi.getMonth(), oggi.getDate());
+    const dataInizioSoloData = new Date(data_inizio.getFullYear(), data_inizio.getMonth(), data_inizio.getDate());
+    const dataFineSoloData = new Date(data_fine.getFullYear(), data_fine.getMonth(), data_fine.getDate());
+
+    if (oggiSoloData < dataInizioSoloData) {
+        return 'In attesa';
+    } else if (oggiSoloData >= dataInizioSoloData && oggiSoloData <= dataFineSoloData) {
+        return 'In corso';
+    } else if (oggiSoloData > dataFineSoloData) {
+        return 'Conclusa';
+    } else {
+        return 'Sconosciuto';
+    }
+};
+
+exports.deletePrenotazione = async (id) => {
+    let sql = `DELETE FROM prenotazioni WHERE id = ?`
+    let params = [id]
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function (err){
+            if (err) {
+                reject(err)
+            } else {
+                resolve({id: this.lastID});
+            }
+        })
+    }
+    )
+}
