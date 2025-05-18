@@ -57,12 +57,14 @@
                                     <%= prenotazione.stato %>
                                 </td>
                                 <td class="text-center">
-                                    <form action="/dashboard/deletePrenotazione/<%= prenotazione.id %>" method="POST" class="d-inline">
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash"></i> Cancella
-                                        </button>
-                                    </form>
-                                </td>
+                                    <% if (prenotazione.stato != 'Conclusa') { %>
+                                        <form action="/dashboard/deletePrenotazione/<%= prenotazione.id %>" method="POST" class="d-inline">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i> Cancella
+                                            </button>
+                                        </form>
+                                    <% } %>
+                                </td>                               
                             </tr>
                         <% }) %>
                     </tbody>
