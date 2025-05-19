@@ -16,9 +16,9 @@
             <div class="card border-0 shadow-lg overflow-hidden">
                 <div class="row g-0">
                     <div class="col-md-5 position-relative">
-                        <img src="/assets/home_image.jpg" 
+                        <img src="<%= auto.immagine %>" 
                              class="img-fluid h-100 w-100 object-fit-cover" 
-                             alt="Porsche 911">
+                             alt="<%= auto.marca %> <%= auto.modello %>">
                         <div class="position-absolute bottom-0 start-0 bg-warning text-dark py-2 px-3 rounded-end">
                             <span class="fw-bold"><%= auto.tipologia %></span>
                         </div>

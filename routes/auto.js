@@ -3,6 +3,22 @@ const express = require("express")
 const router = express.Router()
 const dao = require("../models/dao")
 const { check, validationResult } = require("express-validator")
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads'); 
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname)); 
+    }
+});
+
+const upload = multer({
+    storage: storage
+});
 
 router.get("/dashboard/getAuto/:id", async (req, res) => {
     if (!req.isAuthenticated() || req.user.ruolo != 1) {
@@ -63,58 +79,43 @@ router.post("/dashboard/deleteAuto/:id", async (req, res) => {
     }
 });
 
-router.post("/dashboard/addAuto", [
-    check('marca').notEmpty(),
-    check('modello').notEmpty(),
-    // check('immagine').isEmail(),
-    check('tipologia').notEmpty(),
-    check('velocita').notEmpty(),
-    check('cavalli').notEmpty(),
-    check('prezzo_giornaliero').notEmpty(),
-    check('carburante').notEmpty()
-], async (req, res) => {
+router.post("/dashboard/addAuto", upload.single('immagine'), async (req, res) => {
     if (!req.isAuthenticated() || req.user.ruolo != 1) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        console.log("Errori di validazione:", errors.array())
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Campi non validi, riprovare.",
-            user: req.user,
-            view: "inserimentoAuto"
-        })
-    }
+
+    const { marca, modello, tipologia, velocita, cavalli, prezzo_giornaliero, carburante } = req.body;
 
     try {
-        await dao.newAuto(
-            req.body
-        );
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            alert: "success",
-            message: "Auto inserita con successo.",
-            user: req.user,
-            view: "inserimentoAuto",
-        })
+        const immagine = req.file ? `/uploads/${req.file.filename}` : null;
+
+        await dao.newAuto({
+            marca,
+            modello,
+            immagine,
+            velocita,
+            cavalli,
+            tipologia,
+            prezzo_giornaliero,
+            carburante
+        });
+
+        return res.redirect("/dashboard?alert=elencoAuto&message=Auto inserita con successo");
     } catch (error) {
-        console.log("Errore durante l'inserimento dell'auto: ", error);
+        console.error("Errore durante l'inserimento dell'auto:", error);
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             alert: "errore",
             message: "Errore durante l'inserimento dell'auto.",
             user: req.user,
             view: "inserimentoAuto"
-        })
+        });
     }
-})
+});
 
 router.post("/dashboard/updateAuto/:id", [
     check('marca').notEmpty(),
     check('modello').notEmpty(),
-    // check('immagine').isEmail(),
     check('tipologia').notEmpty(),
     check('velocita').notEmpty(),
     check('cavalli').notEmpty(),
