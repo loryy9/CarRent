@@ -102,7 +102,7 @@ body {
 /* pagina catalogo */
 .catalogo{
     height: 60vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/catalogo_imagejpg.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/catalogo_image.jpg') no-repeat center center/cover;
 }
 
 
