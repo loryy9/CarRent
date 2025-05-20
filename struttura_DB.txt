@@ -6,7 +6,7 @@ CREATE TABLE utenti (
   password TEXT NOT NULL,
   data_nascita TEXT,
   telefono TEXT,
-  ruolo TEXT DEFAULT 'utente', -- utente, admin
+  ruolo TEXT DEFAULT 'utente',
   data_registrazione TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
