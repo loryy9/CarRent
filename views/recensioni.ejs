@@ -11,8 +11,14 @@
     <div class="container py-5">
         <div class="recensioni px-lg-5 py-5 bg-dark">
             <div class="text-white p-4 px-lg-5 h-100">
-                <h2 class="fw-bold text-center mb-5 text-warning">Cosa dicono di noi</h2>
-                <div class="row justify-content-center g-4">
+                <div class="container d-flex flex-wrap align-items-center justify-content-between mb-5">
+                    <h2 class="fw-bold text-warning mb-0">Cosa dicono di noi</h2>
+                    <a href="#" class="btn btn-warning d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addRecensioneModal">
+                        <i class="fas fa-plus"></i>
+                        <span>Aggiungi Recensione</span>
+                    </a>
+                </div>
+                <div class="row g-4">
                     <% if (recensioni.length > 0) { %>
                         <% recensioni.forEach((recensione) => { %>
                             <%- include('./components/card_recensioni', { recensione }) %>
@@ -20,9 +26,6 @@
                     <% } else { %>
                         <p class="text-white">Nessuna recensione disponibile.</p>
                     <% } %>
-                </div>
-                <div class="text-center mt-5">
-                    <a href="/recensioni" class="btn btn-warning btn-lg mx-auto">Altre recensioni</a>
                 </div>
             </div>
         </div>
