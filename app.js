@@ -22,7 +22,7 @@ const recensioniRouter = require("./routes/recensione")
 
 app.set("view engine", "ejs")
 
-app.use(morgan("tiny"))
+app.use(morgan("dev"))
 app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
