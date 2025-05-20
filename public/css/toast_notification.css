@@ -17,11 +17,14 @@
 }
 
 .error{
-    background-color: #c21300;
+    background-color: rgba(194, 19, 0, .5);
+    backdrop-filter: blur(20px);
 }
 
 .success{
-    background-color: #00963e;
+    background-color: rgba(0, 150, 62, .5);
+    backdrop-filter: blur(20px);
+
 }
 
 .toast-message {
