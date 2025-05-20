@@ -1,3 +1,5 @@
+"use strict";
+
 setTimeout(() => {
     const toast = document.querySelector('.toast-notification');
     if (toast){

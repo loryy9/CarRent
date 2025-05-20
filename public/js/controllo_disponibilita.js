@@ -1,3 +1,5 @@
+"use strict";
+
 document.getElementById('verifica_disponibilita').addEventListener('click', async () => {
     const data_inizio = document.getElementById('data_inizio').value;
     const data_fine = document.getElementById('data_fine').value;

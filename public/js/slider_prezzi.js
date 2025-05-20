@@ -1,3 +1,5 @@
+"use strict";
+
 function updatePriceLabels() {
     const priceMin = document.getElementById('priceMin').value;
     const priceMax = document.getElementById('priceMax').value;

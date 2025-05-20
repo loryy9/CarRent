@@ -1,3 +1,5 @@
+"use strict";
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const dataInizio = document.getElementById('data_inizio');

@@ -1,3 +1,5 @@
+"use strict";
+
 document.getElementById('prenota_button').addEventListener('click', async () => {
     const id_auto = document.getElementById('id_auto').value;
     const id_utente = document.getElementById('id_utente').value;
