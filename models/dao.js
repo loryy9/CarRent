@@ -222,19 +222,7 @@ exports.isAutoPreferita = async (id_auto, id_utente) => {
                 reject(err);
             }
             else{
-                resolve({
-                    id: row.id,
-                    marca: row.marca,
-                    modello: row.modello,
-                    immagine: row.immagine,
-                    disponibile: row.disponibile === 1,
-                    velocita: row.velocita,
-                    cavalli: row.cavalli,
-                    tipologia: row.tipologia,
-                    pref_contatore: row.pref_contatore,
-                    prezzo_giornaliero: row.prezzo_giornaliero,
-                    carburante: row.carburante
-                });
+                resolve(row ? true : false);
             }
         })
     })
@@ -320,7 +308,7 @@ exports.getPreferiteByUserId = async (id_utente) => {
             else{
                 let auto = rows.map((a) => (
                     {
-                        id: a.id,
+                        id_auto: a.id_auto,
                         marca: a.marca,
                         modello: a.modello,
                         immagine: a.immagine,

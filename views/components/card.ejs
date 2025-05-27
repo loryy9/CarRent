@@ -36,7 +36,7 @@
             </div>
             <div class="col-2">
                 <% if (user.ruolo == 0) { %>
-                    <% if (preferite_user.find(p => p.id_auto === auto.id)) { %>
+                    <% if (preferite_user.find(p => p.id_auto == auto.id)) { %>
                         <form action="/removeAutoPreferita/<%= auto.id %>" class="h-100" method="POST">
                             <button type="submit" class="btn btn-warning w-100 h-100 d-flex justify-content-center align-items-center">
                                 <i class="fa-solid fa-heart"></i>
