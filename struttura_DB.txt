@@ -20,7 +20,8 @@ CREATE TABLE auto (
   cavalli INTEGER NOT NULL,
   tipologia TEXT NOT NULL, 
   pref_contatore INTEGER DEFAULT 0,
-  prezzo_giornaliero REAL
+  prezzo_giornaliero REAL,
+  carburante TEXT NOT NULL
 );
 
 CREATE TABLE preferite (

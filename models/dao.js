@@ -76,7 +76,22 @@ exports.getAllAuto = async () => {
             if (err) {
                 reject(err);
             } else {
-                resolve(rows);
+                let auto = rows.map((a) => (
+                    {
+                        id: a.id,
+                        marca: a.marca,
+                        modello: a.modello,
+                        immagine: a.immagine,
+                        disponibile: a.disponibile === 1,
+                        velocita: a.velocita,
+                        cavalli: a.cavalli,
+                        tipologia: a.tipologia,
+                        pref_contatore: a.pref_contatore,
+                        prezzo_giornaliero: a.prezzo_giornaliero,
+                        carburante: a.carburante
+                    }
+                ));
+                resolve(auto);
             }
         });
     });
@@ -89,8 +104,20 @@ exports.getAutoById = async (id) => {
         db.get(sql, params, (err, row) => {
             if (err) {
                 reject(err)
-            } else {
-                resolve(row)
+            } else {                
+                resolve({
+                    id: row.id,
+                    marca: row.marca,
+                    modello: row.modello,
+                    immagine: row.immagine,
+                    disponibile: row.disponibile === 1,
+                    velocita: row.velocita,
+                    cavalli: row.cavalli,
+                    tipologia: row.tipologia,
+                    pref_contatore: row.pref_contatore,
+                    prezzo_giornaliero: row.prezzo_giornaliero,
+                    carburante: row.carburante
+                })
             }
         })
     })
@@ -103,7 +130,22 @@ exports.getAutoPreferite = async () => {
             if(err) {
                 reject(err)
             } else {
-                resolve(rows)
+                let auto = rows.map((a) => (
+                    {
+                        id: a.id,
+                        marca: a.marca,
+                        modello: a.modello,
+                        immagine: a.immagine,
+                        disponibile: a.disponibile === 1,
+                        velocita: a.velocita,
+                        cavalli: a.cavalli,
+                        tipologia: a.tipologia,
+                        pref_contatore: a.pref_contatore,
+                        prezzo_giornaliero: a.prezzo_giornaliero,
+                        carburante: a.carburante
+                    }
+                ));
+                resolve(auto);
             }
         })
     })
@@ -159,7 +201,12 @@ exports.getMarchi = async () => {
             if(err){
                 reject(err);
             } else{
-                resolve(rows);
+                const marchi = rows.map((row) => (
+                    {
+                        marca: row.marca
+                    }
+                ));
+                resolve(marchi);
             }
         })
     })
@@ -175,7 +222,19 @@ exports.isAutoPreferita = async (id_auto, id_utente) => {
                 reject(err);
             }
             else{
-                resolve(row);
+                resolve({
+                    id: row.id,
+                    marca: row.marca,
+                    modello: row.modello,
+                    immagine: row.immagine,
+                    disponibile: row.disponibile === 1,
+                    velocita: row.velocita,
+                    cavalli: row.cavalli,
+                    tipologia: row.tipologia,
+                    pref_contatore: row.pref_contatore,
+                    prezzo_giornaliero: row.prezzo_giornaliero,
+                    carburante: row.carburante
+                });
             }
         })
     })
@@ -259,7 +318,22 @@ exports.getPreferiteByUserId = async (id_utente) => {
                 reject(err);
             }
             else{
-                resolve(rows);
+                let auto = rows.map((a) => (
+                    {
+                        id: a.id,
+                        marca: a.marca,
+                        modello: a.modello,
+                        immagine: a.immagine,
+                        disponibile: a.disponibile === 1,
+                        velocita: a.velocita,
+                        cavalli: a.cavalli,
+                        tipologia: a.tipologia,
+                        pref_contatore: a.pref_contatore,
+                        prezzo_giornaliero: a.prezzo_giornaliero,
+                        carburante: a.carburante
+                    }
+                ));
+                resolve(auto);
             }
         })
     })
@@ -272,8 +346,13 @@ exports.getPacchettoById = async (id) => {
         db.get(sql, params, (err, row) => {
             if (err) {
                 reject(err)
-            } else {
-                resolve(row)
+            } else {                
+                resolve({
+                    id: row.id,
+                    nome: row.nome,
+                    descrizione: row.descrizione,
+                    prezzo: row.prezzo
+                })
             }
         })
     })
@@ -287,7 +366,15 @@ exports.getAllPacchetti = async () => {
             if(err){
                 reject(err);
             } else {
-                resolve(rows)
+                let pacchetti = rows.map((p) => (
+                    {
+                        id: p.id,
+                        nome: p.nome,
+                        descrizione: p.descrizione,
+                        prezzo: p.prezzo
+                    }
+                ));
+                resolve(pacchetti)
             }            
         })
     })
@@ -399,7 +486,24 @@ exports.getAllPrenotazioni = async () => {
             if(err){
                 reject(err);
             } else{
-                resolve(rows);
+                let prenotazioni = rows.map((p) => (
+                    {
+                        id: p.id,
+                        id_utente: p.id_utente,                        
+                        id_auto: p.id_auto,
+                        data_inizio: p.data_inizio,
+                        data_fine: p.data_fine,
+                        totale_giorni: p.totale_giorni,
+                        prezzo_totale: p.prezzo_totale,
+                        id_pacchetto: p.id_pacchetto,
+                        data_creazione: p.data_creazione,
+                        marca: p.marca,
+                        modello: p.modello,
+                        nome_pacchetto: p.nome_pacchetto,
+                        email_utente: p.email_utente
+                    }
+                ));
+                resolve(prenotazioni);
             }
         })
     })
@@ -419,7 +523,23 @@ exports.getPrenotazioniByUserId = async (id_utente) => {
             if(err){
                 reject(err);
             } else{
-                resolve(rows);
+                let prenotazioni = rows.map((p) => (
+                    {
+                        id: p.id,
+                        id_utente: p.id_utente,
+                        id_auto: p.id_auto,
+                        data_inizio: p.data_inizio,
+                        data_fine: p.data_fine,
+                        totale_giorni: p.totale_giorni,
+                        prezzo_totale: p.prezzo_totale,
+                        id_pacchetto: p.id_pacchetto,
+                        data_creazione: p.data_creazione,
+                        marca: p.marca,
+                        modello: p.modello,
+                        nome_pacchetto: p.nome_pacchetto 
+                    }
+                ));
+                resolve(prenotazioni);
             }
         })
     })
@@ -471,7 +591,16 @@ exports.getRecensioniHome = async () => {
             if(err){
                 reject(err);
             } else{
-                resolve(rows);
+                let recensioni = rows.map((r) => (
+                    {
+                        id: r.id,
+                        id_utente: r.id_utente,
+                        voto: r.voto,
+                        commento: r.commento,
+                        data: r.data
+                    }
+                ));
+                resolve(recensioni);
             }
         })
     })            
@@ -487,7 +616,16 @@ exports.getAllRecensioni = async () => {
             if(err){
                 reject(err);
             } else{
-                resolve(rows);
+                let recensioni = rows.map((r) => (
+                    {
+                        id: r.id,
+                        id_utente: r.id_utente,
+                        voto: r.voto,
+                        commento: r.commento,
+                        data: r.data
+                    }
+                ));
+                resolve(recensioni);
             }
         })
     })            
