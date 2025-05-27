@@ -9,6 +9,18 @@ document.getElementById('verifica_disponibilita').addEventListener('click', asyn
 
     alertDiv.style.display = 'none';
 
+    
+    const oggi = new Date();
+    if (new Date(data_inizio) < oggi || new Date(data_fine) < oggi) {
+        alert('Le date di prenotazione non possono essere nel passato.');
+        return;
+    }
+
+    if(new Date(data_inizio) > new Date(data_fine)) {
+        alert('La data di inizio deve essere precedente alla data di fine.');
+        return;
+    }
+
     try {
         const response = await fetch('/prenotazioni/controllo_disponibilita', {
             method: 'POST',

@@ -9,7 +9,6 @@ document.getElementById('prenota_button').addEventListener('click', async () => 
     const totale_giorni = document.getElementById('contatore_giorni').textContent;
     const prezzo_totale = document.getElementById('prezzo_totale').textContent.replace('€', '').replace(',', '.');
 
-    console.log("ID Auto: " + id_auto);
 
     try {
         const response = await fetch('/prenotazioni/crea_prenotazione', {
