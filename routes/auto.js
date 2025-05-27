@@ -9,11 +9,11 @@ const { isAuth, isAdmin } = require("../public/js/auth")
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/uploads'); 
+        cb(null, 'public/uploads');
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname)); 
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
     }
 });
 
@@ -81,7 +81,7 @@ router.post("/dashboard/deleteAuto/:id", async (req, res) => {
 });
 
 router.post("/dashboard/addAuto", upload.single('immagine'), async (req, res) => {
-    if (!isAuth(req) || !isAdmin(req))  {
+    if (!isAuth(req) || !isAdmin(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
@@ -114,14 +114,14 @@ router.post("/dashboard/addAuto", upload.single('immagine'), async (req, res) =>
     }
 });
 
-router.post("/dashboard/updateAuto/:id", [
+router.post("/dashboard/updateAuto/:id", upload.single('immagine'), [
     check('marca').notEmpty(),
     check('modello').notEmpty(),
     check('tipologia').notEmpty(),
     check('velocita').notEmpty(),
     check('cavalli').notEmpty(),
     check('prezzo_giornaliero').notEmpty(),
-    check('carburante').notEmpty()  
+    check('carburante').notEmpty()
 ], async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
@@ -142,7 +142,11 @@ router.post("/dashboard/updateAuto/:id", [
     }
 
     try {
-        await dao.updateAuto(req.params.id, req.body);
+        const autoEsistente = await dao.getAutoById(req.params.id);
+
+        const immagine = req.file ? `/uploads/${req.file.filename}` : autoEsistente.immagine;
+
+        await dao.updateAuto(req.params.id, req.body, immagine);
         return res.redirect("/dashboard?alert=elencoAuto&message=Auto modificata con successo");
     } catch (error) {
         console.log("Errore durante l'aggiornamento dell'auto:", error);
@@ -219,7 +223,7 @@ router.get("/prenotazione/getAuto/:id", async (req, res) => {
         if (auto) {
             return res.render("prenotazione", {
                 isAuth: req.isAuthenticated(),
-                user: req.user,                
+                user: req.user,
                 auto: auto,
                 pacchetti: pacchetti,
                 alert: "",
@@ -238,7 +242,7 @@ router.get("/prenotazione/getAuto/:id", async (req, res) => {
             isAuth: req.isAuthenticated(),
             alert: "errore",
             message: "Errore durante il recupero dell'auto.",
-            user: req.user || {ruolo: 0},
+            user: req.user || { ruolo: 0 },
             preferite_user: preferite_user,
         });
     }

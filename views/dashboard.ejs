@@ -90,20 +90,16 @@
                     <div class="container p-0 d-flex flex-column gap-2">
                         <p>ciao</p>
                     </div>
-                <% } else if (view === 'inserimentoAuto') { %>
-                    <%- include('./components/dashboard_components/inserimentoAuto') %>
+                <% } else if (view === 'inserimentoAuto' || view === 'modificaAuto') { %>
+                    <%- include('./components/dashboard_components/auto_form', { auto: view === 'modificaAuto' ? auto : null }) %>
+                <% } else if (view === 'inserimentoPacchetto' || view === 'modificaPacchetto') { %>
+                    <%- include('./components/dashboard_components/pacchetto_form', { pacchetto: view === 'modificaPacchetto' ? pacchetto : null }) %>
                 <% } else if (view === 'elencoAuto') { %>
-                    <%- include('./components/dashboard_components/elencoAuto', { auto }) %>
-                <% } else if (view === 'modificaAuto') { %>
-                    <%- include('./components/dashboard_components/modificaAuto', { auto }) %>
+                    <%- include('./components/dashboard_components/elencoAuto', { auto }) %>            
                 <% } else if (view === 'autoPreferite') { %>
                     <%- include('./components/dashboard_components/elencoAutoPreferite', {auto, preferite_user }) %>
                 <% } else if (view === 'elencoPacchetti') { %>
                     <%- include('./components/dashboard_components/elencoPacchetti', {pacchetti}) %>
-                <% } else if (view === 'inserimentoPacchetto') { %>
-                    <%- include('./components/dashboard_components/inserimentoPacchetto') %>
-                <% } else if (view === 'modificaPacchetto') { %>
-                    <%- include('./components/dashboard_components/modificaPacchetto', {pacchetto}) %>
                 <% } else if (view === 'prenotazioniUtente' || view === 'allPrenotazioni') { %>
                     <%- include('./components/dashboard_components/elencoPrenotazioni', {prenotazioni}) %>
                 <% } %>

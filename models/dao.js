@@ -151,15 +151,16 @@ exports.getAutoPreferite = async () => {
     })
 }
 
-exports.updateAuto = async (id, auto) => {
+exports.updateAuto = async (id, auto, immagine) => {
     const sql = `
         UPDATE auto
-        SET marca = ?, modello = ?, tipologia = ?, velocita = ?, cavalli = ?, prezzo_giornaliero = ?, carburante = ?
+        SET marca = ?, modello = ?, immagine = ?, tipologia = ?, velocita = ?, cavalli = ?, prezzo_giornaliero = ?, carburante = ?
         WHERE id = ?
     `;
     const params = [
         auto.marca, 
         auto.modello, 
+        immagine,
         auto.tipologia, 
         auto.velocita, 
         auto.cavalli, 
