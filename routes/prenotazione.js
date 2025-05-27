@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const dao = require("../models/dao")
 const { check, validationResult } = require("express-validator")
-const { isAuth } = require('../public/js/auth')
+const { isAuth, isAdmin } = require('../public/js/auth')
 
 router.post("/prenotazioni/controllo_disponibilita", [
     check("data_inizio").notEmpty(),
@@ -63,6 +63,9 @@ router.post("/dashboard/deletePrenotazione/:id", async (req, res) => {
     const id = req.params.id;
     try {
         await dao.deletePrenotazione(id);
+        if( isAdmin(req) ) {
+            return res.redirect("/dashboard?alert=allPrenotazioni&message=Prenotazione eliminata con successo.");
+        }
         return res.redirect("/dashboard?alert=prenotazioniUtente&message=Prenotazione eliminata con successo.");
     } catch (error) {
         console.log("Errore durante l'eliminazione della prenotazione:", error);
