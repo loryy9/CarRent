@@ -11,12 +11,13 @@ document.getElementById('verifica_disponibilita').addEventListener('click', asyn
 
     
     const oggi = new Date();
-    if (new Date(data_inizio) < oggi || new Date(data_fine) < oggi) {
+    oggi.setHours(0, 0, 0, 0);
+    if (new Date(data_inizio).setHours(0,0,0,0) < oggi || new Date(data_fine).setHours(0,0,0,0) < oggi) {
         alert('Le date di prenotazione non possono essere nel passato.');
         return;
     }
 
-    if(new Date(data_inizio) > new Date(data_fine)) {
+    if(new Date(data_inizio).setHours(0,0,0,0) > new Date(data_fine).setHours(0,0,0,0)) {
         alert('La data di inizio deve essere precedente alla data di fine.');
         return;
     }
