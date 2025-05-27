@@ -3,9 +3,10 @@ const express = require("express")
 const router = express.Router()
 const dao = require("../models/dao")
 const { check, validationResult } = require("express-validator")
+const { isAuth, isAdmin } = require("../public/js/auth")
 
 router.get("/dashboard/getPacchetto/:id", async (req, res) => {
-    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+    if (!isAuth(req) || !isAdmin(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
@@ -58,6 +59,9 @@ router.post("/dashboard/addPacchetto", [
             view: "inserimentoPacchetto"
         })
     }
+    if (!isAuth(req) || !isAdmin(req)) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+    }
 
     try {
         await dao.newPacchetto(
@@ -83,7 +87,7 @@ router.post("/dashboard/addPacchetto", [
 })
 
 router.post("/dashboard/deletePacchetto/:id", async (req, res) => {
-    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+    if (!isAuth(req) || !isAdmin(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
@@ -119,6 +123,9 @@ router.post("/dashboard/updatePacchetto/:id", [
             user: req.user,
             view: "inserimentoPacchetto",
         });
+    }
+    if (!isAuth(req) || !isAdmin(req)) {
+        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
     try {

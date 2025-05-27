@@ -3,13 +3,14 @@ const express = require('express')
 const router = express.Router()
 const dao = require("../models/dao")
 const { check, validationResult } = require("express-validator")
+const { isAuth } = require('../public/js/auth')
 
 router.post("/prenotazioni/controllo_disponibilita", [
     check("data_inizio").notEmpty(),
     check("data_fine").notEmpty(),
     check("id_auto").notEmpty()
 ], async (req, res) => {   
-    if (!req.isAuthenticated()) {
+    if (!isAuth(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     } 
     const errors = validationResult(req)
@@ -35,7 +36,7 @@ router.post("/prenotazioni/crea_prenotazione", [
     check("totale_giorni").notEmpty(),
     check("prezzo_totale").notEmpty()
 ], async (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (!isAuth(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
     const errors = validationResult(req)
@@ -55,7 +56,7 @@ router.post("/prenotazioni/crea_prenotazione", [
 })
 
 router.post("/dashboard/deletePrenotazione/:id", async (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (!isAuth(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 

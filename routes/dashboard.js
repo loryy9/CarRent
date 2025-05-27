@@ -1,11 +1,12 @@
 'use strict'
 const express = require("express")
 const router = express.Router()
-const dao = require("../models/dao")
+const dao = require("../models/dao");
+const { isAuth } = require("../public/js/auth");
 
 
 router.get('/dashboard', async (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (!isAuth(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 

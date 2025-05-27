@@ -1,11 +1,12 @@
 'use strict'
 const express = require("express")
 const router = express.Router()
-const passport = require("../models/passport")
+const passport = require("../models/passport");
+const { isAuth } = require("../public/js/auth");
 
 
 router.get("/login", (req, res) => {
-    if(req.isAuthenticated()) {
+    if (isAuth(req)) {
         return res.redirect("/");
     }
 

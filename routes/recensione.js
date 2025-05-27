@@ -2,6 +2,7 @@
 const express = require("express")
 const router = express.Router()
 const dao = require("../models/dao")
+const { isAuth } = require('../public/js/auth')
 
 router.get('/recensioni', async (req, res) => {
     const { alert } = req.query
@@ -16,7 +17,7 @@ router.get('/recensioni', async (req, res) => {
 })
 
 router.post('/recensioni/add' , async (req, res) => {   
-    if (!req.isAuthenticated()) {
+    if (!isAuth(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
     const { commento, voto } = req.body

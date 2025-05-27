@@ -5,6 +5,7 @@ const dao = require("../models/dao")
 const { check, validationResult } = require("express-validator")
 const multer = require('multer');
 const path = require('path');
+const { isAuth, isAdmin } = require("../public/js/auth")
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -21,7 +22,7 @@ const upload = multer({
 });
 
 router.get("/dashboard/getAuto/:id", async (req, res) => {
-    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+    if (!isAuth(req) || !isAdmin(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
@@ -59,7 +60,7 @@ router.get("/dashboard/getAuto/:id", async (req, res) => {
 });
 
 router.post("/dashboard/deleteAuto/:id", async (req, res) => {
-    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+    if (!isAuth(req) || !isAdmin(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
@@ -80,7 +81,7 @@ router.post("/dashboard/deleteAuto/:id", async (req, res) => {
 });
 
 router.post("/dashboard/addAuto", upload.single('immagine'), async (req, res) => {
-    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+    if (!isAuth(req) || !isAdmin(req))  {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
@@ -122,7 +123,7 @@ router.post("/dashboard/updateAuto/:id", [
     check('prezzo_giornaliero').notEmpty(),
     check('carburante').notEmpty()  
 ], async (req, res) => {
-    if (!req.isAuthenticated() || req.user.ruolo != 1) {
+    if (!isAuth(req) || !isAdmin(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
@@ -157,7 +158,7 @@ router.post("/dashboard/updateAuto/:id", [
 });
 
 router.post("/addAutoPreferita/:id", async (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (!isAuth(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
@@ -185,7 +186,7 @@ router.post("/addAutoPreferita/:id", async (req, res) => {
 })
 
 router.post("/removeAutoPreferita/:id", async (req, res) => {
-    if (!req.isAuthenticated) {
+    if (!isAuth(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
@@ -207,7 +208,7 @@ router.post("/removeAutoPreferita/:id", async (req, res) => {
 })
 
 router.get("/prenotazione/getAuto/:id", async (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (!isAuth(req)) {
         return res.redirect('/login?alert=errore&errorType=non_autorizzato');
     }
 
