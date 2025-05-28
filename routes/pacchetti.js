@@ -32,11 +32,7 @@ router.get("/getPacchetto/:id", async (req, res) => {
     } catch (error) {
         console.log("Errore durante il recupero del pacchetto:", error);
         req.flash("error_msg", "Errore durante il recupero del pacchetto.");
-        return res.render("dashboard", {
-                isAuth: req.isAuthenticated(),
-                user: req.user,
-                view: ""
-            });
+        return res.redirect("/dashboard/elencoPacchetti");
     }
 })
 
@@ -49,11 +45,7 @@ router.post("/addPacchetto", [
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array())
         req.flash("error_msg", "Campi non validi, riprovare.");
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: "inserimentoPacchetto"
-        })
+        return res.redirect("/dashboard/inserimentoPacchetto");
     }
     if (!isAuth(req) || !isAdmin(req)) {
         req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
@@ -68,11 +60,7 @@ router.post("/addPacchetto", [
     } catch (error) {
         console.log("Errore durante l'inserimento del pacchetto: ", error);
         req.flash("error_msg", "Errore durante l'inserimento del pacchetto.");
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: "inserimentoPacchetto"
-        })
+        res.redirect("/dashboard/inserimentoPacchetto");
     }
 })
 
@@ -90,11 +78,7 @@ router.post("/deletePacchetto/:id", async (req, res) => {
     } catch (error) {
         console.log("Errore durante l'eliminazione del pacchetto:", error);
         req.flash("error_msg", "Errore durante l'eliminazione del pacchetto.");
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: ""
-        });
+        return res.redirect("/dashboard/elencoPacchetti");
     }
 })
 
@@ -107,11 +91,7 @@ router.post("/updatePacchetto/:id", [
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array());
         req.flash("error_msg", "Campi non validi, riprovare.");
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: "inserimentoPacchetto"
-        });
+        return res.redirect(`/dashboard/modificaPacchetto/${req.params.id}`);
     }
     
     if (!isAuth(req) || !isAdmin(req)) {
@@ -126,11 +106,7 @@ router.post("/updatePacchetto/:id", [
     } catch (error) {
         console.log("Errore durante l'aggiornamento del pacchetto: ", error);
         req.flash("error_msg", "Errore durante l'aggiornamento del pacchetto.");
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: "inserimentoPacchetto"
-        });
+        return res.redirect(`/dashboard/modificaPacchetto/${req.params.id}`);
     }
 });
 

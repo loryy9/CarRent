@@ -2,7 +2,7 @@
 
 setTimeout(() => {
     const toast = document.querySelector('.toast-notification');
-    if (toast){
+    if (toast) {
         toast.style.animation = 'fadeOut 0.5s forwards';
         setTimeout(() => {
             toast.remove();

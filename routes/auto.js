@@ -78,10 +78,25 @@ router.post("/deleteAuto/:id", async (req, res) => {
     }
 });
 
-router.post("/addAuto", upload.single('immagine'), async (req, res) => {
+router.post("/addAuto", upload.single('immagine'), [
+    check('marca').notEmpty(),
+    check('modello').notEmpty(),
+    check('tipologia').notEmpty(),
+    check('velocita').notEmpty(),
+    check('cavalli').notEmpty(),
+    check('prezzo_giornaliero').notEmpty(),
+    check('carburante').notEmpty()
+], async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
         req.flash("error_msg", "Non sei autorizzato a inserire un'auto.");
         return res.redirect('/login');
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log("Errori di validazione:", errors.array());
+        req.flash("error_msg", "Campi non validi, riprovare.");
+        return res.redirect("/dashboard/inserimentoAuto");
     }
 
     const { marca, modello, tipologia, velocita, cavalli, prezzo_giornaliero, carburante } = req.body;
@@ -105,11 +120,7 @@ router.post("/addAuto", upload.single('immagine'), async (req, res) => {
     } catch (error) {
         console.error("Errore durante l'inserimento dell'auto:", error);
         req.flash("error_msg", "Errore durante l'inserimento dell'auto.");
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: "inserimentoAuto"
-        });
+        return res.redirect("/dashboard/inserimentoAuto");
     }
 });
 
@@ -130,14 +141,8 @@ router.post("/updateAuto/:id", upload.single('immagine'), [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array());
-        const auto = await dao.getAutoById(req.params.id);
         req.flash("error_msg", "Campi non validi, riprovare.");
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: "modificaAuto",
-            auto: auto
-        });
+        return res.redirect("/dashboard/modificaAuto/" + req.params.id);
     }
 
     try {
@@ -151,12 +156,7 @@ router.post("/updateAuto/:id", upload.single('immagine'), [
     } catch (error) {
         console.log("Errore durante l'aggiornamento dell'auto:", error);
         req.flash("error_msg", "Errore durante l'aggiornamento dell'auto.");
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: "modificaAuto",
-            auto: req.body
-        });
+        return res.redirect("/dashboard/modificaAuto/" + req.params.id);
     }
 });
 
@@ -180,11 +180,7 @@ router.post("/addAutoPreferita/:id", async (req, res) => {
         return res.redirect(req.headers.referer || '/catalogo')
     } catch (error) {
         req.flash("error_msg", "Errore durante l'aggiunta dell'auto preferita.");
-        return res.render("index", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: ""
-        })
+        return res.redirect(req.headers.referer || '/catalogo');
     }
 })
 
@@ -202,11 +198,7 @@ router.post("/removeAutoPreferita/:id", async (req, res) => {
         return res.redirect(req.headers.referer || '/catalogo')
     } catch (error) {
         req.flash("error_msg", "Errore durante la rimozione dell'auto preferita.");
-        return res.render("index", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: ""
-        })
+        return res.redirect(req.headers.referer || '/catalogo');
     }
 })
 
@@ -232,16 +224,8 @@ router.get("/prenotazione/getAuto/:id", async (req, res) => {
         }
     } catch (error) {
         console.log("Errore durante il recupero dell'auto:", error);
-        let preferite_user = []
-        if (req.user) {
-            preferite_user = await dao.getPreferiteByUserId(req.user.id);
-        }
         req.flash("error_msg", "Errore durante il recupero dell'auto.");
-        return res.render("catalogo", {
-            isAuth: req.isAuthenticated(),
-            user: req.user || { ruolo: 0 },
-            preferite_user: preferite_user,
-        });
+        return res.redirect("/catalogo")
     }
 });
 

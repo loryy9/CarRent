@@ -38,6 +38,25 @@ router.get('/dashboard/inserimentoAuto', async (req, res) => {
     });
 });
 
+router.get('/dashboard/modificaAuto/:id', async (req, res) => {
+    if (!isAuth(req) || !isAdmin(req)) {
+        req.flash("error_msg", "Non sei autorizzato ad accedere a questa sezione.");
+        return res.redirect('/dashboard');
+    }
+
+    const auto = await dao.getAutoById(req.params.id);
+    
+    res.render('dashboard', { 
+        user: req.user,
+        view: 'modificaAuto',
+        isAuth: true,
+        auto,
+        preferite_user: [],
+        pacchetti: [],
+        prenotazioni: []
+    });
+});
+
 router.get('/dashboard/elencoAuto', async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
         req.flash("error_msg", "Non sei autorizzato ad accedere a questa sezione.");
@@ -116,13 +135,31 @@ router.get('/dashboard/inserimentoPacchetto', async (req, res) => {
         req.flash("error_msg", "Non sei autorizzato ad accedere a questa sezione.");
         return res.redirect('/dashboard');
     }
-
+    
     res.render('dashboard', { 
         user: req.user,
         view: 'inserimentoPacchetto',
         isAuth: true,
-        auto: [],
+        pacchetto: [],
         preferite_user: [],
+        prenotazioni: []
+    });
+});
+
+router.get('/dashboard/modificaPacchetto/:id', async (req, res) => {
+    if (!isAuth(req) || !isAdmin(req)) {
+        req.flash("error_msg", "Non sei autorizzato ad accedere a questa sezione.");
+        return res.redirect('/dashboard');
+    }
+
+    const pacchetto = await dao.getPacchettoById(req.params.id);
+    
+    res.render('dashboard', { 
+        user: req.user,
+        view: 'modificaPacchetto',
+        isAuth: true,
+        preferite_user: [],
+        pacchetto,
         prenotazioni: []
     });
 });
