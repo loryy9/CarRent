@@ -46,8 +46,7 @@ router.get('/catalogo', async (req, res) => {
         });
     } catch (err) {
         console.error(err);
-        req.session.alert = "errore";
-        req.session.message = "Si è verificato un errore durante il caricamento del catalogo.";
+        req.flash("error_msg", "Errore durante il caricamento del catalogo.");
         return res.redirect('/');
     }
 });

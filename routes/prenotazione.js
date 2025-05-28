@@ -11,8 +11,7 @@ router.post("/prenotazioni/controllo_disponibilita", [
     check("id_auto").notEmpty()
 ], async (req, res) => {   
     if (!isAuth(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Accesso non autorizzato. Effettua il login.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");  
         return res.redirect('/login');
     } 
     const errors = validationResult(req)
@@ -39,8 +38,7 @@ router.post("/prenotazioni/crea_prenotazione", [
     check("prezzo_totale").notEmpty()
 ], async (req, res) => {
     if (!isAuth(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Accesso non autorizzato. Effettua il login.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
     const errors = validationResult(req)
@@ -59,28 +57,23 @@ router.post("/prenotazioni/crea_prenotazione", [
     }
 })
 
-router.post("/dashboard/deletePrenotazione/:id", async (req, res) => {
+router.post("/deletePrenotazione/:id", async (req, res) => {
     if (!isAuth(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Accesso non autorizzato. Effettua il login.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
 
     const id = req.params.id;
     try {
         await dao.deletePrenotazione(id);
+        req.flash("success_msg", "Prenotazione eliminata con successo.");
         if (isAdmin(req)) {
-            req.session.alert = "allPrenotazioni";
-            req.session.message = "Prenotazione eliminata con successo.";
-            return res.redirect("/dashboard");
+            return res.redirect("/dashboard/allPrenotazioni");
         }
-        req.session.alert = "prenotazioniUtente";
-        req.session.message = "Prenotazione eliminata con successo.";
-        return res.redirect("/dashboard");
+        return res.redirect("/dashboard/prenotazioniUtente");
     } catch (error) {
         console.log("Errore durante l'eliminazione della prenotazione:", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante l'eliminazione della prenotazione";
+        req.flash("error_msg", "Errore durante l'eliminazione della prenotazione.");
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             user: req.user,

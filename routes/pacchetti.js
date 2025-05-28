@@ -5,10 +5,9 @@ const dao = require("../models/dao")
 const { check, validationResult } = require("express-validator")
 const { isAuth, isAdmin } = require("../public/js/auth")
 
-router.get("/dashboard/getPacchetto/:id", async (req, res) => {
+router.get("/getPacchetto/:id", async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
 
@@ -23,8 +22,7 @@ router.get("/dashboard/getPacchetto/:id", async (req, res) => {
                 pacchetto
             });
         } else {
-            req.session.alert = "errore";
-            req.session.message = "Pacchetto non trovato.";
+            req.flash("error_msg", "Pacchetto non trovato.");
             return res.render("dashboard", {
                 isAuth: req.isAuthenticated(),
                 user: req.user,
@@ -33,8 +31,7 @@ router.get("/dashboard/getPacchetto/:id", async (req, res) => {
         }
     } catch (error) {
         console.log("Errore durante il recupero del pacchetto:", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante il recupero del pacchetto.";
+        req.flash("error_msg", "Errore durante il recupero del pacchetto.");
         return res.render("dashboard", {
                 isAuth: req.isAuthenticated(),
                 user: req.user,
@@ -43,7 +40,7 @@ router.get("/dashboard/getPacchetto/:id", async (req, res) => {
     }
 })
 
-router.post("/dashboard/addPacchetto", [
+router.post("/addPacchetto", [
     check('nome').notEmpty(),
     check('descrizione').notEmpty(),
     check('prezzo').notEmpty(),
@@ -51,8 +48,7 @@ router.post("/dashboard/addPacchetto", [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array())
-        req.session.alert = "errore";
-        req.session.message = "Campi non validi, riprovare.";
+        req.flash("error_msg", "Campi non validi, riprovare.");
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             user: req.user,
@@ -60,24 +56,18 @@ router.post("/dashboard/addPacchetto", [
         })
     }
     if (!isAuth(req) || !isAdmin(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
 
     try {
         await dao.newPacchetto(req.body);
-        req.session.alert = "success";
-        req.session.message = "Pacchetto inserito con successo.";
-        return res.render("dashboard", {
-            isAuth: req.isAuthenticated(),
-            user: req.user,
-            view: "elencoPacchetti"
-        })
+        req.flash("success_msg", "Pacchetto inserito con successo.");
+        const pacchetti = await dao.getAllPacchetti();
+        res.redirect("/dashboard/elencoPacchetti");
     } catch (error) {
         console.log("Errore durante l'inserimento del pacchetto: ", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante l'inserimento del pacchetto.";
+        req.flash("error_msg", "Errore durante l'inserimento del pacchetto.");
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             user: req.user,
@@ -86,23 +76,20 @@ router.post("/dashboard/addPacchetto", [
     }
 })
 
-router.post("/dashboard/deletePacchetto/:id", async (req, res) => {
+router.post("/deletePacchetto/:id", async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
 
     const id = req.params.id;
     try {
         await dao.deletePacchetto(id);
-        req.session.alert = "elencoPacchetti";
-        req.session.message = "Pacchetto eliminato con successo";
-        return res.redirect("/dashboard");
+        req.flash("success_msg", "Pacchetto eliminato con successo.");
+        return res.redirect("/dashboard/elencoPacchetti");
     } catch (error) {
         console.log("Errore durante l'eliminazione del pacchetto:", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante l'eliminazione del pacchetto.";
+        req.flash("error_msg", "Errore durante l'eliminazione del pacchetto.");
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             user: req.user,
@@ -111,7 +98,7 @@ router.post("/dashboard/deletePacchetto/:id", async (req, res) => {
     }
 })
 
-router.post("/dashboard/updatePacchetto/:id", [
+router.post("/updatePacchetto/:id", [
     check('nome').notEmpty(),
     check('descrizione').notEmpty(),
     check('prezzo').notEmpty(),
@@ -119,8 +106,7 @@ router.post("/dashboard/updatePacchetto/:id", [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array());
-        req.session.alert = "errore";
-        req.session.message = "Campi non validi, riprovare.";
+        req.flash("error_msg", "Campi non validi, riprovare.");
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             user: req.user,
@@ -129,20 +115,17 @@ router.post("/dashboard/updatePacchetto/:id", [
     }
     
     if (!isAuth(req) || !isAdmin(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
 
     try {
         await dao.updatePacchetto(req.params.id, req.body);
-        req.session.alert = "elencoPacchetti";
-        req.session.message = "Pacchetto aggiornato con successo";
-        return res.redirect("/dashboard");
+        req.flash("success_msg", "Pacchetto aggiornato con successo.");
+        return res.redirect("/dashboard/elencoPacchetti");
     } catch (error) {
         console.log("Errore durante l'aggiornamento del pacchetto: ", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante l'aggiornamento del pacchetto.";
+        req.flash("error_msg", "Errore durante l'aggiornamento del pacchetto.");
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
             user: req.user,

@@ -6,21 +6,12 @@ const { isAuth, isAdmin } = require("../public/js/auth");
 
 router.get('/dashboard', async (req, res) => {
     if (!isAuth(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Accesso non autorizzato. Effettua il login.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
-
-    const alert = req.session.alert || '';
-    const message = req.session.message || '';
-    
-    delete req.session.alert;
-    delete req.session.message;
     
     res.render('dashboard', { 
-        user: req.user, 
-        alert,
-        message,
+        user: req.user,
         view: '',
         isAuth: true,
         auto: [],
@@ -32,8 +23,7 @@ router.get('/dashboard', async (req, res) => {
 
 router.get('/dashboard/inserimentoAuto', async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        req.flash("error_msg", "Non sei autorizzato ad accedere a questa sezione.");
         return res.redirect('/dashboard');
     }
     
@@ -50,8 +40,7 @@ router.get('/dashboard/inserimentoAuto', async (req, res) => {
 
 router.get('/dashboard/elencoAuto', async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        req.flash("error_msg", "Non sei autorizzato ad accedere a questa sezione.");
         return res.redirect('/dashboard');
     }
     
@@ -68,16 +57,14 @@ router.get('/dashboard/elencoAuto', async (req, res) => {
         });
     } catch (error) {
         console.error("Errore durante il recupero delle auto:", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante il recupero delle auto.";
+        req.flash("error_msg", "Errore durante il recupero delle auto.");
         return res.redirect('/dashboard');
     }
 });
 
 router.get('/dashboard/autoPreferite', async (req, res) => {
     if (!isAuth(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Accesso non autorizzato. Effettua il login.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
     
@@ -95,16 +82,14 @@ router.get('/dashboard/autoPreferite', async (req, res) => {
         });
     } catch (error) {
         console.error("Errore durante il recupero delle auto preferite:", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante il recupero delle auto preferite.";
+        req.flash("error_msg", "Errore durante il recupero delle auto preferite.");
         return res.redirect('/dashboard');
     }
 });
 
 router.get('/dashboard/elencoPacchetti', async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        req.flash("error_msg", "Non sei autorizzato ad accedere a questa sezione.");
         return res.redirect('/dashboard');
     }
     
@@ -121,34 +106,30 @@ router.get('/dashboard/elencoPacchetti', async (req, res) => {
         });
     } catch (error) {
         console.error("Errore durante il recupero dei pacchetti:", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante il recupero dei pacchetti.";
+        req.flash("error_msg", "Errore durante il recupero dei pacchetti.");
         return res.redirect('/dashboard');
     }
 });
 
 router.get('/dashboard/inserimentoPacchetto', async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        req.flash("error_msg", "Non sei autorizzato ad accedere a questa sezione.");
         return res.redirect('/dashboard');
     }
-    
+
     res.render('dashboard', { 
         user: req.user,
         view: 'inserimentoPacchetto',
         isAuth: true,
         auto: [],
         preferite_user: [],
-        pacchetti: [],
         prenotazioni: []
     });
 });
 
 router.get('/dashboard/prenotazioniUtente', async (req, res) => {
     if (!isAuth(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Accesso non autorizzato. Effettua il login.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
     
@@ -168,16 +149,14 @@ router.get('/dashboard/prenotazioniUtente', async (req, res) => {
         });
     } catch (error) {
         console.error("Errore durante il recupero delle prenotazioni:", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante il recupero delle prenotazioni.";
+        req.flash("error_msg", "Errore durante il recupero delle prenotazioni.");
         return res.redirect('/dashboard');
     }
 });
 
 router.get('/dashboard/allPrenotazioni', async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/dashboard');
     }
     
@@ -197,8 +176,7 @@ router.get('/dashboard/allPrenotazioni', async (req, res) => {
         });
     } catch (error) {
         console.error("Errore durante il recupero delle prenotazioni:", error);
-        req.session.alert = "errore";
-        req.session.message = "Errore durante il recupero di tutte le prenotazioni.";
+        req.flash("error_msg", "Errore durante il recupero delle prenotazioni.");
         return res.redirect('/dashboard');
     }
 });

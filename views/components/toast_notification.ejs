@@ -1,7 +1,15 @@
-<% if (locals.message && message) { %>
-    <div class="toast-notification <%= locals.alert && alert == 'errore' ? 'error' : 'success' %>">
+<% if (success_msg && success_msg.length > 0) { %>
+    <div class="toast-notification success %>">
         <div class="toast-message">
-            <p><%=message%></p>
+            <p><%= success_msg %></p>
+        </div>
+        <div class="line"></div>
+    </div>
+<% } %>
+<% if (error_msg && error_msg.length > 0) { %>
+    <div class="toast-notification error %>">
+        <div class="toast-message">
+            <p><%= error_msg %></p>
         </div>
         <div class="line"></div>
     </div>

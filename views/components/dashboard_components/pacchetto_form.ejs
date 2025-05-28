@@ -1,4 +1,4 @@
-<form action="<%= pacchetto ? `/dashboard/updatePacchetto/${pacchetto.id}` : '/dashboard/addPacchetto' %>" method="POST" class="bg-dark text-white p-5 rounded shadow-lg col-lg-6 mx-auto mt-5">
+<form action="<%= pacchetto ? `/updatePacchetto/${pacchetto.id}` : '/addPacchetto' %>" method="POST" class="bg-dark text-white p-5 rounded shadow-lg col-lg-6 mx-auto mt-5">
     <h3 class="text-warning mb-4 text-center"><%= pacchetto ? 'Modifica Pacchetto' : 'Inserisci un nuovo pacchetto' %></h3>
 
     <div class="row g-3">

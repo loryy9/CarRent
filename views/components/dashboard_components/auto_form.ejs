@@ -1,4 +1,4 @@
-<form action="<%= auto ? `/dashboard/updateAuto/${auto.id}` : '/dashboard/addAuto' %>" method="POST" enctype="multipart/form-data" class="bg-dark text-white p-5 rounded shadow-lg col-lg-8 mx-auto mt-5">
+<form action="<%= auto ? `/updateAuto/${auto.id}` : '/addAuto' %>" method="POST" enctype="multipart/form-data" class="bg-dark text-white p-5 rounded shadow-lg col-lg-8 mx-auto mt-5">
     <h3 class="text-warning mb-4 text-center"><%= auto ? 'Modifica Auto' : 'Inserisci una nuova auto' %></h3>
 
     <div class="row g-3">

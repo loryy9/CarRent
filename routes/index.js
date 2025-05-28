@@ -4,12 +4,6 @@ const router = express.Router()
 const dao = require("../models/dao")
 
 router.get('/', async (req, res) => {
-    const alert = req.session.alert || '';
-    const message = req.session.message || '';
-    
-    delete req.session.alert;
-    delete req.session.message;
-    
     try {
         let preferite_user = []
         if (req.user) {
@@ -20,8 +14,6 @@ router.get('/', async (req, res) => {
         let recensioni = await dao.getRecensioniHome();
         
         res.render('index', { 
-            alert, 
-            message, 
             top_auto, 
             preferite_user, 
             recensioni, 
@@ -30,8 +22,7 @@ router.get('/', async (req, res) => {
         });
     } catch (error) {
         console.error("Errore nella pagina principale:", error);
-        req.session.alert = "errore";
-        req.session.message = "Si è verificato un errore durante il caricamento della pagina.";
+        req.flash("error_msg", "Errore durante il caricamento della pagina principale.");
         res.redirect('/'); 
     }
 });

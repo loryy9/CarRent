@@ -12,13 +12,7 @@ router.get("/registrazione", (req, res) => {
         return res.redirect("/");
     }
     
-    const alert = req.session.alert || '';
-    const message = req.session.message || '';
-    
-    delete req.session.alert;
-    delete req.session.message;
-    
-    res.render("registrazione", { alert, message, isAuth: req.isAuthenticated() });
+    res.render("registrazione", { isAuth: req.isAuthenticated() });
 })
 
 router.post("/registrazione", [
@@ -31,8 +25,7 @@ router.post("/registrazione", [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array());
-        req.session.alert = "errore";
-        req.session.message = "Campi non validi, riprovare.";
+        req.flash("error_msg", "Campi non validi, riprovare."); 
         
         return res.render("registrazione", { 
             isAuth: req.isAuthenticated(),
@@ -47,15 +40,12 @@ router.post("/registrazione", [
             cryptoPwd
         );
         
-        req.session.alert = "success";
-        req.session.message = "Registrazione effettuata con successo.";
-        
+        req.flash("success_msg", "Registrazione effettuata con successo.");        
         return res.redirect("/");
     } catch (error) {
         console.log("Errore durante la registrazione: ", error);
         
-        req.session.alert = "errore";
-        req.session.message = "Errore durante la registrazione. Potrebbe essere che l'email sia già in uso.";
+        req.flash("error_msg", "Errore durante la registrazione");
         
         return res.render("registrazione", { 
             isAuth: req.isAuthenticated(),

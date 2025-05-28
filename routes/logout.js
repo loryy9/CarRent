@@ -7,21 +7,18 @@ const router = express.Router();
 
 router.get('/logout', (req, res, next) => {
     if (!isAuth(req)) {
-        req.session.alert = "errore";
-        req.session.message = "Devi effettuare il login prima di poter fare logout.";
+        req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
     
     req.logout((err) => {
         if (err) {
             console.error('Errore durante il logout:', err);
-            req.session.alert = "errore";
-            req.session.message = "Si è verificato un errore durante il logout.";
+            req.flash("error_msg", "Si è verificato un errore durante il logout.");
             return res.redirect('/');
         }
         
-        req.session.alert = "success";
-        req.session.message = "Logout effettuato con successo.";
+        req.flash("success_msg", "Logout effettuato con successo.");
         return res.redirect('/login');
     });
 });

@@ -8,14 +8,8 @@ router.get("/login", (req, res) => {
     if (isAuth(req)) {
         return res.redirect("/");
     }
-
-    const alert = req.session.alert || '';
-    const message = req.session.message || '';
     
-    delete req.session.alert;
-    delete req.session.message;
-    
-    res.render("login", { alert, message, isAuth: req.isAuthenticated() });
+    res.render("login", { isAuth: req.isAuthenticated() });
 });
 
 router.post('/login', (req, res, next) => {
@@ -25,8 +19,7 @@ router.post('/login', (req, res, next) => {
         }
         
         if (!utente) {
-            req.session.alert = "errore";
-            req.session.message = "Credenziali errate.";
+            req.flash("error_msg", "Credenziali errate.");
             return res.redirect('/login');
         }
         
@@ -35,9 +28,7 @@ router.post('/login', (req, res, next) => {
                 return next(err);
             }
             
-            req.session.alert = "success";
-            req.session.message = "Login effettuato con successo.";
-            
+            req.flash("success_msg", "Login effettuato con successo.");            
             return res.redirect("/");
         });
     })(req, res, next);
