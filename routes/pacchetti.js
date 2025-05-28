@@ -7,40 +7,40 @@ const { isAuth, isAdmin } = require("../public/js/auth")
 
 router.get("/dashboard/getPacchetto/:id", async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        return res.redirect('/login');
     }
 
     const id = req.params.id;
-        try {
-            const pacchetto = await dao.getPacchettoById(id);
-            if (pacchetto) {
-                return res.render("dashboard", {
-                    isAuth: req.isAuthenticated(),
-                    user: req.user,
-                    view: "modificaPacchetto",
-                    pacchetto,
-                    alert: "",
-                    message: ""
-                });
-            } else {
-                return res.render("dashboard", {
-                    isAuth: req.isAuthenticated(),
-                    alert: "errore",
-                    message: "Pacchetto non trovato.",
-                    user: req.user,
-                    view: ""
-                });
-            }
-        } catch (error) {
-            console.log("Errore durante il recupero del pacchetto:", error);
+    try {
+        const pacchetto = await dao.getPacchettoById(id);
+        if (pacchetto) {
             return res.render("dashboard", {
                 isAuth: req.isAuthenticated(),
-                alert: "errore",
-                message: "Errore durante il recupero del pacchetto.",
+                user: req.user,
+                view: "modificaPacchetto",
+                pacchetto
+            });
+        } else {
+            req.session.alert = "errore";
+            req.session.message = "Pacchetto non trovato.";
+            return res.render("dashboard", {
+                isAuth: req.isAuthenticated(),
                 user: req.user,
                 view: ""
             });
         }
+    } catch (error) {
+        console.log("Errore durante il recupero del pacchetto:", error);
+        req.session.alert = "errore";
+        req.session.message = "Errore durante il recupero del pacchetto.";
+        return res.render("dashboard", {
+                isAuth: req.isAuthenticated(),
+                user: req.user,
+                view: ""
+            });
+    }
 })
 
 router.post("/dashboard/addPacchetto", [
@@ -51,60 +51,64 @@ router.post("/dashboard/addPacchetto", [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array())
+        req.session.alert = "errore";
+        req.session.message = "Campi non validi, riprovare.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Campi non validi, riprovare.",
             user: req.user,
             view: "inserimentoPacchetto"
         })
     }
     if (!isAuth(req) || !isAdmin(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        return res.redirect('/login');
     }
 
     try {
-        await dao.newPacchetto(
-            req.body
-        );
+        await dao.newPacchetto(req.body);
+        req.session.alert = "success";
+        req.session.message = "Pacchetto inserito con successo.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "success",
-            message: "Pacchetto inserito con successo.",
             user: req.user,
-            view: "inserimentoPacchetto",
+            view: "elencoPacchetti"
         })
     } catch (error) {
         console.log("Errore durante l'inserimento del pacchetto: ", error);
+        req.session.alert = "errore";
+        req.session.message = "Errore durante l'inserimento del pacchetto.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Errore durante l'inserimento del pacchetto.",
             user: req.user,
-            view: "inserimentoPacchetto",
+            view: "inserimentoPacchetto"
         })
     }
 })
 
 router.post("/dashboard/deletePacchetto/:id", async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        return res.redirect('/login');
     }
 
     const id = req.params.id;
-        try {
-            await dao.deletePacchetto(id);
-            return res.redirect("/dashboard?alert=elencoPacchetti&message=Pacchetto eliminato con successo");
-        } catch (error) {
-            console.log("Errore durante l'eliminazione del pacchetto:", error);
-            return res.render("dashboard", {
-                isAuth: req.isAuthenticated(),
-                alert: "errore",
-                message: "Errore durante l'eliminazione del pacchetto.",
-                user: req.user,
-                view: ""
-            });
-        }
+    try {
+        await dao.deletePacchetto(id);
+        req.session.alert = "elencoPacchetti";
+        req.session.message = "Pacchetto eliminato con successo";
+        return res.redirect("/dashboard");
+    } catch (error) {
+        console.log("Errore durante l'eliminazione del pacchetto:", error);
+        req.session.alert = "errore";
+        req.session.message = "Errore durante l'eliminazione del pacchetto.";
+        return res.render("dashboard", {
+            isAuth: req.isAuthenticated(),
+            user: req.user,
+            view: ""
+        });
+    }
 })
 
 router.post("/dashboard/updatePacchetto/:id", [
@@ -115,34 +119,34 @@ router.post("/dashboard/updatePacchetto/:id", [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array());
-        
+        req.session.alert = "errore";
+        req.session.message = "Campi non validi, riprovare.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Campi non validi, riprovare.",
             user: req.user,
-            view: "inserimentoPacchetto",
+            view: "inserimentoPacchetto"
         });
     }
+    
     if (!isAuth(req) || !isAdmin(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato ad accedere a questa sezione.";
+        return res.redirect('/login');
     }
 
     try {
-        await dao.updatePacchetto(
-            req.params.id,
-            req.body
-        );
-        return res.redirect("/dashboard?alert=elencoPacchetti&message=Pacchetto aggiornato con successo");
+        await dao.updatePacchetto(req.params.id, req.body);
+        req.session.alert = "elencoPacchetti";
+        req.session.message = "Pacchetto aggiornato con successo";
+        return res.redirect("/dashboard");
     } catch (error) {
         console.log("Errore durante l'aggiornamento del pacchetto: ", error);
-        
+        req.session.alert = "errore";
+        req.session.message = "Errore durante l'aggiornamento del pacchetto.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Errore durante l'aggiornamento del pacchetto.",
             user: req.user,
-            view: "inserimentoPacchetto",
+            view: "inserimentoPacchetto"
         });
     }
 });

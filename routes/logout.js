@@ -5,18 +5,25 @@ const passport = require('passport');
 const { isAuth } = require('../public/js/auth');
 const router = express.Router();
 
-router.get('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
     if (!isAuth(req)) {
-        return res.redirect('/login?alert=errore&errorType=logout');
+        req.session.alert = "errore";
+        req.session.message = "Devi effettuare il login prima di poter fare logout.";
+        return res.redirect('/login');
     }
+    
     req.logout((err) => {
         if (err) {
             console.error('Errore durante il logout:', err);
-            return next(err);
+            req.session.alert = "errore";
+            req.session.message = "Si è verificato un errore durante il logout.";
+            return res.redirect('/');
         }
-        res.redirect('/login?alert=logout')
+        
+        req.session.alert = "success";
+        req.session.message = "Logout effettuato con successo.";
+        return res.redirect('/login');
     });
-
-})
+});
 
 module.exports = router;

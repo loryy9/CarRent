@@ -28,30 +28,30 @@
                     </li>
 
                     <li class="nav-item mb-2">
-                        <a href="/dashboard?alert=prenotazioniUtente" class="nav-link ">
+                        <a href="/dashboard/prenotazioniUtente" class="nav-link ">
                             <i class="fas fa-clipboard-list me-2"></i> Le tue prenotazioni
                         </a>
                     </li>
 
                     <li class="nav-item mb-2">
-                        <a href="/dashboard?alert=autoPreferite" class="nav-link ">
+                        <a href="/dashboard/autoPreferite" class="nav-link ">
                             <i class="fas fa-heart me-2"></i> Le tue auto preferite
                         </a>
                     </li>
                     <% } else if (user.ruolo==1) { %>
                     <!-- UTENTE ADMIN -->
                     <li class="nav-item mb-2">
-                        <a href="/dashboard?alert=elencoAuto" class="nav-link ">
+                        <a href="/dashboard/elencoAuto" class="nav-link ">
                             <i class="fas fa-car-side me-2"></i> Gestisci auto
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="/dashboard?alert=allPrenotazioni" class="nav-link ">
+                        <a href="/dashboard/allPrenotazioni" class="nav-link ">
                             <i class="fas fa-tasks me-2"></i> Visualizza prenotazioni
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="/dashboard?alert=elencoPacchetti" class="nav-link ">
+                        <a href="/dashboard/elencoPacchetti" class="nav-link ">
                             <i class="fas fa-tasks me-2"></i> Gestisci pacchetti
                         </a>
                     </li>
@@ -90,15 +90,15 @@
                     <div class="container p-0 d-flex flex-column gap-2">
                         <p>ciao</p>
                     </div>
-                <% } else if (view === 'inserimentoAuto' || view === 'modificaAuto') { %>
+                <% } else if (view == 'inserimentoAuto' || view === 'modificaAuto') { %>
                     <%- include('./components/dashboard_components/auto_form', { auto: view === 'modificaAuto' ? auto : null }) %>
-                <% } else if (view === 'inserimentoPacchetto' || view === 'modificaPacchetto') { %>
+                <% } else if (view == 'inserimentoPacchetto' || view === 'modificaPacchetto') { %>
                     <%- include('./components/dashboard_components/pacchetto_form', { pacchetto: view === 'modificaPacchetto' ? pacchetto : null }) %>
-                <% } else if (view === 'elencoAuto') { %>
+                <% } else if (view == 'elencoAuto') { %>
                     <%- include('./components/dashboard_components/elencoAuto', { auto }) %>            
-                <% } else if (view === 'autoPreferite') { %>
+                <% } else if (view == 'autoPreferite') { %>
                     <%- include('./components/dashboard_components/elencoAutoPreferite', {auto, preferite_user }) %>
-                <% } else if (view === 'elencoPacchetti') { %>
+                <% } else if (view == 'elencoPacchetti') { %>
                     <%- include('./components/dashboard_components/elencoPacchetti', {pacchetti}) %>
                 <% } else if (view === 'prenotazioniUtente' || view === 'allPrenotazioni') { %>
                     <%- include('./components/dashboard_components/elencoPrenotazioni', {prenotazioni}) %>
@@ -128,29 +128,29 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="/dashboard?alert=prenotazioniUtente" class="nav-link ">
+                    <a href="/dashboard/prenotazioniUtente" class="nav-link ">
                         <i class="fas fa-clipboard-list me-2"></i> Le tue prenotazioni
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="/dashboard?alert=autoPreferite" class="nav-link ">
+                    <a href="/dashboard/autoPreferite" class="nav-link ">
                         <i class="fas fa-heart me-2"></i> Le tue auto preferite
                     </a>
                 </li>
                 <% } else if (user.ruolo == 1) { %>
                 <!-- UTENTE ADMIN -->
                 <li class="nav-item mb-2">
-                    <a href="/dashboard?alert=elencoAuto" class="nav-link ">
+                    <a href="/dashboard/elencoAuto" class="nav-link ">
                         <i class="fas fa-car-side me-2"></i> Gestisci auto
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="/dashboard?alert=allPrenotazioni" class="nav-link ">
+                    <a href="/dashboard/allPrenotazioni" class="nav-link ">
                         <i class="fas fa-tasks me-2"></i> Visualizza prenotazioni
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="/dashboard?alert=elencoPacchetti" class="nav-link ">
+                    <a href="/dashboard/elencoPacchetti" class="nav-link ">
                         <i class="fas fa-tasks me-2"></i> Gestisci pacchetti
                     </a>
                 </li>

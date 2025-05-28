@@ -32,6 +32,20 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
+
+app.use((req, res, next) => {
+    res.locals.alert = req.session.alert;
+    res.locals.message = req.session.message;
+
+    // Dopo il rendering della view, cancella i messaggi
+    res.on('finish', () => {
+        delete req.session.alert;
+        delete req.session.message;
+    });
+
+    next();
+});
+
 app.use(passport.initialize())
 app.use(passport.session())
 

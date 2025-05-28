@@ -23,7 +23,9 @@ const upload = multer({
 
 router.get("/dashboard/getAuto/:id", async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato a visualizzare questa pagina.";
+        return res.redirect('/login');
     }
 
     const id = req.params.id;
@@ -34,25 +36,23 @@ router.get("/dashboard/getAuto/:id", async (req, res) => {
                 isAuth: req.isAuthenticated(),
                 user: req.user,
                 view: "modificaAuto",
-                auto: auto,
-                alert: "",
-                message: ""
+                auto: auto
             });
         } else {
+            req.session.alert = "errore";
+            req.session.message = "Auto non trovata.";
             return res.render("dashboard", {
                 isAuth: req.isAuthenticated(),
-                alert: "errore",
-                message: "Auto non trovata.",
                 user: req.user,
                 view: ""
             });
         }
     } catch (error) {
         console.log("Errore durante il recupero dell'auto:", error);
+        req.session.alert = "errore";
+        req.session.message = "Errore durante il recupero dell'auto.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Errore durante il recupero dell'auto.",
             user: req.user,
             view: ""
         });
@@ -61,19 +61,23 @@ router.get("/dashboard/getAuto/:id", async (req, res) => {
 
 router.post("/dashboard/deleteAuto/:id", async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato a eliminare questa auto.";
+        return res.redirect('/login');
     }
 
     const id = req.params.id;
     try {
         await dao.deleteAuto(id);
-        return res.redirect("/dashboard?alert=elencoAuto&message=Auto eliminata con successo");
+        req.session.alert = "elencoAuto";
+        req.session.message = "Auto eliminata con successo.";
+        return res.redirect("/dashboard");
     } catch (error) {
         console.log("Errore durante l'eliminazione dell'auto:", error);
+        req.session.alert = "errore";
+        req.session.message = "Errore durante l'eliminazione dell'auto.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Errore durante l'eliminazione dell'auto.",
             user: req.user,
             view: ""
         });
@@ -82,7 +86,9 @@ router.post("/dashboard/deleteAuto/:id", async (req, res) => {
 
 router.post("/dashboard/addAuto", upload.single('immagine'), async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato a inserire un'auto.";
+        return res.redirect('/login');
     }
 
     const { marca, modello, tipologia, velocita, cavalli, prezzo_giornaliero, carburante } = req.body;
@@ -101,13 +107,15 @@ router.post("/dashboard/addAuto", upload.single('immagine'), async (req, res) =>
             carburante
         });
 
-        return res.redirect("/dashboard?alert=elencoAuto&message=Auto inserita con successo");
+        req.session.alert = "elencoAuto";
+        req.session.message = "Auto inserita con successo.";
+        return res.redirect("/dashboard");
     } catch (error) {
         console.error("Errore durante l'inserimento dell'auto:", error);
+        req.session.alert = "errore";
+        req.session.message = "Errore durante l'inserimento dell'auto.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Errore durante l'inserimento dell'auto.",
             user: req.user,
             view: "inserimentoAuto"
         });
@@ -124,17 +132,19 @@ router.post("/dashboard/updateAuto/:id", upload.single('immagine'), [
     check('carburante').notEmpty()
 ], async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato a modificare questa auto.";
+        return res.redirect('/login');
     }
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("Errori di validazione:", errors.array());
         const auto = await dao.getAutoById(req.params.id);
+        req.session.alert = "errore";
+        req.session.message = "Campi non validi, riprovare.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Campi non validi, riprovare.",
             user: req.user,
             view: "modificaAuto",
             auto: auto
@@ -147,13 +157,15 @@ router.post("/dashboard/updateAuto/:id", upload.single('immagine'), [
         const immagine = req.file ? `/uploads/${req.file.filename}` : autoEsistente.immagine;
 
         await dao.updateAuto(req.params.id, req.body, immagine);
-        return res.redirect("/dashboard?alert=elencoAuto&message=Auto modificata con successo");
+        req.session.alert = "elencoAuto";
+        req.session.message = "Auto modificata con successo.";
+        return res.redirect("/dashboard");
     } catch (error) {
         console.log("Errore durante l'aggiornamento dell'auto:", error);
+        req.session.alert = "errore";
+        req.session.message = "Errore durante l'aggiornamento dell'auto.";
         return res.render("dashboard", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Errore durante l'aggiornamento dell'auto.",
             user: req.user,
             view: "modificaAuto",
             auto: req.body
@@ -163,7 +175,9 @@ router.post("/dashboard/updateAuto/:id", upload.single('immagine'), [
 
 router.post("/addAutoPreferita/:id", async (req, res) => {
     if (!isAuth(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato a aggiungere un'auto preferita.";
+        return res.redirect('/login');
     }
 
     const id_auto = req.params.id;
@@ -179,10 +193,10 @@ router.post("/addAutoPreferita/:id", async (req, res) => {
         await dao.incrementaContatorePreferite(id_auto);
         return res.redirect(req.headers.referer || '/catalogo')
     } catch (error) {
+        req.session.alert = "errore";
+        req.session.message = "Errore durante l'aggiunta dell'auto preferita.";
         return res.render("index", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Errore durante l'aggiunta dell'auto preferita.",
             user: req.user,
             view: ""
         })
@@ -191,7 +205,9 @@ router.post("/addAutoPreferita/:id", async (req, res) => {
 
 router.post("/removeAutoPreferita/:id", async (req, res) => {
     if (!isAuth(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato a rimuovere un'auto preferita.";
+        return res.redirect('/login');
     }
 
     const id_auto = req.params.id;
@@ -201,10 +217,10 @@ router.post("/removeAutoPreferita/:id", async (req, res) => {
         await dao.decrementaContatorePreferite(id_auto);
         return res.redirect(req.headers.referer || '/catalogo')
     } catch (error) {
+        req.session.alert = "errore";
+        req.session.message = "Errore durante la rimozione dell'auto preferita.";
         return res.render("index", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Errore durante la rimozione dell'auto preferita.",
             user: req.user,
             view: ""
         })
@@ -213,7 +229,9 @@ router.post("/removeAutoPreferita/:id", async (req, res) => {
 
 router.get("/prenotazione/getAuto/:id", async (req, res) => {
     if (!isAuth(req)) {
-        return res.redirect('/login?alert=errore&errorType=non_autorizzato');
+        req.session.alert = "errore";
+        req.session.message = "Non sei autorizzato a visualizzare questa pagina.";
+        return res.redirect('/login');
     }
 
     const id = req.params.id;
@@ -225,9 +243,7 @@ router.get("/prenotazione/getAuto/:id", async (req, res) => {
                 isAuth: req.isAuthenticated(),
                 user: req.user,
                 auto: auto,
-                pacchetti: pacchetti,
-                alert: "",
-                message: ""
+                pacchetti: pacchetti
             });
         } else {
             res.redirect(req.headers.referer || '/catalogo');
@@ -238,10 +254,10 @@ router.get("/prenotazione/getAuto/:id", async (req, res) => {
         if (req.user) {
             preferite_user = await dao.getPreferiteByUserId(req.user.id);
         }
+        req.session.alert = "errore";
+        req.session.message = "Errore durante il recupero dell'auto.";
         return res.render("catalogo", {
             isAuth: req.isAuthenticated(),
-            alert: "errore",
-            message: "Errore durante il recupero dell'auto.",
             user: req.user || { ruolo: 0 },
             preferite_user: preferite_user,
         });

@@ -46,7 +46,9 @@ router.get('/catalogo', async (req, res) => {
         });
     } catch (err) {
         console.error(err);
-        res.status(500).send('Errore del server');
+        req.session.alert = "errore";
+        req.session.message = "Si è verificato un errore durante il caricamento del catalogo.";
+        return res.redirect('/');
     }
 });
 
