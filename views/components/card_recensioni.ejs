@@ -11,7 +11,16 @@
                 </div>
                 <div>
                     <h6 class="mb-0 fw-bold"><%= recensione.nome %> <%= recensione.cognome %></h6>
-                    <small><%= recensione.voto %>/5</small>
+                    <div class="d-flex align-items-center">
+                        <span class="text-warning me-1">
+                            <% for (let i = 0; i < recensione.voto; i++) { %>
+                                <i class="fas fa-star"></i>
+                            <% } %>
+                            <% for (let i = recensione.voto; i < 5; i++) { %>
+                                <i class="far fa-star"></i>
+                            <% } %>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
