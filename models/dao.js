@@ -609,6 +609,8 @@ exports.getAllRecensioni = async () => {
                     {
                         id: r.id,
                         id_utente: r.id_utente,
+                        nome: r.nome,
+                        cognome: r.cognome,
                         voto: r.voto,
                         commento: r.commento,
                         data: r.data
