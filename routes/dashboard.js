@@ -9,16 +9,22 @@ router.get('/dashboard', async (req, res) => {
         req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
         return res.redirect('/login');
     }
+
+    if (isAdmin(req)) {
+        return res.redirect('/dashboard/allPrenotazioni');
+    }
+
+    return res.redirect('/dashboard/prenotazioniUtente');
     
-    res.render('dashboard', { 
-        user: req.user,
-        view: '',
-        isAuth: true,
-        auto: [],
-        preferite_user: [],
-        pacchetti: [],
-        prenotazioni: []
-    });
+    // res.render('dashboard', { 
+    //     user: req.user,
+    //     view: '',
+    //     isAuth: true,
+    //     auto: [],
+    //     preferite_user: [],
+    //     pacchetti: [],
+    //     prenotazioni: []
+    // });
 });
 
 router.get('/dashboard/inserimentoAuto', async (req, res) => {

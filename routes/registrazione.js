@@ -20,7 +20,8 @@ router.post("/registrazione", [
     check('cognome').notEmpty(),
     check('email').isEmail(),
     check('password').isLength({ min: 6 }),
-    check('data_nascita').optional().isDate()
+    check('data_nascita').optional().isDate(),
+    check('telefono').notEmpty()
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

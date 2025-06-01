@@ -50,12 +50,12 @@
                     <div class="form-row">
                         <div class="form-field">
                             <label for="data_nascita">Data di nascita</label>
-                            <input type="date" id="data_nascita" name="data_nascita" value="<%= locals.user && user.data_nascita ? user.data_nascita : '' %>">
+                            <input type="date" id="data_nascita" name="data_nascita" value="<%= locals.user && user.data_nascita ? user.data_nascita : '' %>" required>
                         </div>
                         
                         <div class="form-field">
                             <label for="telefono">Telefono</label>
-                            <input type="tel" id="telefono" name="telefono" value="<%= locals.user && user.telefono ? user.telefono : '' %>">
+                            <input type="tel" id="telefono" name="telefono" value="<%= locals.user && user.telefono ? user.telefono : '' %>" required>
                         </div>
                     </div>
                 </div>
