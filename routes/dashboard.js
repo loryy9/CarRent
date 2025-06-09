@@ -4,6 +4,14 @@ const router = express.Router()
 const dao = require("../models/dao");
 const { isAuth, isAdmin } = require("../public/js/auth");
 
+const formattaData = (data) => {
+    const date = new Date(data);
+    const giorno = String(date.getDate()).padStart(2, '0');
+    const mese = String(date.getMonth() + 1).padStart(2, '0');
+    const anno = date.getFullYear();
+    return `${giorno}/${mese}/${anno}`;
+}
+
 router.get('/dashboard', async (req, res) => {
     if (!isAuth(req)) {
         req.flash("error_msg", "Accesso non autorizzato. Effettua il login.");
@@ -180,6 +188,8 @@ router.get('/dashboard/prenotazioniUtente', async (req, res) => {
         let prenotazioni = await dao.getPrenotazioniByUserId(req.user.id);
         prenotazioni.forEach((prenotazione) => {
             prenotazione.stato = dao.getStatoPrenotazione(prenotazione);
+            prenotazione.data_inizio = formattaData(prenotazione.data_inizio);
+            prenotazione.data_fine = formattaData(prenotazione.data_fine);            
         });
         res.render('dashboard', { 
             user: req.user,
@@ -207,6 +217,8 @@ router.get('/dashboard/allPrenotazioni', async (req, res) => {
         let prenotazioni = await dao.getAllPrenotazioni();
         prenotazioni.forEach((prenotazione) => {
             prenotazione.stato = dao.getStatoPrenotazione(prenotazione);
+            prenotazione.data_inizio = formattaData(prenotazione.data_inizio);
+            prenotazione.data_fine = formattaData(prenotazione.data_fine);   
         });
         res.render('dashboard', { 
             user: req.user,
