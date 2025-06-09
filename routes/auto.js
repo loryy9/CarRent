@@ -101,6 +101,11 @@ router.post("/addAuto", upload.single('immagine'), [
 
     const { marca, modello, tipologia, velocita, cavalli, prezzo_giornaliero, carburante } = req.body;
 
+    if (await dao.getAutoByMarca(marca, modello)) {
+        req.flash("error_msg", "Un'auto con la stessa marca e modello esiste già.");
+        return res.redirect("/dashboard/inserimentoAuto");
+    }
+
     try {
         const immagine = req.file ? `/uploads/${req.file.filename}` : null;
 

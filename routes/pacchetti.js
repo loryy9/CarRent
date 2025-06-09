@@ -52,6 +52,13 @@ router.post("/addPacchetto", [
         return res.redirect('/login');
     }
 
+    const {nome} = req.body;
+
+    if(await dao.getPacchettoByNome(nome)) {
+        req.flash("error_msg", "Pacchetto con questo nome già esistente.");
+        return res.redirect("/dashboard/inserimentoPacchetto");
+    }
+
     try {
         await dao.newPacchetto(req.body);
         req.flash("success_msg", "Pacchetto inserito con successo.");

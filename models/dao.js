@@ -123,6 +123,25 @@ exports.getAutoById = async (id) => {
     })
 }
 
+exports.getAutoByMarca = async (marca, modello) => {
+    let sql = `SELECT * FROM auto WHERE marca = ? AND modello = ?`
+    let params = [marca, modello]
+
+    return new Promise((resolve, reject) => {
+        db.all(sql, params, (err, rows) => {
+            if (err) {
+                reject(err)
+            } else {
+                if(rows.length === 0) {
+                    resolve(null);
+                } else{
+                    resolve(rows)
+                }
+            }
+        })
+    })
+}
+
 exports.getAutoPreferite = async () => {
     let sql = `SELECT * FROM auto ORDER BY pref_contatore DESC LIMIT 3`
     return new Promise((resolve, reject) => {
@@ -342,6 +361,26 @@ exports.getPacchettoById = async (id) => {
                     descrizione: row.descrizione,
                     prezzo: row.prezzo
                 })
+            }
+        })
+    })
+}
+
+
+exports.getPacchettoByNome = async (nome) => {
+    let sql = `SELECT * FROM pacchetti_aggiuntivi WHERE nome = ?`
+    let params = [nome]
+
+    return new Promise((resolve, reject) => {
+        db.all(sql, params, (err, rows) => {
+            if (err) {
+                reject(err)
+            } else {
+                if(rows.length === 0) {
+                    resolve(null);
+                } else{
+                    resolve(rows)
+                }
             }
         })
     })
