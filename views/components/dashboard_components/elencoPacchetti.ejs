@@ -37,15 +37,39 @@
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                         </form>
-                                        <form action="/deletePacchetto/<%= pacchetto.id %>" method="POST"
-                                            class="d-inline">
-                                            <button type="submit" class="btn btn-danger">
+                                        <form class="d-inline">
+                                            <button type="button" class="btn btn-danger"
+                                                data-bs-toggle="modal" data-bs-target="#confirmDeleteModal-<%= pacchetto.id %>">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
+
+                            <div class="modal fade" id="confirmDeleteModal-<%= pacchetto.id %>" tabindex="-1"
+                                aria-labelledby="confirmDeleteLabel-<%= pacchetto.id %>" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmDeleteLabel-<%= pacchetto.id %>">Conferma
+                                                Eliminazione</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Sei sicuro di voler eliminare questo pacchetto?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla
+                                            </button>
+                                            <form action="/deletePacchetto/<%= pacchetto.id %>" method="POST">
+                                                <button type="submit" class="btn btn-danger">Elimina</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <% }) %>
                     </tbody>
                 </table>
