@@ -28,6 +28,32 @@ exports.newUser = async (user, cryptPwd) => {
     })    
 }
 
+exports.updateUser = async (id, user) => {
+    const sql = `
+        UPDATE utenti
+        SET nome = ?, cognome = ?, email = ?, data_nascita = ?, telefono = ?
+        WHERE id = ?
+    `;
+    const params = [ 
+        user.nome, 
+        user.cognome, 
+        user.email, 
+        user.data_nascita, 
+        user.telefono,
+        id
+    ];
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function(err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(this.changes);
+            }
+        });
+    });
+}
+
 exports.deleteUser = async (id) => {
     let sql = `DELETE FROM utenti WHERE id = ?`
     let params = [id]

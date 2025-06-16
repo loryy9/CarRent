@@ -14,61 +14,66 @@
             <h1>Registrazione</h1>
             <p>Completa il modulo per creare il tuo account</p>
 
-            <form id="signup-form" action="/registrazione" method="POST">
+            <form id="signup-form" action="<%= locals.user ? '/modifica_utente' : '/registrazione' %>" method="POST">
                 <div class="form-group">
                     <h2>Informazioni personali</h2>
                     
                     <div class="form-row">
                         <div class="form-field">
                             <label for="nome">Nome *</label>
-                            <input type="text" id="nome" name="nome" value="<%= locals.user && user.nome ? user.nome : '' %>" required>
+                            <input type="text" id="nome" name="nome" value="<%= locals.user ? user.nome : '' %>" required>
                         </div>
                         
                         <div class="form-field">
                             <label for="cognome">Cognome *</label>
-                            <input type="text" id="cognome" name="cognome" value="<%= locals.user && user.cognome ? user.cognome : '' %> " required>
+                            <input type="text" id="cognome" name="cognome" value="<%= locals.user ? user.cognome : '' %> " required>
                         </div>
                     </div>
                     
                     <div class="form-field">
                         <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" value="<%= locals.user && user.email ? user.email : '' %>" required>
+                        <input type="email" id="email" name="email" value="<%= locals.user ? user.email : '' %>" required>
                     </div>
+                    
+                    <% if (!locals.user) { %>
+
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="password">Password * <span class="text-secondary text-small">(Min. 6 caratteri)</span></label>
+                                <input type="password" id="password" name="password" value="<%= locals.user && user.password ? user.password : '' %>" required>
+                            </div>
+                            
+                            <div class="form-field">
+                                <label for="conferma_password">Conferma Password * <span class="text-secondary text-small">(Min. 6 caratteri)</span></label>
+                                <input type="password" id="conferma_password" name="conferma_password" value="<%= locals.user && user.conferma_password ? user.conferma_password : '' %>" required>
+                            </div>
+                        </div>
+                    <% } %>
                     
                     <div class="form-row">
                         <div class="form-field">
-                            <label for="password">Password * <span class="text-secondary text-small">(Min. 6 caratteri)</span></label>
-                            <input type="password" id="password" name="password" value="<%= locals.user && user.password ? user.password : '' %>" required>
-                        </div>
-                        
-                        <div class="form-field">
-                            <label for="conferma_password">Conferma Password * <span class="text-secondary text-small">(Min. 6 caratteri)</span></label>
-                            <input type="password" id="conferma_password" name="conferma_password" value="<%= locals.user && user.conferma_password ? user.conferma_password : '' %>" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-field">
-                            <label for="data_nascita">Data di nascita</label>
+                            <label for="data_nascita">Data di nascita *</label>
                             <input type="date" id="data_nascita" name="data_nascita" value="<%= locals.user && user.data_nascita ? user.data_nascita : '' %>" required>
                         </div>
                         
                         <div class="form-field">
-                            <label for="telefono">Telefono</label>
+                            <label for="telefono">Telefono *</label>
                             <input type="tel" id="telefono" name="telefono" value="<%= locals.user && user.telefono ? user.telefono : '' %>" required>
                         </div>
                     </div>
                 </div>
+
+                <% if (!locals.user) { %>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Registrati</button>
+                        <p>Hai già un account? <a href="/login">Accedi</a></p>
+                    </div>
+                <% } else { %>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Modifica</button>
+                    </div>
+                <% } %>
                 
-                <div class="form-field privacy-policy">
-                    <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
-                    <label for="privacy_policy">Accetto la <a href="#">Privacy Policy</a> e i <a href="#">Termini e Condizioni</a> *</label>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">Registrati</button>
-                    <p>Hai già un account? <a href="/login">Accedi</a></p>
-                </div>
             </form>
         </section>
     </div>
