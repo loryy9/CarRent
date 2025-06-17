@@ -117,7 +117,9 @@ body {
     background-color: var(--background-color-dark);
 }
 
-
+textarea {
+    resize: none;
+}
 
 @keyframes fadeIn {
     0% {

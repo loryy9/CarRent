@@ -12,8 +12,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/uploads');
     },
     filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+        cb(null, file.originalname);
     }
 });
 
@@ -176,16 +175,15 @@ router.post("/addAutoPreferita/:id", async (req, res) => {
 
     try {
         const isPreferita = await dao.isAutoPreferita(id_auto, id_utente);
-        console.log(isPreferita)
         if (isPreferita) {
-            return res.redirect(req.headers.referer || '/catalogo')
+            return res.redirect(req.headers.referer + '#auto-in-evidenza' || '/catalogo')
         }
         await dao.addAutoPreferita(id_auto, id_utente);
         await dao.incrementaContatorePreferite(id_auto);
-        return res.redirect(req.headers.referer || '/catalogo')
+        return res.redirect(req.headers.referer + '#auto-in-evidenza' || '/catalogo')
     } catch (error) {
         req.flash("error_msg", "Errore durante l'aggiunta dell'auto preferita.");
-        return res.redirect(req.headers.referer || '/catalogo');
+        return res.redirect(req.headers.referer + '#auto-in-evidenza' || '/catalogo');
     }
 })
 
@@ -200,10 +198,10 @@ router.post("/removeAutoPreferita/:id", async (req, res) => {
     try {
         await dao.removePreferita(id_auto, id_utente);
         await dao.decrementaContatorePreferite(id_auto);
-        return res.redirect(req.headers.referer || '/catalogo')
+        return res.redirect(req.headers.referer + '#auto-in-evidenza' || '/catalogo')
     } catch (error) {
         req.flash("error_msg", "Errore durante la rimozione dell'auto preferita.");
-        return res.redirect(req.headers.referer || '/catalogo');
+        return res.redirect(req.headers.referer + '#auto-in-evidenza' || '/catalogo');
     }
 })
 
