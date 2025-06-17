@@ -23,16 +23,7 @@ router.get('/dashboard', async (req, res) => {
     }
 
     return res.redirect('/dashboard/prenotazioniUtente');
-    
-    // res.render('dashboard', { 
-    //     user: req.user,
-    //     view: '',
-    //     isAuth: true,
-    //     auto: [],
-    //     preferite_user: [],
-    //     pacchetti: [],
-    //     prenotazioni: []
-    // });
+
 });
 
 router.get('/dashboard/inserimentoAuto', async (req, res) => {
