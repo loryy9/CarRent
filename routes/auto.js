@@ -5,7 +5,7 @@ const dao = require("../models/dao")
 const { check, validationResult } = require("express-validator")
 const multer = require('multer');
 const path = require('path');
-const { isAuth, isAdmin } = require("../public/js/auth")
+const { isAuth, isAdmin } = require("../middleware/auth")
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

@@ -2,7 +2,7 @@
 const express = require("express")
 const router = express.Router()
 const dao = require("../models/dao")
-const { isAuth } = require('../public/js/auth')
+const { isAuth } = require('../middleware/auth')
 
 router.get('/recensioni', async (req, res) => {
     

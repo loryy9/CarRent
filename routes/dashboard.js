@@ -2,7 +2,7 @@
 const express = require("express")
 const router = express.Router()
 const dao = require("../models/dao");
-const { isAuth, isAdmin } = require("../public/js/auth");
+const { isAuth, isAdmin } = require("../middleware/auth");
 
 const formattaData = (data) => {
     const date = new Date(data);

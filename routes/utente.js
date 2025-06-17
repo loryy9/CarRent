@@ -1,10 +1,8 @@
 'use strict'
 const express = require("express")
 const router = express.Router()
-const passport = require("../models/passport")
 const dao = require("../models/dao")
-const { isAuth } = require("../public/js/auth")
-const { route } = require(".")
+const { isAuth } = require("../middleware/auth")
 
 router.post("/cancella-utente", async (req, res) => {
     const id = req.user.id;

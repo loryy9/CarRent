@@ -3,7 +3,7 @@ const express = require("express")
 const router = express.Router()
 const dao = require("../models/dao")
 const { check, validationResult } = require("express-validator")
-const { isAuth, isAdmin } = require("../public/js/auth")
+const { isAuth, isAdmin } = require("../middleware/auth")
 
 router.get("/getPacchetto/:id", async (req, res) => {
     if (!isAuth(req) || !isAdmin(req)) {

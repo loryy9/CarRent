@@ -5,7 +5,7 @@ const passport = require("../models/passport")
 const { check, validationResult} = require("express-validator")
 const bcrypt = require("bcrypt")
 const dao = require("../models/dao")
-const { isAuth } = require('../public/js/auth')
+const { isAuth } = require('../middleware/auth')
 
 router.get("/registrazione", (req, res) => {
     if (isAuth(req)) {

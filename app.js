@@ -5,8 +5,10 @@ const passport = require("passport")
 const morgan = require("morgan")
 const db = require("./models/db")
 const flash = require('connect-flash')
+require ("dotenv").config()
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000
+
 const app = express()
 
 const indexRouter = require("./routes/index")
@@ -28,10 +30,19 @@ app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+const isProd = process.env.NODE_ENV === 'production';
+app.set('trust proxy', 1); 
+
 app.use(session({
-    secret: "CarRent",
+    secret: process.env.SECRET_SESSION,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        secure: isProd,
+        httpOnly: true,
+        sameSite: 'lax', 
+        maxAge: 1000 * 60 * 60 
+    }
 }))
 
 app.use(flash());

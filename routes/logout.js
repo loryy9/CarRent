@@ -2,7 +2,7 @@
 
 const express = require('express');
 const passport = require('passport');
-const { isAuth } = require('../public/js/auth');
+const { isAuth } = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/logout', (req, res, next) => {

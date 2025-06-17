@@ -11,8 +11,13 @@
 
     <div class="main-content">
         <section class="signup-container">
-            <h1>Registrazione</h1>
-            <p>Completa il modulo per creare il tuo account</p>
+            <% if (locals.user) { %>
+                <h1>Modifica Profilo</h1>
+                <p>Modifica le tue informazioni personali</p>
+            <% } else { %>
+                <h1>Registrazione</h1>
+                <p>Completa il modulo per creare il tuo account</p>
+            <% } %>
 
             <form id="signup-form" action="<%= locals.user ? '/modifica_utente' : '/registrazione' %>" method="POST">
                 <div class="form-group">
