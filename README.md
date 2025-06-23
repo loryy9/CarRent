@@ -22,3 +22,9 @@ user2: email - user@gmail.com
     
 user3: email - franco@gmail.com
        password - franco99
+
+# Link al video YouTube
+https://youtu.be/Z_6mFkUqjuo
+
+# Link alla versione deployata
+https://carrent-production.up.railway.app/
